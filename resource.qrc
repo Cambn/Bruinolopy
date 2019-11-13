@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/fig">
+        <file>uclaCover.jpg</file>
+        <file>paw.png</file>
+        <file>mute.png</file>
+        <file>sound.png</file>
+        <file>brownbear.png</file>
+        <file>panda.png</file>
+        <file>polarbear.png</file>
+        <file>records_bkgd.jpg</file>
+        <file>rules.png</file>
+        <file>rules_bkgd.jpg</file>
+        <file>setting_bkgd.jpg</file>
+    </qresource>
+    <qresource prefix="/sound">
+        <file>welcomemusic.mp3</file>
+    </qresource>
+    <qresource prefix="/properties">
+        <file>blueProperty.png</file>
+        <file>greenProperty.png</file>
+        <file>lightBlueProperty.png</file>
+        <file>magentaProperty.png</file>
+        <file>orangeProperty.png</file>
+        <file>purpleProperty.png</file>
+        <file>redProperty.png</file>
+        <file>yellowProperty.png</file>
+    </qresource>
+    <qresource prefix="/txt">
+        <file>tileBuilder.txt</file>
+    </qresource>
+</RCC>

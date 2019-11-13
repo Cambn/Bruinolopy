@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/pic">
+        <file>uclaCover.jpg</file>
+        <file>mute.png</file>
+        <file>sound.png</file>
+        <file>paw.png</file>
+        <file>../../Desktop/PIC 10C/projectpic/rules_bkgd.jpg</file>
+    </qresource>
+    <qresource prefix="/sound">
+        <file>welcomemusic.mp3</file>
+    </qresource>
+</RCC>
