@@ -3,7 +3,9 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
 {
+    ui->setupUi(this);
     QWidget *centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -22,3 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout ->addWidget(playerGroupBox,1,0,1,2);
 
 }
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+

@@ -33,8 +33,9 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
         for(int row = 0; row< BoardWidth; ++row){
             pixmapLabels[column][row] = createPixmapLabel();
             mainLayout ->addWidget(pixmapLabels[column][row], row+1, column+1);
-        }
 
+        }
+        //mainLayout->addWidget(createHeaderLabel())
     }
 
     //Player info
@@ -46,12 +47,13 @@ void GameBoard::setIcon(const QIcon &icon){
     this ->icon = icon;
     updatePixmapLabels();
 }
+*/
 void GameBoard::setSize(const QSize &size){
-    if(size!=this ->size){
         this ->size = size;
-        updatePixmapLabels();
-    }
-}*/
+
+        //updatePixmapLabels();
+
+}
 QLabel *GameBoard::createPixmapLabel(){
     QLabel *label = new QLabel;
     label ->setEnabled(false);

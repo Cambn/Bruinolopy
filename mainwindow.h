@@ -6,8 +6,9 @@
 #include <QBoxLayout>
 #include "gameboard.h"
 #include "playerinfodisplay.h"
-
-
+QT_BEGIN_NAMESPACE
+namespace Ui { class MainWindow; }
+QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -15,9 +16,10 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow(){}
+    ~MainWindow();
 
 private:
+    Ui::MainWindow *ui;
     GameBoard *boardArea;
     PlayerInfoDisplay *playerArea;
 };

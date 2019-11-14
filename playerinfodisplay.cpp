@@ -1,4 +1,5 @@
 #include "playerinfodisplay.h"
+#include "ui_playerinfodisplay.h"
 
 PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent) :
     QWidget(parent)
