@@ -17,13 +17,14 @@ class Property;
 class Player{
 
 	friend Bank;
+    friend ownableTile;
     friend Property;
 
     class QInteractor;
 
 public:
     //big 4
-    Player(const std::string& _name, bool makeInteractor = true );
+    Player(const std::string& _name, Bank* _bank, Board* _board, bool makeInteractor = true );
     Player(const Player& oth);
     Player(Player&& oth);
     Player& operator = (Player oth);
@@ -61,19 +62,23 @@ public:
     */
     int getPos() const;
 
-	/**
-	buys property from another player 
-	
-//	@return true if other player accepts the deal.
-//	*/
-//	bool buyPropertyPlayer (?? ,Dollars price) // unsure of params/implementation for this one
-	
+    /**
+    @return Tile the player is currently on
+    */
+    Tile* getTile() const;
+
 
     /**
     attempts to buy property that player is currently on from bank.
     return false if not enough money to purchase property.
     */
     bool buyPropertyBank();
+
+    /**
+    player can call when they are on a tile to trigger the tile's landing event.
+    */
+    void land ();
+
 
     //swap for copy and swap idiom
     friend void swap(Player& left, Player& right){
@@ -91,7 +96,7 @@ private:
     Board* board;
 	int boardPos; //position on board 
 	Dollars playerMoney; //stores player money
-	std::vector<Property*> playerProperties;
+    std::vector<ownableTile*> playerProperties;
     QInteractor* interactor;
     std::string name;
 	
@@ -107,6 +112,7 @@ public:
 
 public slots:
     void buyBankProp ();
+    void payRent ();
 signals:
     void buyPropFail();
 

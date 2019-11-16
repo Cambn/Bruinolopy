@@ -12,6 +12,12 @@ Board();
 
 Tile * getTile(int boardPos) ;
 
+/**
+checks if both utilities are owned by same player
+for use calculating rent paid when landing on a utility tile.
+*/
+bool checkUtilitiesSameOwner();
+
 private:
 std::vector <Tile*> tiles;
 };

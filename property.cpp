@@ -10,8 +10,7 @@
 
 using std::string; using std::stringstream;
 
-Property::Property(const string& formattedLine) : Tile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2))),
-                                                  owner(nullptr), houseCount(0)                                     {
+Property::Property(const string& formattedLine, Board* _board) : ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board), houseCount(0)                                     {
     stringstream buffer(formattedLine);
     string temp = "";
     stringstream vals;
@@ -41,36 +40,12 @@ Property::Property(const string& formattedLine) : Tile(std::stoi(formattedLine.s
 }
 
 
-Player* Property::propOwner() const {return owner;}
 
 QWidget*  Property::generateView() {
     return (new View(*this));
 }
 
 
-void Property::landingEvent(Player* currPlayer) {
-    if(!propOwner()) { //property is unowned
-        QLandingOptions* propWindow = new QLandingOptions
-                                    (generateView(),
-                                    "Unowned!\n Purchase this property?",
-                                    "Yes",
-                                    "No");
-
-        QObject::connect(propWindow->getLeft(),&QPushButton::clicked,     //connects Yes button to player buy fxn
-                         currPlayer->interactor, &Player::QInteractor::buyBankProp);
-
-        QObject::connect(propWindow->getRight(), &QPushButton::clicked,   //connect No button to closing pop up window
-                         propWindow, &QWidget::close);
-
-	
-	}
-	
-}
-
-
-void Property::transfer(Player* newOwner) {
-    owner = newOwner;
-	}
 
 bool Property::buildHouse(Bank* bank) {
 	if (houseCount<4){ //trying to build a house
@@ -116,10 +91,9 @@ Property::View::View(const Property& prop)  {
     //QString qfileName(QString::fromStdString(fileName));
     //image = QPixmap(qfileName);
 
-//    image= QPixmap(":/Properties/Assets/Properties/BlueProperty.png");
 
-
-    std::string fileName= ":/Properties/Assets/Properties/"+prop.color+"Property.png";
+// :/properties/blueProperty.png
+    std::string fileName= ":/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
     image = QPixmap(qfileName);
     setMinimumSize(320,384);
@@ -133,3 +107,32 @@ void Property::View::paintEvent(QPaintEvent *){
     p.drawPixmap(QRect(0,0,320,384),image,QRect(0,0,160,192));
 }
 
+//
+// Utility tile stuff
+//
+
+Utility::Utility(const std::string& formattedLine, Board* _board):
+    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board)
+{}
+
+//
+//old code
+//
+
+//void Property::landingEvent(Player* currPlayer) {
+//    if(!propOwner()) { //property is unowned
+//        QLandingOptions* propWindow = new QLandingOptions
+//                                    (generateView(),
+//                                    "Unowned!\n Purchase this property?",
+//                                    "Yes",
+//                                    "No");
+
+//        QObject::connect(propWindow->getLeft(),&QPushButton::clicked,     //connects Yes button to player buy fxn
+//                         currPlayer->interactor, &Player::QInteractor::buyBankProp);
+
+//	}
+//  else if (propOwner() == currPlayer) {
+
+//    }
+
+//}

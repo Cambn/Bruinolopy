@@ -1,13 +1,15 @@
 #include "player.h"
 #include "bank.h"
 #include "property.h"
+#include "QLandingWindows.h"
 
 #include <QLabel>
 #include <string>
 
 class Board;
 
-Player::Player(const std::string &_name, bool makeInteractor):
+Player::Player(const std::string &_name, Bank* _bank, Board* _board, bool makeInteractor):
+    bank(_bank), board(_board),
     boardPos(0) , playerMoney(1500), playerProperties(), name(_name) {
     if (makeInteractor) { //if wanted to make Interactor make one
        interactor= new QInteractor(this);
@@ -30,7 +32,7 @@ Player::Player(const Player& oth){
     }
 }
 
-Player::Player(Player&& oth):Player(""){
+Player::Player(Player&& oth):Player("",nullptr,nullptr){
     swap(*this, oth);
 }
 
@@ -54,7 +56,11 @@ bool Player::pay(Player* payee, int amt) {
 			playerMoney-= amt;
 			return true;
 		}
+        else{
+        payee->playerMoney+= playerMoney;
+        playerMoney = 0; //give payee all of current money
 		return false; //not enough money to make the payment
+        }
 	}
 	return false; //not a valid target 
 }
@@ -78,7 +84,7 @@ bool Player::buyPropertyBank() {
     Property* currProp = dynamic_cast<Property*>(board->getTile(boardPos));//cast curr tile that player is on to property type
     if(playerMoney >= currProp->cost/* && currProp->owner == nullptr*/) {//if player has at least enough money to buy
         bank->take(*this, currProp->cost); //charge player for property
-        playerProperties.push_back(currProp); //add to player's properties
+        playerProperties.push_back(currProp); //add to back of player's properties
         currProp->transfer(this);
         return true;
     }
@@ -89,6 +95,12 @@ void Player::move(int val) {boardPos+=val;}
 
 int Player::getPos() const {return boardPos;}
 
+Tile* Player::getTile() const {return board->getTile(this->getPos());}
+
+void Player::land()  {
+    board->getTile(this->boardPos)->landingEvent(this);
+}
+
 //
 //Player::QInteractor stuff
 //
@@ -96,11 +108,19 @@ Player::QInteractor::QInteractor(Player* _player): player(_player) {}
 
 void Player::QInteractor::buyBankProp() {
     if(player->buyPropertyBank()){//able to buy property
-        (player->buyPropertyBank());//send it
+    QLandNoOptions* successMessage = new QLandNoOptions(player->playerProperties.back()->generateView(), //newest property will be at back of player's properties
+                                                        "Property purchased!") ;
     }
     else {
+    QLandNoOptions* failureMessage= new QLandNoOptions((player->board->getTile(player->getPos()))->generateView(),
+                                                       "Unable to purchase property (:/)");
         emit buyPropFail();
     }
 
 
+}
+
+void Player::QInteractor::payRent() {
+    ownableTile* prop = dynamic_cast<ownableTile*> (player->board->getTile((this->player->getPos()))); //prop is the tile the player is on.
+    prop->propOwner()->take(this->player, prop->currentRent()); //owner of the property that the curr player is on takes appropriate amount of money from curr player .
 }
