@@ -25,7 +25,7 @@ ownableTile::ownableTile(int _tileNum, Board* _board):
     Tile(_tileNum, _board), owner(nullptr)
     {}
 
-void ownableTile::landingEvent(Player *currPlayer){
+void ownableTile::landingEvent( Player& currPlayer){
     if(!propOwner()) { //property is unowned
         QLandingOptions* propWindow = new QLandingOptions
                                     (generateView(),
@@ -34,10 +34,10 @@ void ownableTile::landingEvent(Player *currPlayer){
                                     "No");
 
         QObject::connect(propWindow->getLeft(),&QPushButton::clicked,     //connects Yes button to player buy fxn
-                         currPlayer->interactor, &Player::QInteractor::buyBankProp);
+                        &currPlayer, &Player::buyBankProp);
 
     }
-    else if (propOwner() == currPlayer) {//player lands on their own property
+    else if (propOwner() == &currPlayer) {//player lands on their own property
     //do nothing
     }
 
@@ -46,7 +46,7 @@ void ownableTile::landingEvent(Player *currPlayer){
 
         QLandNoOptions* rentWindow = new QLandNoOptions (
                                         generateView(), QString::fromStdString(popupMessage));
-        this->owner->take(currPlayer, this->currentRent()); //owner of tile takes appropriate rent from person who landed on it.
+        this->owner->take(&currPlayer, this->currentRent()); //owner of tile takes appropriate rent from person who landed on it.
 
     }
 }

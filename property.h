@@ -34,7 +34,7 @@ public:
     generates a QWidget with the approperiate property tile painted onto it
 	@return pointer to viewing window to allow for manipulation. 
 	*/
-    virtual QWidget* generateView () override;
+    virtual QWidget* generateView () const override;
 
     /**
     Implements landing event w/ prompt to
@@ -62,7 +62,8 @@ public:
 
 private:
 	std::string color;
-	std::string name;
+    std::string name;
+
 	
 	//0 houses represents no houses, 5 represents a hotel
     int houseCount;
@@ -82,6 +83,7 @@ the View instance will create a pixmap from the appropriate image for the callin
 class Property::View : public QWidget {
    Q_OBJECT
 public:
+    View() = delete;
     View(const Property& prop);
 
     //160x192 -> 320x384
@@ -109,6 +111,33 @@ bool checkSameOwner() const;
 private:
 
 
+};
+
+/**
+Railroad properties from regular game.  We will have 3.
+*/
+class Railroad : public ownableTile {
+public:
+    Railroad(const std::string& formattedLine, Board* _board);
+
+    /**
+    checks how many Railroads owner has to calculate rent.
+    @param player checks # of railroads they own
+    @return int number of railroads they own.
+    */
+    int checkOwnerRailroads(const Player& player) const;
+
+    /**
+    @return rent that must be paid to owner.
+    */
+    int currentRent() const override;
+
+    QWidget* generateView() const override;
+
+protected:
+    int cost;
+    std::string name;
+    int rents[3] {25,75,150}; // each railroad has same rent values;
 };
 
 #endif

@@ -41,7 +41,7 @@ Property::Property(const string& formattedLine, Board* _board) : ownableTile(std
 
 
 
-QWidget*  Property::generateView() {
+QWidget*  Property::generateView() const{
     return (new View(*this));
 }
 
@@ -114,6 +114,35 @@ void Property::View::paintEvent(QPaintEvent *){
 Utility::Utility(const std::string& formattedLine, Board* _board):
     ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board)
 {}
+
+
+/**
+*
+* Railroad Stuff
+*
+*/
+Railroad::Railroad(const std::string& formattedLine, Board* _board):
+    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board),
+    cost(200), name(formattedLine.substr(formattedLine.rfind('\t')))
+{}
+
+int Railroad::checkOwnerRailroads(const Player& player) const{
+    int railroadCount = 0;
+    for ( auto prop : player.playerProperties) {//go through player properties
+        if (dynamic_cast<Railroad*>(prop)){//see which ones are railroads
+            ++railroadCount;                //count them
+        }
+    }
+    return railroadCount; //return number of railroads they own.
+}
+
+int Railroad::currentRent() const {
+    return rents[checkOwnerRailroads(*owner)];
+}
+
+QWidget* Railroad::generateView() const {
+    return new QWidget();
+}
 
 //
 //old code

@@ -12,19 +12,21 @@ using Dollars = int;
 
 class Bank;
 class Property;
+class Railroad;
 
 
-class Player{
-
+class Player : public QObject{
+Q_OBJECT
 	friend Bank;
     friend ownableTile;
     friend Property;
+    friend Railroad;
 
-    class QInteractor;
 
 public:
-    //big 4
-    Player(const std::string& _name, Bank* _bank, Board* _board, bool makeInteractor = true );
+    Player();
+    Player(const std::string& _name, Bank* _bank, Board* _board, QObject* parent = nullptr);
+
     Player(const Player& oth);
     Player(Player&& oth);
     Player& operator = (Player oth);
@@ -77,7 +79,7 @@ public:
     /**
     player can call when they are on a tile to trigger the tile's landing event.
     */
-    void land ();
+    void land () ;
 
 
     //swap for copy and swap idiom
@@ -88,16 +90,20 @@ public:
         swap(left.board, right.board);
         swap(left.boardPos, right.boardPos);
         swap(left.playerMoney, right.playerMoney);
-        swap(left.interactor, right.interactor);
         swap(left.name, right.name);
     }
+
+public slots:
+    void buyBankProp ();
+    void payRent ();
+signals:
+    void buyPropFail();
 private:
     Bank* bank;
     Board* board;
 	int boardPos; //position on board 
 	Dollars playerMoney; //stores player money
     std::vector<ownableTile*> playerProperties;
-    QInteractor* interactor;
     std::string name;
 	
 };
@@ -105,21 +111,21 @@ private:
 //Player::QInteractor stuff
 //This class will allow a player to interact with QObjects without making it a QObject itself.
 //Unless set to false, each instance of player will generate a QInteractor upon its construction.
-class Player::QInteractor: public QObject {
-    Q_OBJECT
-public:
-    QInteractor(Player* _player);
+//class Player::QInteractor: public QObject {
+//    Q_OBJECT
+//public:
+//    QInteractor(Player* _player);
 
-public slots:
-    void buyBankProp ();
-    void payRent ();
-signals:
-    void buyPropFail();
+//public slots:
+//    void buyBankProp ();
+//    void payRent ();
+//signals:
+//    void buyPropFail();
 
-private:
-    Player* player; //This QInteractor will control implement QInteractions with this player
+//private:
+//    Player* player; //This QInteractor will control implement QInteractions with this player
 
 
-};
+//};
 
 #endif

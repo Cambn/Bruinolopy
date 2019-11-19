@@ -27,12 +27,12 @@ public:
     Call to implement desired behavior of a given tile.
     (e.g. a popup window for landing on a property w/ the option to buy.)
     */
-	virtual void landingEvent(Player* currPlayer) =0;
+    virtual void landingEvent( Player& currPlayer) =0;
 
     /**
     @return pointer to QWidget displaying the tile.
     */
-    virtual QWidget* generateView() = 0;
+    virtual QWidget* generateView() const= 0;
 
     virtual ~Tile() = default;
 
@@ -41,6 +41,7 @@ protected:
 
 	int tileNumber;
     Board* board;
+
 
 };
 
@@ -55,7 +56,7 @@ public:
 
     ownableTile(int _tileNum, Board* _board);
 
-    virtual void landingEvent(Player *currPlayer) override;
+    virtual void landingEvent( Player& currPlayer) override;
 
 
     /**
