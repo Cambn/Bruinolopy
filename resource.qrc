@@ -24,8 +24,6 @@
         <file>purpleProperty.png</file>
         <file>redProperty.png</file>
         <file>yellowProperty.png</file>
-    </qresource>
-    <qresource prefix="/txt">
         <file>tileBuilder.txt</file>
     </qresource>
 </RCC>
