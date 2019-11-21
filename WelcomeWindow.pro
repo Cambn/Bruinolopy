@@ -17,30 +17,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    QLandingWindows.cpp \
-    bank.cpp \
-    board.cpp \
+    dice.cpp \
     gameboard.cpp \
     main.cpp \
     mainwindow.cpp \
+    movement.cpp \
     player.cpp \
     playerinfodisplay.cpp \
-    property.cpp \
     subwindow.cpp \
     welcomewindow.cpp
 
 HEADERS += \
-    QLandingWindows.h \
-    bank.h \
-    board.h \
+    dice.h \
     gameboard.h \
     mainwindow.h \
+    movement.h \
     player.h \
     playerinfodisplay.h \
-    property.h \
     statics.h \
     subwindow.h \
-    tile.h \
     welcomewindow.h
 
 FORMS +=

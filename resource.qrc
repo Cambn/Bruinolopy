@@ -8,9 +8,13 @@
         <file>panda.png</file>
         <file>polarbear.png</file>
         <file>records_bkgd.jpg</file>
-        <file>rules.png</file>
-        <file>rules_bkgd.jpg</file>
         <file>setting_bkgd.jpg</file>
+        <file>greybear.png</file>
+        <file>mario.jpg</file>
+        <file>gb_brown bear.png</file>
+        <file>gb_grey bear.png</file>
+        <file>gb_panda.png</file>
+        <file>gb_polar bear.png</file>
     </qresource>
     <qresource prefix="/sound">
         <file>welcomemusic.mp3</file>
@@ -27,5 +31,14 @@
     </qresource>
     <qresource prefix="/txt">
         <file>tileBuilder.txt</file>
+    </qresource>
+    <qresource prefix="/dice">
+        <file>dice1.png</file>
+        <file>dice2.png</file>
+        <file>dice3.png</file>
+        <file>dice4.png</file>
+        <file>dice5.png</file>
+        <file>dice6.png</file>
+        <file>rolling.gif</file>
     </qresource>
 </RCC>

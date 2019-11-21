@@ -1,118 +1,58 @@
-#ifndef _PLAYER_
-#define _PLAYER_
+#ifndef PLAYER_H
+#define PLAYER_H
 
-#include <vector>
-#include <string>
+#include <QLabel>
+#include <QVector>
+#include <QString>
 #include <QObject>
+#include "movement.h"
 
+using Dollars=int;
 
-#include "board.h"
-
-using Dollars = int;
-
-class Bank;
-class Property;
-
-
-class Player{
-
-	friend Bank;
-    friend Property;
-
-    class QInteractor;
+class Player : public QWidget{
+Q_OBJECT
 
 public:
-    //big 4
-    Player(const std::string& _name, bool makeInteractor = true );
-    Player(const Player& oth);
-    Player(Player&& oth);
-    Player& operator = (Player oth);
 
-	/***
-	check player's money. doesn't allow modification. 
-	@return gets playerMoney
-	*/
-    int money() const;
-	
-	/**
-	pays another player, if possible 
-	@param payee player being paid 
-	@param amt to be paid 
-	@return true if pay successful
-	*/
-	bool pay(Player* payee, Dollars amt);
-	
-	/**
-	forcibly takes money from another player.  Can reduce their money to zero !!!
-	@param target to be taken from 
-	@param amt to be taken 
-	@return true if target was valid ptr 
-	*/
-	bool take(Player* target, int amt);
+    //Player();
+    Player(QWidget *parent=nullptr, const QString& charactor="panda",
+           const QString& name="", Dollars money=0, int order=0, const QString& path=":/fig/gb_panda.png");
+    //Player(const std::string& _name, Bank* _bank, Board* _board, QObject* parent = nullptr);
+    //Player(const Player& oth);
+    //Player(Player&& oth);
+    //Player& operator = (Player oth);
 
-    /**
-    move player forward by val amount
-    @param val spaces to move forward.  Can be negative.
+    /***
+    check player's money. doesn't allow modification.
+    @return gets playerMoney
     */
-    void move(int val);
+    int money() const;
 
-    /**
+    /*
     @return current board position of player
     */
     int getPos() const;
 
-	/**
-	buys property from another player 
-	
-//	@return true if other player accepts the deal.
-//	*/
-//	bool buyPropertyPlayer (?? ,Dollars price) // unsure of params/implementation for this one
-	
+    int getProp() const;
 
-    /**
-    attempts to buy property that player is currently on from bank.
-    return false if not enough money to purchase property.
-    */
-    bool buyPropertyBank();
+    int getHouse() const;
 
-    //swap for copy and swap idiom
-    friend void swap(Player& left, Player& right){
-        using std::swap;
+    int getHotel() const;
 
-        swap(left.bank, right.bank);
-        swap(left.board, right.board);
-        swap(left.boardPos, right.boardPos);
-        swap(left.playerMoney, right.playerMoney);
-        swap(left.interactor, right.interactor);
-        swap(left.name, right.name);
-    }
-private:
-    Bank* bank;
-    Board* board;
-	int boardPos; //position on board 
-	Dollars playerMoney; //stores player money
-	std::vector<Property*> playerProperties;
-    QInteractor* interactor;
-    std::string name;
-	
-};
-//
-//Player::QInteractor stuff
-//This class will allow a player to interact with QObjects without making it a QObject itself.
-//Unless set to false, each instance of player will generate a QInteractor upon its construction.
-class Player::QInteractor: public QObject {
-    Q_OBJECT
-public:
-    QInteractor(Player* _player);
+    QString getname()const;
 
-public slots:
-    void buyBankProp ();
-signals:
-    void buyPropFail();
+    QString getcharactor() const;
+
+    Movement* getmovement() const;
+
 
 private:
-    Player* player; //This QInteractor will control implement QInteractions with this player
-
+    QString charactor;
+    QString name;
+    Movement* movement;//
+    int property=0;
+    int house=0;
+    int hotel=0;
 
 };
 

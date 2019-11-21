@@ -1,6 +1,8 @@
 #include "welcomewindow.h"
+#include "dice.h"
 
-//Chuqi Bian
+
+//Yuxin Qian
 //Group members: Hao Zheng, Daniel Becerra, Yuxin Qian, Chuqi Bian
 //"I pledge that I have neither given nor received unauthorized assistance on this assignment."
 

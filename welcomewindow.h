@@ -1,6 +1,6 @@
 #ifndef WELCOMEWINDOW_H
 #define WELCOMEWINDOW_H
-#include <iostream>
+#include "statics.h"
 #include <QLineEdit>
 #include <QComboBox>
 #include <QStringList>
