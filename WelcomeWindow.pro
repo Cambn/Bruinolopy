@@ -20,6 +20,7 @@ SOURCES += \
     QLandingWindows.cpp \
     bank.cpp \
     board.cpp \
+    game.cpp \
     gameboard.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -27,12 +28,14 @@ SOURCES += \
     playerinfodisplay.cpp \
     property.cpp \
     subwindow.cpp \
+    tile.cpp \
     welcomewindow.cpp
 
 HEADERS += \
     QLandingWindows.h \
     bank.h \
     board.h \
+    game.h \
     gameboard.h \
     mainwindow.h \
     player.h \
