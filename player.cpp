@@ -14,8 +14,10 @@ Player::Player() : bank(nullptr), board(nullptr), boardPos(0),
     playerMoney(1500), playerProperties(),name() {}
 
 Player::Player(const QString &_name, const QString& _character, int turnNumber, Bank* _bank, Board* _board,  QWidget* parent):
-    QWidget(parent), bank(_bank), board(_board),  boardPos(0) ,
-    playerMoney(1500), playerProperties(), name(_name), charactor(_character),
+    QWidget(parent), bank(_bank),
+    board(_board),  boardPos(0) , playerMoney(1500),
+    playerProperties(),
+    name(_name), charactor(_character),
     movement(new Movement(*this, turnNumber, QString(":/fig/gb_" + _character + ".png")))
     {
 
