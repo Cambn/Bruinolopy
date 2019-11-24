@@ -60,8 +60,11 @@ void Movement::walkbydice(){
 }
 
 void Movement::one_step(){
-    if (step_walked<d->getresult()){
+    if (step_walked < d->getresult()){
+
         position+=1;
+        this->player->move(1);
+
         ImgRect ->setX(xAxis[position%12]);
         ImgRect ->setY(yAxis[position%12]);
         ImgRect->setHeight(height);
