@@ -2,19 +2,26 @@
 #include "bank.h"
 #include "property.h"
 #include "QLandingWindows.h"
+#include "gameManager.h"
 
 #include <QLabel>
 #include <string>
 
 class Board;
 
+
 Player::Player() : bank(nullptr), board(nullptr), boardPos(0),
     playerMoney(1500), playerProperties(),name() {}
 
-Player::Player(const std::string &_name, Bank* _bank, Board* _board, QObject* parent):
-    bank(_bank), board(_board),
-    boardPos(0) , playerMoney(1500), playerProperties(), name(_name)
-    {}
+Player::Player(const QString &_name, const QString& _character, int turnNumber, Bank* _bank, Board* _board,  QWidget* parent):
+    QWidget(parent), bank(_bank), board(_board),  boardPos(0) ,
+    playerMoney(1500), playerProperties(), name(_name), charactor(_character),
+    movement(new Movement(*this, turnNumber, QString(":/fig/gb_" + _character + ".png")))
+    {
+
+
+
+    }
 
 
 Player::Player(const Player& oth){
@@ -26,7 +33,7 @@ Player::Player(const Player& oth){
     name = oth.name;
 }
 
-Player::Player(Player&& oth):Player("",nullptr,nullptr){
+Player::Player(Player&& oth):Player("","",0,nullptr,nullptr){
     swap(*this, oth);
 }
 
@@ -75,8 +82,8 @@ bool Player::take(Player* target, int amt) {
 }
 
 bool Player::buyPropertyBank() {
-    Property* currProp = dynamic_cast<Property*>(board->getTile(boardPos));//cast curr tile that player is on to property type
-    if(playerMoney >= currProp->cost/* && currProp->owner == nullptr*/) {//if player has at least enough money to buy
+    Property* currProp = dynamic_cast<Property*>(getTile());//cast curr tile that player is on to property type
+    if(playerMoney >= currProp->cost && currProp->owner == nullptr) {//if player has at least enough money to buy and property unowned
         bank->take(*this, currProp->cost); //charge player for property
         playerProperties.push_back(currProp); //add to back of player's properties
         currProp->transfer(this);
@@ -93,6 +100,10 @@ Tile* Player::getTile() const {return board->getTile(this->getPos());}
 
 void Player::land()  {
     board->getTile(this->boardPos)->landingEvent(*this);
+}
+
+int Player::getTurnNumber() const {
+    return board->getGM()->findPlayerNum(*this);
 }
 
 //
@@ -116,6 +127,6 @@ void Player::buyBankProp() {
 }
 
 void Player::payRent() {
-    ownableTile* prop = dynamic_cast<ownableTile*> (board->getTile(getPos())); //prop is the tile the player is on.
+    ownableTile* prop = dynamic_cast<ownableTile*> (getTile()); //prop is the tile the player is on.
     prop->propOwner()->take(this, prop->currentRent()); //owner of the property that the curr player is on takes appropriate amount of money from curr player .
 }

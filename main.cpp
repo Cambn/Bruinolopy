@@ -1,9 +1,8 @@
-#include "bank.h"
-#include "board.h"
-#include "player.h"
-#include "property.h"
 #include "statics.h"
-#include "tile.h"
+
+
+#include "gameManager.h"
+#include "welcomewindow.h"
 
 
 #include <QApplication>
@@ -16,20 +15,14 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc,argv);
-    Board board;
-    Bank bank;
 
+        GameManager game ;
 
-     std::string name("jeff");
-     Player* jeff = new Player(name,&bank,&board) ;
-     Player* BIGMIKE= new Player("BIG MIKE",&bank, &board);
+        WelcomeWindow w;
+        w.show();
 
-
-     jeff->move(9);
-     BIGMIKE->move(9);
-
-    jeff->land();
-
+    game.players[0]->move(9);
+    game.players[0] -> land();
 
 
 

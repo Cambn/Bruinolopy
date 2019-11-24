@@ -20,10 +20,12 @@ SOURCES += \
     QLandingWindows.cpp \
     bank.cpp \
     board.cpp \
-    game.cpp \
+    dice.cpp \
+    gameManager.cpp \
     gameboard.cpp \
     main.cpp \
     mainwindow.cpp \
+    movement.cpp \
     player.cpp \
     playerinfodisplay.cpp \
     property.cpp \
@@ -35,9 +37,11 @@ HEADERS += \
     QLandingWindows.h \
     bank.h \
     board.h \
-    game.h \
+    dice.h \
+    gameManager.h \
     gameboard.h \
     mainwindow.h \
+    movement.h \
     player.h \
     playerinfodisplay.h \
     property.h \

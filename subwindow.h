@@ -22,7 +22,9 @@ public slots:
     void comfirm_num(int);
     void GoSettingPage2();
     void GoGameboard();
+
 friend WelcomeWindow;
+friend class GameManager;
 };
 
 #endif // SUBWINDOW_H

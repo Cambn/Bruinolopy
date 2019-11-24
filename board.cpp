@@ -1,5 +1,6 @@
 #include "board.h"
 #include "property.h"
+#include "gameManager.h"
 
 #include <string>
 #include <sstream>
@@ -11,7 +12,7 @@ Tile* Board::getTile(int boardPos)  {
     return tiles.at(boardPos);
 }
 
-Board::Board() : tiles(40,nullptr) {
+Board::Board(GameManager* gm) : tiles(40,nullptr), gameManager(gm) {
 //    std::fstream tileBuilder(":/properties/tileBuilder.txt");//open appropriate txt file
 //    bool check = tileBuilder.is_open();
 
@@ -82,3 +83,5 @@ bool Board::checkUtilitiesSameOwner() {
     //dynamic cast to utilities and pushing back into a temp vector then loop through temp to check if
     //owner of each element of temp is the same.
 }
+
+GameManager* Board::getGM() const {return gameManager;}

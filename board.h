@@ -3,14 +3,20 @@
 
 #include "tile.h"
 
+
 #include <vector>
 
+class GameManager;
+
+
 class Board {
+friend Player;
 		
 public:
-Board();
+Board(GameManager* gm = nullptr);
 
 Tile * getTile(int boardPos) ;
+GameManager* getGM()const;
 
 /**
 checks if both utilities are owned by same player
@@ -20,6 +26,8 @@ bool checkUtilitiesSameOwner();
 
 private:
 std::vector <Tile*> tiles;
+GameManager* gameManager;
+
 };
 
 #endif

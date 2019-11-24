@@ -5,7 +5,7 @@
 #include <string>
 #include <QObject>
 
-
+#include "movement.h"
 #include "board.h"
 
 using Dollars = int;
@@ -15,7 +15,7 @@ class Property;
 class Railroad;
 
 
-class Player : public QObject{
+class Player : public QWidget{
 Q_OBJECT
 	friend Bank;
     friend ownableTile;
@@ -25,7 +25,7 @@ Q_OBJECT
 
 public:
     Player();
-    Player(const std::string& _name, Bank* _bank, Board* _board, QObject* parent = nullptr);
+    Player(const QString& _name,const QString& _charcter, int turnNumber, Bank* _bank, Board* _board, QWidget* parent = nullptr);
 
     Player(const Player& oth);
     Player(Player&& oth);
@@ -81,6 +81,8 @@ public:
     */
     void land () ;
 
+    int getTurnNumber()const;
+
 
     //swap for copy and swap idiom
     friend void swap(Player& left, Player& right){
@@ -99,12 +101,16 @@ public slots:
 signals:
     void buyPropFail();
 private:
+
     Bank* bank;
     Board* board;
-	int boardPos; //position on board 
-	Dollars playerMoney; //stores player money
-    std::vector<ownableTile*> playerProperties;
-    std::string name;
+    int boardPos;
+    Dollars playerMoney;
+    std::vector<ownableTile*> playerProperties; //properties owned by player
+
+    QString name;
+    QString charactor;
+    Movement* movement;
 	
 };
 //

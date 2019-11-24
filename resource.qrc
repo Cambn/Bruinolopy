@@ -11,6 +11,27 @@
         <file>rules.png</file>
         <file>rules_bkgd.jpg</file>
         <file>setting_bkgd.jpg</file>
+        <file>yellowProperty.png</file>
+        <file>ScreenShot.png</file>
+        <file>redProperty.png</file>
+        <file>purpleProperty.png</file>
+        <file>orangeProperty.png</file>
+        <file>magentaProperty.png</file>
+        <file>lightBlueProperty.png</file>
+        <file>greybear.png</file>
+        <file>greenProperty.png</file>
+        <file>gb_polar bear.png</file>
+        <file>gb_panda.png</file>
+        <file>gb_grey bear.png</file>
+        <file>gb_brown bear.png</file>
+        <file>dice6.png</file>
+        <file>dice5.png</file>
+        <file>dice4.png</file>
+        <file>dice3.png</file>
+        <file>dice2.png</file>
+        <file>dice1.png</file>
+        <file>blueProperty.png</file>
+        <file>rolling.gif</file>
     </qresource>
     <qresource prefix="/sound">
         <file>welcomemusic.mp3</file>
