@@ -1,8 +1,13 @@
 #include "mainwindow.h"
 #include <QDebug>
 
-MainWindow::MainWindow(const Statics& stat,QWidget *parent, int i, const QStringList& n, const QStringList& ch )
-    : QMainWindow(parent),numofplayer(i),names(n),charactors(ch),s(stat),turn(0)
+MainWindow::MainWindow(const Statics& stat, int numPlayer,  const QStringList& n, const QStringList& ch , QWidget *parent )
+    : QMainWindow(parent),
+      names(n),
+      numofplayer(numPlayer),
+      charactors(ch),
+      s(stat),
+      turn(0)
 {
     //create the upper board /a map
     QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));

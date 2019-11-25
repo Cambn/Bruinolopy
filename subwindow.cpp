@@ -57,7 +57,7 @@ void subWindow::GoSettingPage2(){
 }
 
 void subWindow::GoGameboard(){
-    MainWindow* w=new MainWindow(Statics());
+    MainWindow* w=new MainWindow(Statics(), num_player);
     w->setFixedSize(1600,900);
     w->setWindowTitle("Bruinopoly");
     w->show();

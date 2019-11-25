@@ -28,7 +28,7 @@ public:
      * @stat: a statics class
      * @return a mainwindow */
 
-    MainWindow(const Statics& stat=Statics(), QWidget *parent = nullptr, int i=4, const QStringList& n={}, const QStringList& ch={});
+    MainWindow(const Statics& stat=Statics(),int i=4,  const QStringList& n={}, const QStringList& ch={}, QWidget *parent = nullptr );
     bool gameover();
     void infoupdate(int idx){
         playerArea->playerPixmap[idx]->setText("Character: "+playerArea->playerlist[idx]->getcharactor()+

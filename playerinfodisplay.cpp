@@ -13,7 +13,11 @@ PlayerInfoDisplay::~PlayerInfoDisplay(){
 
 
 PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent, int i, const QStringList& n, const QStringList& ch, const Statics& stat) :
-    QWidget(parent),numofplayer(i),names(n),charactors(ch),s(stat)
+    QWidget(parent),
+    numofplayer(i),
+    names(n),
+    charactors(ch),
+    s(stat)
 {
 
     //create a player pointer list
@@ -47,7 +51,7 @@ QLabel *PlayerInfoDisplay::createPlayerHeader(const QString &text){
 
 QLabel *PlayerInfoDisplay::createPlayerPixmap(Player* p){
     QLabel *label = new QLabel;
-    label->setText("Charactor: "+p->getcharactor()+
+    label->setText("Character: "+p->getcharactor()+
                    "\nMoney: "+QString::number(p->money())+
                    "\nProperties:"+QString::number(p->getProp())+
                    "\nHouses:"+QString::number(p->getHouse())+

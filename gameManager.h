@@ -34,6 +34,8 @@ public:
     GameBoard* gameBoard;
     std::vector<Player*> players; // stored in turn order !
 
+
+
 signals:
 
 
@@ -46,6 +48,13 @@ private :
 
     uint turnCount;
     bool shouldContinue;
+    /**
+    * will store all temporary QLandingWindows and other temporary windows and remove them when they are deleted.
+    * Destructor will delete each element of this list so that  if game ends unexpectedly, we can delete them all
+    * to prevent memory leaks by calling  ~GameManager
+    * in the appropriate Catch block.
+    */
+    std::list<QObject*> tempObjects;
 
 
 };

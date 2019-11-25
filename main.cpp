@@ -21,8 +21,6 @@ int main(int argc, char *argv[])
         WelcomeWindow w;
         w.show();
 
-    game.players[0]-> move(9);
-    game.players[0] -> land();
 
 
 
