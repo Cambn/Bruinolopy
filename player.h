@@ -8,19 +8,13 @@
 #include "movement.h"
 #include "board.h"
 
-using Dollars = int;
-
-class Bank;
-class Property;
-class Railroad;
-
 
 class Player : public QWidget{
 Q_OBJECT
-	friend Bank;
-    friend ownableTile;
-    friend Property;
-    friend Railroad;
+    friend class Bank;
+    friend class ownableTile;
+    friend class Property;
+    friend  class Railroad;
 
 
 public:
@@ -43,7 +37,7 @@ public:
 	@param amt to be paid 
 	@return true if pay successful
 	*/
-	bool pay(Player* payee, Dollars amt);
+    bool pay(Player* payee, int amt);
 	
 	/**
 	forcibly takes money from another player.  Can reduce their money to zero !!!
@@ -85,7 +79,7 @@ public:
     /**
     @return number of properties player owns
     */
-    int getProp() const { return playerProperties.size();}
+    size_t getProp() const { return playerProperties.size();}
 
     /**
     @return number of houses built
@@ -127,6 +121,11 @@ public:
 public slots:
     void buyBankProp ();
     void payRent ();
+
+    /**
+    moves the player via signal and then activates the new tile's landing event.
+    */
+    void go(int diceVal) {move(diceVal); land();}
 signals:
     void buyPropFail();
 private:
@@ -134,7 +133,7 @@ private:
     Bank* bank;
     Board* board;
     int boardPos;
-    Dollars playerMoney;
+    int playerMoney;
     std::vector<ownableTile*> playerProperties; //properties owned by player
 
     QString name;
@@ -142,25 +141,5 @@ private:
     Movement* movement;
 	
 };
-//
-//Player::QInteractor stuff
-//This class will allow a player to interact with QObjects without making it a QObject itself.
-//Unless set to false, each instance of player will generate a QInteractor upon its construction.
-//class Player::QInteractor: public QObject {
-//    Q_OBJECT
-//public:
-//    QInteractor(Player* _player);
-
-//public slots:
-//    void buyBankProp ();
-//    void payRent ();
-//signals:
-//    void buyPropFail();
-
-//private:
-//    Player* player; //This QInteractor will control implement QInteractions with this player
-
-
-//};
 
 #endif

@@ -90,6 +90,7 @@ private:
 class eventTile : public Tile {
 public:
 
+    void landingEvent(Player& ) override {};
 
     virtual ~eventTile() override = default;
 
