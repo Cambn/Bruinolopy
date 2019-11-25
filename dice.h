@@ -11,10 +11,12 @@ class Dice : public QWidget{
     Q_OBJECT
 public:
     Dice(QWidget * parent = nullptr);
+    ~Dice();
+
     int getresult(){return result;}
     QPushButton *next;
     QPushButton *rollStart;
-
+    QLabel* infobar;
 private slots:
      void roll_clicked();
      void dice_result_shown();

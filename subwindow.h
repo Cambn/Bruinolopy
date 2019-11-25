@@ -6,17 +6,24 @@
 #include "playerinfodisplay.h"
 #include <QApplication>
 
+class Statics;
 
 class subWindow : public QWidget{
     Q_OBJECT
+
 private:
     int num_player;
-    QVector<QString> names;
-    QVector<QString> charactors;
-    QVector<QComboBox*> Comboboxlist;
-    QVector<QString> token_list= {"Panda", "Brown Bear", "Polar Bear"};
+    QStringList names;
+    QStringList charactors;
+    QVector<QComboBox*> CBlist;
+    QVector<QLineEdit*> LElist;
+    QVector<QString> token_list= {"panda", "brown bear", "polar bear","grey bear"};
+    QVector<QComboBox*> firstCBlist;
 
 public:
+    explicit subWindow(QWidget *parent = nullptr);
+    Statics s;
+
 
 public slots:
     void comfirm_num(int);
@@ -24,7 +31,7 @@ public slots:
     void GoGameboard();
 
 friend WelcomeWindow;
-friend class GameManager;
+friend GameManager;
 };
 
 #endif // SUBWINDOW_H

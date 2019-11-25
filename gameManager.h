@@ -9,7 +9,7 @@
 
 #include "player.h"
 
-
+class Statics;
 class Bank;
 class Board;
 class subWindow;
@@ -20,7 +20,7 @@ class GameManager : public QObject
 public:
      GameManager(QObject *parent = nullptr);
 
-    GameManager(const subWindow& settingsInfo, QObject* parent = nullptr);
+    GameManager(const subWindow& settingsInfo,const Statics& , QObject* parent = nullptr);
 
     /**
     returns turn number of player in question

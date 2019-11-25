@@ -92,7 +92,7 @@ void WelcomeWindow::GoSettingPage(){
     QFont labelfont("Times",20);
 
     QHBoxLayout *layout1 = new QHBoxLayout;
-    QLabel *lb = new QLabel("Plese choose the number of players: ");
+    QLabel *lb = new QLabel("Please choose the number of players: ");
     lb->setFont(labelfont);
     QSpinBox *spinBox_num = new QSpinBox;
     spinBox_num->setRange(2,4);
@@ -101,22 +101,22 @@ void WelcomeWindow::GoSettingPage(){
     QObject::connect(spinBox_num, SIGNAL(valueChanged(int)), game_setup, SLOT(comfirm_num(int)));
 
     QHBoxLayout *layout2 = new QHBoxLayout;
-    QLabel *lb2 = new QLabel("Plese choose the maximun number of money existed: ");
+    QLabel *lb2 = new QLabel("Please select total currency in circulation: ");
     lb2->setFont(labelfont);
     QComboBox *c1 = new QComboBox;
-    c1->addItem("100000");
-    c1->addItem("200000");
-    c1->addItem("300000");
+    c1->addItem("20580 (Default)");
+    c1->addItem("10000");
+    c1->addItem("30000");
     layout2->addWidget((lb2));
     layout2->addWidget((c1));
 
     QHBoxLayout *layout3 = new QHBoxLayout;
-    QLabel *lb3 = new QLabel("Plese choose the maximun number of house allowed: ");
+    QLabel *lb3 = new QLabel("Please select total number of houses houses that can be built ");
     lb3->setFont(labelfont);
     QComboBox *c2 = new QComboBox;
-    c2->addItem("40");
-    c2->addItem("80");
-    c2->addItem("120");
+    c2->addItem("32 (Default)");
+    c2->addItem("20");
+    c2->addItem("48");
     layout3->addWidget((lb3));
     layout3->addWidget((c2));
 

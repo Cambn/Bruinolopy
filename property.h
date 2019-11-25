@@ -70,7 +70,7 @@ private:
 	//costs
 	int cost;
 	int houseCost;
-	//rent prices with rent[0] being base rent and rent [5] being rent w/ hotel
+    //rent prices with rent[0] being base rent, rents[1] being rent w/ one house, and rent [5] being rent w/ hotel
 	int rents[6];
 
 

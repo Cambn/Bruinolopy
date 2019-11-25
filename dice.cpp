@@ -1,21 +1,32 @@
-
 #include "dice.h"
+Dice::~Dice(){
+    delete animation;
+    delete animatedisplay;
+    delete next;
+    delete rollStart;
+}
 
 
 Dice::Dice(QWidget *parent) : QWidget(parent){
    setFixedSize(300,140);
+   infobar= new QLabel(this);
+   infobar->setFixedSize(300,50);
    rollStart = new QPushButton("Roll",this);
-   rollStart->setFixedSize(100,100);
+   rollStart->setFixedSize(100,90);
    animation = new QMovie(":/dice/rolling.gif");
    animatedisplay = new QLabel(this);
-   animatedisplay->setFixedSize(160,100);
+   animatedisplay->setFixedSize(100,90);
    next = new QPushButton("Next",this);
-   next->setFixedSize(100,100);
+   next->setFixedSize(100,90);
    QObject::connect(rollStart, SIGNAL(clicked()), this, SLOT(roll_clicked()));
    QHBoxLayout* mainlayout=new QHBoxLayout(this);
    mainlayout->addWidget(rollStart);
    mainlayout->addWidget(next);
    mainlayout->addWidget(animatedisplay);
+   QVBoxLayout* anotherlyt=new QVBoxLayout(this);
+   anotherlyt->addWidget(infobar);
+   anotherlyt->addLayout(mainlayout);
+   setLayout(anotherlyt);
    show();
    next->hide();
 }

@@ -1,6 +1,8 @@
 #include "subwindow.h"
 #include "gameboard.h"
 
+subWindow::subWindow(QWidget* parent): QWidget(parent) {}
+
 
 void subWindow::comfirm_num(int _num){
     num_player = _num;
@@ -18,6 +20,7 @@ void subWindow::GoSettingPage2(){
     window2->setPalette(p);
     window2->comfirm_num(num_player);
     QVBoxLayout *layout = new QVBoxLayout;
+
     for (int a = 0 ; a < window2->num_player ; ++a){
         QVBoxLayout *layout2 = new QVBoxLayout;
         QFont labelfont("Times",15);
@@ -29,7 +32,7 @@ void subWindow::GoSettingPage2(){
         combobox->setMaximumSize(200,50);
         txt->setMaximumSize(300,50);
         ok->setMaximumSize(100,50);
-        Comboboxlist.append(combobox);
+        CBlist.append(combobox);
         combobox->addItem(QIcon(":/fig/panda.png"),"Panda");
         combobox->addItem(QIcon(":/fig/brownbear.png"),"Brown Bear");
         combobox->addItem(QIcon(":/fig/polarbear.png"),"Polar Bear");
@@ -54,7 +57,7 @@ void subWindow::GoSettingPage2(){
 }
 
 void subWindow::GoGameboard(){
-    MainWindow* w=new MainWindow;
+    MainWindow* w=new MainWindow(Statics());
     w->setFixedSize(1600,900);
     w->setWindowTitle("Bruinopoly");
     w->show();

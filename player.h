@@ -25,7 +25,7 @@ Q_OBJECT
 
 public:
     Player();
-    Player(const QString& _name,const QString& _charcter, int turnNumber, Bank* _bank, Board* _board, QWidget* parent = nullptr);
+    Player(const QString& _name,const QString& _charcter, int turnNumber, int startingAmount, Bank* _bank, Board* _board, QWidget* parent = nullptr);
 
     Player(const Player& oth);
     Player(Player&& oth);
@@ -72,7 +72,7 @@ public:
 
     /**
     attempts to buy property that player is currently on from bank.
-    return false if not enough money to purchase property.
+    @return false if not enough money to purchase property.
     */
     bool buyPropertyBank();
 
@@ -82,6 +82,35 @@ public:
     void land () ;
 
     int getTurnNumber()const;
+    /**
+    @return number of properties player owns
+    */
+    int getProp() const { return playerProperties.size();}
+
+    /**
+    @return number of houses built
+    */
+    int getHouse() const;
+
+    /**
+    @return number of hotels built
+    */
+    int getHotel() const;
+
+    /**
+    @return character of player
+    */
+    QString getcharactor() const {return charactor;}
+
+    /**
+    @return movement component of player
+    */
+    Movement* getmovement() const {return movement;}
+
+    /**
+    @return name of player
+    */
+    QString getname() const {return name;}
 
 
     //swap for copy and swap idiom
