@@ -20,8 +20,9 @@ Movement::Movement(QWidget *parent,int order, int money, QString address) :
 }
 
 Movement::Movement( Player& _player,int turnNumber, const QString& address, QWidget *parent) :
-    QWidget(parent), player(&_player),
-    d(new Dice(this)),
+    QWidget(parent),
+    d(nullptr),
+    player(&_player),
     Img(new QPixmap(address)),
     position(player->getPos()),
     money(player->money()),
@@ -54,6 +55,8 @@ void Movement::walkbydice(){
     if(position/12<(position+d->getresult())/12){
         money+=1000;
     }
+
+
     timer=new QTimer(this);
     timer->start(250);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(one_step()));
@@ -64,7 +67,7 @@ void Movement::one_step(){
     if (step_walked < d->getresult()){
 
         position+=1;
-        this->player->move(1);
+
 
         ImgRect ->setX(xAxis[position%12]);
         ImgRect ->setY(yAxis[position%12]);
@@ -72,6 +75,7 @@ void Movement::one_step(){
         ImgRect->setWidth(width);
         repaint();
         step_walked++;
+
     }
     else
     {

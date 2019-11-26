@@ -114,6 +114,11 @@ public:
     QString getname() const {return name;}
 
     /**
+    Activates Movement's walkbydice fxn
+    */
+    void walkbydice() {movement->walkbydice();}
+
+    /**
     sets player hasLost to true;
     */
     void kill() {hasLost= true; }

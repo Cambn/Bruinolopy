@@ -8,44 +8,6 @@
 #include <algorithm >
 
 
-//MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStringList& ch, const Statics& stat)
-//    : QMainWindow(parent),numofplayer(i),names(n),charactors(ch),s(stat)
-//{
-//    //create the upper board /a map
-//    QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));
-//    boardArea = new GameBoard(boardGroupBox);
-//    QVBoxLayout *boardLayout = new QVBoxLayout(boardGroupBox);
-//    boardLayout ->addWidget(boardArea);
-
-//    //create the lower board /an info section
-//    QGroupBox *playerGroupBox = new QGroupBox(tr("Player"));
-//    playerArea = new PlayerInfoDisplay(playerGroupBox,numofplayer,names,charactors,s);
-
-//    //set layout
-//    QWidget *centralWidget = new QWidget(this);
-//    setCentralWidget(centralWidget);
-//    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-//    mainLayout ->addWidget(boardGroupBox);
-//    QHBoxLayout *playerLayout = new QHBoxLayout(playerGroupBox);
-//    playerLayout ->addWidget(playerArea);
-//    mainLayout ->addWidget(playerGroupBox);
-
-//    //test movement
-
-//    for (int i=0; i<numofplayer;i++){
-//        playerArea->playerlist[i]->getmovement()->d=maindice;
-//        playerArea->playerlist[i]->getmovement()->setParent(boardArea);
-//    }
-//    QHBoxLayout *dicelayout = new QHBoxLayout;
-//    dicelayout->addWidget(maindice);
-//    playerLayout->addLayout(dicelayout);
-
-//    QObject::connect(maindice->next,SIGNAL(clicked()),playerArea->playerlist[0]->getmovement(),SLOT(walkbydice()));
-
-
-//    //QObject::connect(panda->d->next,SIGNAL(clicked()),this,SLOT(updateinfo()));
-//}
-
 MainWindow::MainWindow(const int numPlayers, const QStringList& _names, const QStringList& _characters, const Statics& _static, QWidget* parent):
 QMainWindow(parent),
 board(new Board (this)),               //create board
@@ -87,7 +49,7 @@ mainLayout ->addWidget(playerGroupBox);
 //test movement
 
 for (size_t i=0; i<players.size(); ++i) {
-    players.at(i) ->setDice(maindice,true);
+    players.at(i) ->setDice(maindice);
     (players.at(i)->getmovement())-> setParent(boardArea);
 }
 
@@ -104,66 +66,44 @@ QObject::connect(maindice->next,SIGNAL(clicked()),this,SLOT(playerwalk()));
 //void MainWindow::gameStart(){}
 
 void MainWindow::playerwalk(){
-    {
-    size_t numofplayer=players.size();
+    int currTurn = turn% players.size();
     if(!gameover())
     {
-        if(looserlist[turn%numofplayer]==1){
+        if(players[currTurn]->isDefeated()){
             turn+=1;
-            playerwalk();}
-        else
-            {playerArea->players[turn%numofplayer]->getmovement()->walkbydice();//turn()
-            players[turn&numofplayer]->land();
-
+            playerwalk();
+        }
+        else{
+            players[currTurn]->walkbydice();//turn()
             turn+=1;
         }
 
     }
-    else //gameover
-    {
-        int winner=0;
-        for (int i=0; i<4; i++)
-        {if(!looserlist[i]){
-                winner=i;
+    else { //gameover
+        for(Player* player: players) { //for the players
+            if (!player->isDefeated()){ //if not yet defeated
+                maindice->infobar->setText("Game is over.\n"+player->getname()+" wins.");
+                repaint();
                 break;
-            }}
-        maindice->infobar->setText("Game is over.\n"+players[winner]->getname()+" wins.");
-        repaint();
-        return;}
+            }
+        }
     }
 }
 
+
 bool MainWindow::gameover(){
     int temp=0;
-    for (int i=0; i<restnum; i++)
+    for (Player* player : players)
     {
-        if (players[i]->money()>0)
-            temp+=1;
+       if(! (player->isDefeated())){
+           ++temp;
+       }
     }
-    restnum=temp;
     if(temp==1)
         return true;
     else
         return false;
 }
-
-//void MainWindow::actionupdate(int idx){
-//    //int position=playerArea->playerlist[idx]->getPos()%12;
-//    //if(position%12==index of chance card){
-//        chancecard->conduct_change(playerArea->players[idx]);
-//        qDebug()<<"after run chancecard conduct change";
-//    //}
-//}
-
-
-/*
-void MainWindow::updateinfo(){
-    for(int column = 0; column<numofplayer;++column){
-        playerArea->playerPixmap[column] = playerArea->createPlayerPixmap(playerArea->playerlist[column]);
-        update();
-    }
-}
-*/
 
 
 void MainWindow::addTempObject(QObject* temp) {
@@ -182,3 +122,57 @@ bool MainWindow::eraseTempObject(QObject* temp) {
  }
 
 
+//void MainWindow::actionupdate(int idx){
+//    //int position=playerArea->playerlist[idx]->getPos()%12;
+//    //if(position%12==index of chance card){
+//        chancecard->conduct_change(playerArea->players[idx]);
+//        qDebug()<<"after run chancecard conduct change";
+//    //}
+//}
+
+
+/*
+void MainWindow::updateinfo(){
+    for(int column = 0; column<numofplayer;++column){
+        playerArea->playerPixmap[column] = playerArea->createPlayerPixmap(playerArea->playerlist[column]);
+        update();
+    }
+}
+*/
+//MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStringList& ch, const Statics& stat)
+//    : QMainWindow(parent),numofplayer(i),names(n),charactors(ch),s(stat)
+//{
+//    //create the upper board /a map
+//    QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));
+//    boardArea = new GameBoard(boardGroupBox);
+//    QVBoxLayout *boardLayout = new QVBoxLayout(boardGroupBox);
+//    boardLayout ->addWidget(boardArea);
+
+//    //create the lower board /an info section
+//    QGroupBox *playerGroupBox = new QGroupBox(tr("Player"));
+//    playerArea = new PlayerInfoDisplay(playerGroupBox,numofplayer,names,charactors,s);
+
+//    //set layout
+//    QWidget *centralWidget = new QWidget(this);
+//    setCentralWidget(centralWidget);
+//    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+//    mainLayout ->addWidget(boardGroupBox);
+//    QHBoxLayout *playerLayout = new QHBoxLayout(playerGroupBox);
+//    playerLayout ->addWidget(playerArea);
+//    mainLayout ->addWidget(playerGroupBox);
+
+//    //test movement
+
+//    for (int i=0; i<numofplayer;i++){
+//        playerArea->playerlist[i]->getmovement()->d=maindice;
+//        playerArea->playerlist[i]->getmovement()->setParent(boardArea);
+//    }
+//    QHBoxLayout *dicelayout = new QHBoxLayout;
+//    dicelayout->addWidget(maindice);
+//    playerLayout->addLayout(dicelayout);
+
+//    QObject::connect(maindice->next,SIGNAL(clicked()),playerArea->playerlist[0]->getmovement(),SLOT(walkbydice()));
+
+
+//    //QObject::connect(panda->d->next,SIGNAL(clicked()),this,SLOT(updateinfo()));
+//}

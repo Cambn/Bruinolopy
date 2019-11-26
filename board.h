@@ -2,15 +2,15 @@
 #define _BOARD_
 
 #include "tile.h"
-
+#include "chancecard.h"
 
 #include <vector>
 
 class MainWindow;
 
-
 class Board {
 friend Player;
+friend class ChanceTile;
 		
 public:
 Board(MainWindow* game);
@@ -22,6 +22,7 @@ Tile * getTile(int boardPos) ;
 
 private:
 std::vector <Tile*> tiles;
+std::vector <ChanceCard*> chanceCards;
 
 };
 

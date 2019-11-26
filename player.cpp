@@ -108,13 +108,10 @@ void Player::setDice (Dice* newDice, bool deleteOld) {
     if (deleteOld) { //if you wanna delete old
         delete (this->getmovement()->d); //do it
     }
-    this->getmovement()->d = newDice;
+    this->getmovement()->d = newDice;//playerArea->playerlist[i]->getmovement()->d=maindice
 
 }
 
-//int Player::getTurnNumber() const {
-//    return board->getGM()->findPlayerNum(*this);
-//}
 
 int Player::getHouse()  const {
     int count = 0;

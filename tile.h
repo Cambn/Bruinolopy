@@ -13,7 +13,7 @@ public:
     friend class Board;
 
     Tile ()            : tileNumber(0)         {}
-    Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board)  {}
+    Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board), game(_game)  {}
 
 	
     //all comparisons just compare the tile number.  so we can sort tiles, if necessary.
@@ -90,7 +90,7 @@ private:
 
 class eventTile : public Tile {
 public:
-
+    eventTile (int _tileNum, Board* _board, MainWindow* _game): Tile(_tileNum, _board, _game) {}
     void landingEvent(Player& ) override {}
 
     virtual ~eventTile() override = default;

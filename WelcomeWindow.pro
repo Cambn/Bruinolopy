@@ -20,6 +20,7 @@ SOURCES += \
     QLandingWindows.cpp \
     bank.cpp \
     board.cpp \
+    chancecard.cpp \
     dice.cpp \
     gameboard.cpp \
     main.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     QLandingWindows.h \
     bank.h \
     board.h \
+    chancecard.h \
     dice.h \
     gameboard.h \
     mainwindow.h \

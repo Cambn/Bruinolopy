@@ -29,7 +29,7 @@ public:
     void resizeEvent(QResizeEvent *evt);
     explicit WelcomeWindow(QWidget *parent = nullptr);
 
-    ~WelcomeWindow(){delete rule;delete record;delete game_setup;}
+    ~WelcomeWindow();
 
 private:
     QPushButton* sound;

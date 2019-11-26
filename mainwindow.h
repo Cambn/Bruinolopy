@@ -70,7 +70,7 @@ public slots:
 private:
     int restnum;
     int turn;
-    int looserlist[4]={0,0,0,0};
+
 
     //visual elements
     GameBoard *boardArea;
@@ -79,9 +79,10 @@ private:
 
     //data fields
     Board* board;
-    Bank* bank;
     std::vector<Player*> players;
 
     std::list<QObject*> tempObjects;
+public:
+    Bank* bank;
 };
 #endif // MAINWINDOW_H

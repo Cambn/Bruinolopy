@@ -47,4 +47,8 @@
         <file>yellowProperty.png</file>
         <file>tileBuilder.txt</file>
     </qresource>
+    <qresource prefix="/">
+        <file>chance_deco.png</file>
+        <file>chancecard.png</file>
+    </qresource>
 </RCC>

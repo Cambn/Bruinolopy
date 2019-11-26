@@ -204,3 +204,4 @@ p.setBrush(QPalette::Background, bkgnd);
 setPalette(p);
 }
 
+WelcomeWindow::~WelcomeWindow(){delete rule;delete record;delete game_setup;}
