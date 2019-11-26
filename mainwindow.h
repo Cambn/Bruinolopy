@@ -6,11 +6,16 @@
 #include <QMainWindow>
 #include <QGroupBox>
 #include <QBoxLayout>
+
+#include <vector>
+
 #include "gameboard.h"
 #include "playerinfodisplay.h"
 #include "movement.h"
 #include "statics.h"
 #include "dice.h"
+
+class Player;
 
 //the MainWindow class controls and stores all the element in the mainwindow
 
@@ -28,33 +33,55 @@ public:
      * @stat: a statics class
      * @return a mainwindow */
 
-    MainWindow(const Statics& stat=Statics(),int i=4,  const QStringList& n={}, const QStringList& ch={}, QWidget *parent = nullptr );
+    MainWindow(QWidget *parent = nullptr,
+               int i=4,
+               const QStringList& n={},
+               const QStringList& ch={},
+               const Statics& stat=Statics());
+
+    MainWindow(int numPlayers,
+               const QStringList& _names,
+               const QStringList& _characters,
+               const Statics& _static = Statics(),
+               QWidget* = nullptr);
+
+
+
+    /**
+    adds an object to temp objects
+    @param temp will be inserted at end of tempObjects
+    */
+    void addTempObject(QObject* temp);
+
+    /**
+    erases a specified QObject in tempObjects
+    @param object we wanna delete
+    @return true if object erased.
+    */
+    bool eraseTempObject(QObject* temp);
+
     bool gameover();
-    void infoupdate(int idx){
-        playerArea->playerPixmap[idx]->setText("Character: "+playerArea->playerlist[idx]->getcharactor()+
-                       "\nMoney: "+QString::number(playerArea->playerlist[idx]->money())+
-                       "\nProperties:"+QString::number(playerArea->playerlist[idx]->getProp())+
-                       "\nHouses:"+QString::number(playerArea->playerlist[idx]->getHouse())+
-                       "\nHotels:"+QString::number(playerArea->playerlist[idx]->getHotel()));
-        update();
-    }
     void gameStart();
 
 public slots:
+   // void actionupdate(int idx);
     void playerwalk();
 
 private:
-    GameBoard *boardArea;
-    PlayerInfoDisplay *playerArea;
-
-
-    QStringList names;
-    QStringList charactors;
-    Statics s;
-    Dice* maindice=new Dice(this);
-
-    int numofplayer;
+    int restnum;
     int turn;
     int looserlist[4]={0,0,0,0};
+
+    //visual elements
+    GameBoard *boardArea;
+    PlayerInfoDisplay *playerArea;
+    Dice* maindice=new Dice();
+
+    //data fields
+    Board* board;
+    Bank* bank;
+    std::vector<Player*> players;
+
+    std::list<QObject*> tempObjects;
 };
 #endif // MAINWINDOW_H

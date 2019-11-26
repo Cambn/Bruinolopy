@@ -75,7 +75,13 @@ public:
     */
     void land () ;
 
-    int getTurnNumber()const;
+    /**
+    sets player's movement's dice to designated Dice.
+    Deletes old dice for memory managment, if desired.
+    @param Dice will become player's dice
+    */
+    void setDice(Dice* newDice, bool deleteOld = false);
+
     /**
     @return number of properties player owns
     */
@@ -99,12 +105,37 @@ public:
     /**
     @return movement component of player
     */
-    Movement* getmovement() const {return movement;}
+    Movement* getmovement()  {
+        return movement;}
 
     /**
     @return name of player
     */
     QString getname() const {return name;}
+
+    /**
+    sets player hasLost to true;
+    */
+    void kill() {hasLost= true; }
+
+    /**
+    checks if hasLost is true;
+    @return : equal to hasLost
+    */
+    bool isDefeated() const {return (hasLost);}
+
+    /**
+    adds an object to temp objects
+    @param temp will be inserted at end of tempObjects
+    */
+    void addTempObject(QObject* temp);
+
+    /**
+    erases a specified QObject in tempObjects
+    @param object we wanna delete
+    @return true if object erased.
+    */
+    bool eraseTempObject(QObject* temp);
 
 
     //swap for copy and swap idiom
@@ -134,7 +165,10 @@ private:
     Board* board;
     int boardPos;
     int playerMoney;
+    bool hasLost;
+
     std::vector<ownableTile*> playerProperties; //properties owned by player
+    std::list<QObject*> tempObjects;
 
     QString name;
     QString charactor;

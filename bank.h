@@ -16,10 +16,7 @@ public:
 
 friend Property;
 
-Bank() {}
-//	moneyRemaining (Statics::getMONEY_MAX()- (Statics::getSTARTING_AMOUNT() * players.size())),
-//    housesRemaining(Statics::getHOUSES_MAX()),
-//	hotelsRemaining(Statics::getHOTELS_MAX())
+Bank(const Statics& seed, const size_t numPlayers);
 
 
 /**

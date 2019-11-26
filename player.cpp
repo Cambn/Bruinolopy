@@ -2,7 +2,7 @@
 #include "bank.h"
 #include "property.h"
 #include "QLandingWindows.h"
-#include "gameManager.h"
+
 
 #include <QLabel>
 #include <string>
@@ -104,9 +104,17 @@ void Player::land()  {
     board->getTile(this->boardPos)->landingEvent(*this);
 }
 
-int Player::getTurnNumber() const {
-    return board->getGM()->findPlayerNum(*this);
+void Player::setDice (Dice* newDice, bool deleteOld) {
+    if (deleteOld) { //if you wanna delete old
+        delete (this->getmovement()->d); //do it
+    }
+    this->getmovement()->d = newDice;
+
 }
+
+//int Player::getTurnNumber() const {
+//    return board->getGM()->findPlayerNum(*this);
+//}
 
 int Player::getHouse()  const {
     int count = 0;
@@ -134,6 +142,22 @@ int Player::getHotel() const  {
     }
     return count;
 }
+
+void Player::addTempObject(QObject* temp) {
+    tempObjects.push_back(temp);
+}
+
+
+bool Player::eraseTempObject(QObject* temp) {
+    for (auto iter = tempObjects.begin(); iter != tempObjects.begin(); ++iter){ //manual ranged for loop
+        if (*iter == temp){//if we find temp
+           tempObjects.erase(iter); //erase it
+           return true;//to signal success
+         }
+     }
+    return false; //fail if we can't find removeTempObject;
+ }
+
 //
 //
 // slots
@@ -143,11 +167,11 @@ int Player::getHotel() const  {
 void Player::buyBankProp() {
     if(buyPropertyBank()){//able to buy property
     QLandNoOptions* successMessage = new QLandNoOptions(playerProperties.back()->generateView(), //newest property will be at back of player's properties
-                                                        "Property purchased!") ;
+                                                         "Property purchased!",this) ;
     }
     else {
     QLandNoOptions* failureMessage= new QLandNoOptions((board->getTile(getPos()))->generateView(),
-                                                       "Unable to purchase property (:/)");
+                                                       "Unable to purchase property (:/)", this);
         emit buyPropFail();
     }
 

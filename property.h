@@ -24,7 +24,7 @@ public:
     for use for building a property from a line of "tileBuilder.txt"
     @param formattedLine properly formatted line from tileBuilder.txt
     */
-    Property(const std::string& formattedLine, Board* _board);
+    Property(const std::string& formattedLine, Board* _board, MainWindow* game);
 
 
     Property(const Property& oth) = default;
@@ -99,7 +99,7 @@ utilities aka water company and electric company from regular game.
 
 class Utility : public ownableTile {
 public:
-Utility(const std::string& formattedLine, Board* _board);
+Utility(const std::string& formattedLine, Board* _board, MainWindow* game);
 
 
 
@@ -118,7 +118,7 @@ Railroad properties from regular game.  We will have 3.
 */
 class Railroad : public ownableTile {
 public:
-    Railroad(const std::string& formattedLine, Board* _board);
+    Railroad(const std::string& formattedLine, Board* _board, MainWindow* game);
 
     /**
     checks how many Railroads owner has to calculate rent.

@@ -3,6 +3,7 @@
 
 #include <string>
 
+class MainWindow;
 class Player;
 class QWidget;
 
@@ -12,7 +13,7 @@ public:
     friend class Board;
 
     Tile ()            : tileNumber(0)         {}
-    Tile (int _tileNum, Board* _board): tileNumber(_tileNum), board(_board)  {}
+    Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board)  {}
 
 	
     //all comparisons just compare the tile number.  so we can sort tiles, if necessary.
@@ -41,7 +42,7 @@ protected:
 
 	int tileNumber;
     Board* board;
-
+    MainWindow* game;
 
 };
 
@@ -54,7 +55,7 @@ class ownableTile : public Tile {
 
 public:
 
-    ownableTile(int _tileNum, Board* _board);
+    ownableTile(int _tileNum, Board* _board, MainWindow* _game);
 
     virtual void landingEvent( Player& currPlayer) override;
 
@@ -90,7 +91,7 @@ private:
 class eventTile : public Tile {
 public:
 
-    void landingEvent(Player& ) override {};
+    void landingEvent(Player& ) override {}
 
     virtual ~eventTile() override = default;
 

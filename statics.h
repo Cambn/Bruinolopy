@@ -16,16 +16,16 @@ public:
     int _starting_amount =1500,
 	int _houses_max= 32,
     int _hotels_max = 12
-            )
+     )
     {MONEY_MAX=_money_max;
      HOUSES_MAX=_houses_max;
      HOTELS_MAX=_hotels_max;
      STARTING_AMOUNT=_starting_amount;}
 	
-    int getMONEY_MAX (){return MONEY_MAX;}
-    int getHOUSES_MAX (){return HOUSES_MAX;}
-    int getHOTELS_MAX (){return HOTELS_MAX;}
-    int getSTARTING_AMOUNT() {return STARTING_AMOUNT;}
+    int getMONEY_MAX () const {return MONEY_MAX;}
+    int getHOUSES_MAX ()const {return HOUSES_MAX;}
+    int getHOTELS_MAX ()const {return HOTELS_MAX;}
+    int getSTARTING_AMOUNT() const {return STARTING_AMOUNT;}
 		
 };
 

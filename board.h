@@ -6,27 +6,22 @@
 
 #include <vector>
 
-class GameManager;
+class MainWindow;
 
 
 class Board {
 friend Player;
 		
 public:
-Board(GameManager* gm = nullptr);
+Board(MainWindow* game);
 
 Tile * getTile(int boardPos) ;
-GameManager* getGM()const;
+//GameManager* getGM()const;
 
-/**
-checks if both utilities are owned by same player
-for use calculating rent paid when landing on a utility tile.
-*/
-bool checkUtilitiesSameOwner();
+
 
 private:
 std::vector <Tile*> tiles;
-GameManager* gameManager;
 
 };
 

@@ -5,12 +5,17 @@
 
 #include <string>
 
+class MainWindow;
 class QGridLayout;
+
+
+
 
 /**
 Base class for my custom popup windows.
 Stores a gridlayout and a QWidget.
 Displays QWidget in 0,0 of GridLayout.
+Registers window to tempObjects in a mainWindow for memory management.
 */
 class QLandingWindow: public QWidget {
 Q_OBJECT
@@ -18,18 +23,21 @@ Q_OBJECT
 
 public: 
 
-QLandingWindow(QWidget* parent = nullptr);
+QLandingWindow(QObject* _game, QWidget* parent = nullptr);
 
-QLandingWindow(QWidget* _mainWidget, QWidget* parent = nullptr);
+QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* parent = nullptr);
 
 
-virtual ~QLandingWindow() =default;
+virtual ~QLandingWindow();
 
 protected:
 
 QGridLayout* layout;
 QWidget* mainWidget;
 
+
+private:
+QObject* game;
 
 
 };
@@ -44,6 +52,7 @@ class QLandingOptions : public QLandingWindow {
 public :
     QLandingOptions(QWidget* _mainWidget,
                     const QString& _prompt,
+                    QObject* _game,
                     const QString& leftOpt = "Yes",
                     const QString& rightOpt= "No",
                     QWidget* parent = nullptr);
@@ -52,8 +61,7 @@ public :
     QPushButton* getLeft() const{return left;  }
     QPushButton* getRight()const{return right; }
 
-//    void paintEvent(QPaintEvent* ) override;
-
+    ~QLandingOptions() override;
 private:
     QLabel* prompt;
     QPushButton* left;
@@ -69,8 +77,11 @@ class QLandNoOptions: public QLandingWindow {
 public:
     QLandNoOptions(QWidget* _mainWidget,
                    const QString& _message,
+                   QObject* _game,
                    const QString& buttonText= "Okay",
                    QWidget* parent = nullptr);
+
+    ~QLandNoOptions() override;
 
 private:
     QLabel* message;

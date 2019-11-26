@@ -3,41 +3,23 @@
 #include "board.h"
 #include "bank.h"
 
-PlayerInfoDisplay::~PlayerInfoDisplay(){
-    delete mainLayout;
-    int a=playerPixmap.length();
-    for (int i=0;i<a;i++){
-        delete playerPixmap[i];
-        delete playerlist[i];}
-}
 
-
-PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent, int i, const QStringList& n, const QStringList& ch, const Statics& stat) :
-    QWidget(parent),
-    numofplayer(i),
-    names(n),
-    charactors(ch),
-    s(stat)
+PlayerInfoDisplay::PlayerInfoDisplay( std::vector <Player*>  _players, QWidget* parent) :
+    QWidget(parent), numofplayer(_players.size()),
+    players(std::move(_players))
 {
-
-    //create a player pointer list
-    playerlist.resize(numofplayer);
-    for (int i=0; i<numofplayer;i++){
-
-        Player* p= new Player (names[i],charactors[i],i,s.getSTARTING_AMOUNT(),new Bank(),new Board());
-        playerlist[i]=p;
-    }
-
-
     playerPixmap.resize(numofplayer);
     mainLayout = new QGridLayout(this);
     for(int column = 0; column<numofplayer;++column){
-        mainLayout ->addWidget(createPlayerHeader(names[column]), 0, column+1);
-        playerPixmap[column] = createPlayerPixmap(playerlist[column]);
+        mainLayout ->addWidget(createPlayerHeader(players[column]->getname()), 0, column+1); //names
+        playerPixmap[column] = createPlayerPixmap(players[column]);
         mainLayout ->addWidget(playerPixmap[column], 1, column+1);
     }
 
+
+
 }
+
 
 
 
@@ -68,3 +50,44 @@ QLabel *PlayerInfoDisplay::createPlayerPixmap(Player* p){
     label ->setMinimumSize(130,60);
     return label;
 }
+
+PlayerInfoDisplay::~PlayerInfoDisplay(){
+    delete mainLayout;
+    int a=playerPixmap.length();
+    for (int i=0;i<a;i++){
+        delete playerPixmap[i];
+        }
+    //dont delete players[i] players is shallow copy of players in MainWindow.
+}
+
+//
+//
+//old stuff
+//
+//
+//PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent, int i, const QStringList& n, const QStringList& ch, const Statics& stat) :
+//    QWidget(parent),
+//    numofplayer(i),
+//    names(n),
+//    charactors(ch),
+//    s(stat)
+//{
+
+//    //create a player pointer list
+//    playerlist.resize(numofplayer);
+//    for (int i=0; i<numofplayer;i++){
+
+//        Player* p= new Player (names[i],charactors[i],i,s.getSTARTING_AMOUNT(),new Bank(stat, i),new Board());
+//        playerlist[i]=p;
+//    }
+
+
+//    playerPixmap.resize(numofplayer);
+//    mainLayout = new QGridLayout(this);
+//    for(int column = 0; column<numofplayer;++column){
+//        mainLayout ->addWidget(createPlayerHeader(names[column]), 0, column+1);
+//        playerPixmap[column] = createPlayerPixmap(playerlist[column]);
+//        mainLayout ->addWidget(playerPixmap[column], 1, column+1);
+//    }
+
+//}

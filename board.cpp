@@ -1,6 +1,7 @@
 #include "board.h"
 #include "property.h"
-#include "gameManager.h"
+#include "mainwindow.h"
+
 
 #include <string>
 #include <sstream>
@@ -8,11 +9,11 @@
 
 using std::string;
 
-Tile* Board::getTile(int boardPos)  {
+Tile* Board::getTile(int boardPos )  {
     return tiles.at(boardPos);
 }
 
-Board::Board(GameManager* gm) : tiles(40,nullptr), gameManager(gm) {
+Board::Board(MainWindow* game) : tiles(40,nullptr) {
 //    std::fstream tileBuilder(":/properties/tileBuilder.txt");//open appropriate txt file
 //    bool check = tileBuilder.is_open();
 
@@ -55,33 +56,20 @@ Board::Board(GameManager* gm) : tiles(40,nullptr), gameManager(gm) {
     string ten("prop	18	orange	prop9	180	100	14	70	200	550	700	950");
     string eleven("prop	19	orange	prop10	200	100	16	80	220	600	900	1000");
     string twelve("prop	21	red	prop11	220	150	18	90	250	700	875	1050");
-    tiles.at(1)= new Property(first,this);
-    tiles.at(3)= new Property (sec,this);
-    tiles.at(6)= new Property(third,this);
-    tiles.at(8)= new Property(four,this);
-    tiles.at(9)= new Property(five,this);
-    tiles.at(11)=new Property(six,this);
-    tiles.at(13)=new Property(sev,this);
-    tiles.at(14)= new Property(eight,this);
-    tiles.at(16)= new Property(nine,this);
-    tiles.at(18)=new Property(ten,this);
-    tiles.at(19)=new Property(eleven,this);
-    tiles.at(21)= new Property(twelve,this);
+    tiles.at(1)= new Property(first,this,game);
+    tiles.at(3)= new Property (sec,this,game);
+    tiles.at(6)= new Property(third,this,game);
+    tiles.at(8)= new Property(four,this,game);
+    tiles.at(9)= new Property(five,this,game);
+    tiles.at(11)=new Property(six,this,game);
+    tiles.at(13)=new Property(sev,this,game);
+    tiles.at(14)= new Property(eight,this,game);
+    tiles.at(16)= new Property(nine,this,game);
+    tiles.at(18)=new Property(ten,this,game);
+    tiles.at(19)=new Property(eleven,this,game);
+    tiles.at(21)= new Property(twelve,this,game);
 
 }
 
-bool Board::checkUtilitiesSameOwner() {
-    //utilities are located at 12th and 28th position on the board.
-    Utility* utilityOne = dynamic_cast<Utility*>(tiles.at(12));
-    Utility* utilityTwo = dynamic_cast<Utility*>(tiles.at(28));
-    if(utilityOne->propOwner() != nullptr && (utilityOne->propOwner()==utilityTwo->propOwner())){
-        return true;
-    }
-    return false;
 
-    //to implement with randomized tiles/more than two utilities, loop through board's tiles vector checking for true
-    //dynamic cast to utilities and pushing back into a temp vector then loop through temp to check if
-    //owner of each element of temp is the same.
-}
 
-GameManager* Board::getGM() const {return gameManager;}

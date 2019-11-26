@@ -21,7 +21,6 @@ SOURCES += \
     bank.cpp \
     board.cpp \
     dice.cpp \
-    gameManager.cpp \
     gameboard.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -38,7 +37,6 @@ HEADERS += \
     bank.h \
     board.h \
     dice.h \
-    gameManager.h \
     gameboard.h \
     mainwindow.h \
     movement.h \

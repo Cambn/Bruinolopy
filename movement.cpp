@@ -21,6 +21,7 @@ Movement::Movement(QWidget *parent,int order, int money, QString address) :
 
 Movement::Movement( Player& _player,int turnNumber, const QString& address, QWidget *parent) :
     QWidget(parent), player(&_player),
+    d(new Dice(this)),
     Img(new QPixmap(address)),
     position(player->getPos()),
     money(player->money()),

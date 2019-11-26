@@ -1,16 +1,19 @@
 #ifndef SUBWINDOW_H
 #define SUBWINDOW_H
+
 #include "welcomewindow.h"
 #include "mainwindow.h"
 #include "gameboard.h"
 #include "playerinfodisplay.h"
+
 #include <QApplication>
+#include <QComboBox>
 
 class Statics;
 
 class subWindow : public QWidget{
     Q_OBJECT
-
+    friend class WelcomeWindow;
 private:
     int num_player;
     QStringList names;
@@ -30,8 +33,7 @@ public slots:
     void GoSettingPage2();
     void GoGameboard();
 
-friend WelcomeWindow;
-friend GameManager;
+
 };
 
 #endif // SUBWINDOW_H

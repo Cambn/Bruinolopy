@@ -8,9 +8,11 @@
 #include <QRect>
 #include <sstream>
 
+class MainWindow;
+
 using std::string; using std::stringstream;
 
-Property::Property(const string& formattedLine, Board* _board) : ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board), houseCount(0)                                     {
+Property::Property(const string& formattedLine, Board* _board, MainWindow* _game) : ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board,_game), houseCount(0)                                     {
     stringstream buffer(formattedLine);
     string temp = "";
     stringstream vals;
@@ -111,8 +113,8 @@ void Property::View::paintEvent(QPaintEvent *){
 // Utility tile stuff
 //
 
-Utility::Utility(const std::string& formattedLine, Board* _board):
-    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board)
+Utility::Utility(const std::string& formattedLine, Board* _board, MainWindow* game):
+    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board,game)
 {}
 
 
@@ -121,8 +123,8 @@ Utility::Utility(const std::string& formattedLine, Board* _board):
 * Railroad Stuff
 *
 */
-Railroad::Railroad(const std::string& formattedLine, Board* _board):
-    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board),
+Railroad::Railroad(const std::string& formattedLine, Board* _board, MainWindow* game):
+    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board, game),
     cost(200), name(formattedLine.substr(formattedLine.rfind('\t')))
 {}
 

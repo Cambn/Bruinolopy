@@ -21,7 +21,14 @@ public:
      * @ch: a list of charactors chosen by players
      * @stat: a statics class
      * return a mainwindow */
-    explicit PlayerInfoDisplay(QWidget *parent = nullptr, int i=4, const QStringList& n={}, const QStringList& ch={},const Statics& stat=Statics());
+   // explicit PlayerInfoDisplay(QWidget *parent = nullptr, int i=4, const QStringList& n={}, const QStringList& ch={},const Statics& stat=Statics());
+
+    /**
+    constructor
+    @param players: player vector whose info we will display
+    @param parent: parent widget
+    */
+    PlayerInfoDisplay(std::vector <Player*> _players, QWidget* parent = nullptr);
     ~PlayerInfoDisplay();
 
 private:
@@ -36,13 +43,11 @@ private:
      * return a label of the block*/
     QLabel *createPlayerPixmap(Player* p);
 
+
+    const short int numofplayer;
     QGridLayout* mainLayout;
-    const int numofplayer;
-    QStringList names;
-    QStringList charactors;
     QVector<QLabel *>playerPixmap;
-    Statics s;
-    QVector<Player*> playerlist;
+    std::vector<Player*> players;
 
     friend class MainWindow;
 };

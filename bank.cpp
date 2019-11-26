@@ -1,6 +1,12 @@
 #include "bank.h"
 #include "player.h"
 
+Bank::Bank(const Statics& seed, const size_t numPlayers)  :
+    bankMoney (seed.getMONEY_MAX()- (seed.getSTARTING_AMOUNT() * numPlayers)),
+    housesRemaining(seed.getHOUSES_MAX()),
+    hotelsRemaining(seed.getHOTELS_MAX())
+    {}
+
 bool Bank::pay(Player& payee, int amt) {
 	if (bankMoney >= amt){//enough money left in bank
 		bankMoney -= amt; //adjust bank money
