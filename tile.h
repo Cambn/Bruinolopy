@@ -5,7 +5,8 @@
 
 class MainWindow;
 class Player;
-class QWidget;
+
+#include <QWidget>
 
 class Tile  {
 
@@ -23,6 +24,10 @@ public:
     bool operator !=(const Tile& oth) const;
     bool operator >=(const Tile& oth) const;
 
+    /**
+    @return pointer to QWidget displaying the tile AS IT WILL APPEAR ON THE BOARD
+    */
+    QWidget* generateBoardView() const;
 
     /**
     Call to implement desired behavior of a given tile.
@@ -37,7 +42,11 @@ public:
 
     virtual ~Tile() = default;
 
-
+    /**
+    nested class to use ONLY with generateBoardView();
+    these will be QWidgets on the board.
+    */
+    class View;
 protected:
 
 	int tileNumber;
@@ -45,6 +54,19 @@ protected:
     MainWindow* game;
 
 };
+
+class Tile::View : public QWidget {
+    Q_OBJECT
+public:
+    View() = delete;
+    View(const Tile& tile);
+
+    void paintEvent(QPaintEvent *) override;
+private:
+    QPixmap image;
+
+};
+
 
 /**
 abstract base class for tiles that can be purchased/ owned.

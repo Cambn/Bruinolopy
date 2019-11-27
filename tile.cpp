@@ -5,8 +5,11 @@
 
 
 #include <string>
-
-
+#include <QWidget>
+#include <QPainter>
+//
+//Tile stuff.
+//
 bool Tile::operator>(const Tile &oth) const {
     return this->tileNumber > oth.tileNumber;
 }
@@ -20,6 +23,24 @@ bool Tile::operator==(const Tile& oth) const{
 bool Tile::operator!=(const Tile& oth) const {
     return !(*this == oth);
 }
+
+QWidget* Tile::generateBoardView() const {
+
+
+}
+
+Tile::View::View(const Tile& tile) {
+    //:/tile/Tile/tile13.png
+    std::string filename= ":/tile/Tile"+(std::to_string(tile.tileNumber))+".png";
+    QString qfileName(QString::fromStdString(std::move(filename)));
+    image = QPixmap(qfileName);
+}
+
+void Tile::View::paintEvent(QPaintEvent *) {
+    QPainter p(this);
+    p.drawPixmap(QRect(0,0,160,192), image, QRect(0,0,160, 102));
+}
+
 //
 //OwnableTile Stuff
 //
