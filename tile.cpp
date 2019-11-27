@@ -25,8 +25,7 @@ bool Tile::operator!=(const Tile& oth) const {
 }
 
 QWidget* Tile::generateBoardView() const {
-
-
+return (new View(*this));
 }
 
 Tile::View::View(const Tile& tile) {
@@ -38,7 +37,7 @@ Tile::View::View(const Tile& tile) {
 
 void Tile::View::paintEvent(QPaintEvent *) {
     QPainter p(this);
-    p.drawPixmap(QRect(0,0,160,192), image, QRect(0,0,160, 102));
+    p.drawPixmap(QRect(0,0,160,192), image, QRect(0,0,160, 192));
 }
 
 //
