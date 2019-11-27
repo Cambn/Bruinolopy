@@ -40,7 +40,7 @@ Board::Board(MainWindow* game) : tiles(40,nullptr) {
     tiles.at(12)=new Property(ten,this,game);
     tiles.at(13)=new Property(eleven,this,game);
     tiles.at(14)= new Property(twelve,this,game);
-//    tiles.at(15)= new Railroad("rr  15 ",this,game);
+    tiles.at(15)= new Railroad(15, "Big Blue Bus",this,game);
 
 
    chanceCards.emplace_back(new ChanceCard("Lose 300 Dollars!",

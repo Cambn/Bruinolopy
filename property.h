@@ -118,7 +118,7 @@ Railroad properties from regular game.  We will have 3.
 */
 class Railroad : public ownableTile {
 public:
-    Railroad(const std::string& formattedLine, Board* _board, MainWindow* game);
+    Railroad( int _tileNum, std::string name, Board* _board, MainWindow* game);
 
     /**
     checks how many Railroads owner has to calculate rent.

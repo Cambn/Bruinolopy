@@ -123,9 +123,9 @@ Utility::Utility(const std::string& formattedLine, Board* _board, MainWindow* ga
 * Railroad Stuff
 *
 */
-Railroad::Railroad(const std::string& formattedLine, Board* _board, MainWindow* game):
-    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board, game),
-    cost(200), name(formattedLine.substr(formattedLine.rfind('\t')))
+Railroad::Railroad(int _tileNum, std::string _name, Board* _board, MainWindow* _game):
+    ownableTile(_tileNum ,_board, _game),
+    cost(200), name(std::move(_name))
 {}
 
 int Railroad::checkOwnerRailroads(const Player& player) const{
