@@ -16,6 +16,7 @@ Player::Player() : bank(nullptr), board(nullptr), boardPos(0),
 Player::Player(const QString &_name, const QString& _character, int turnNumber, int startingAmount, Bank* _bank, Board* _board,  QWidget* parent):
     QWidget(parent), bank(_bank),
     board(_board),  boardPos(0) , playerMoney(startingAmount),
+    hasLost(false), isDisabled(false),
     playerProperties(),
     name(_name), charactor(_character),
     movement(new Movement(*this, turnNumber, QString(":/fig/gb_" + _character + ".png")))
@@ -31,8 +32,15 @@ Player::Player(const Player& oth){
     board = oth.board;
     boardPos = oth.boardPos;
     playerMoney = oth.playerMoney;
+    hasLost = oth.hasLost;
+    isDisabled = oth.isDisabled;
+
     playerProperties = oth.playerProperties;
+    tempObjects = oth.tempObjects;
+
     name = oth.name;
+    charactor= oth.charactor;
+    movement = oth.movement;
 }
 
 Player::Player(Player&& oth):Player("","",0,1500,nullptr,nullptr){
@@ -94,7 +102,10 @@ bool Player::buyPropertyBank() {
     return false;//player doesn't have enough money to buy
 }
 
-void Player::move(int val) {boardPos+=val;}
+void Player::move(int val) {
+   int unadjustedPos = (boardPos+val);
+   boardPos = unadjustedPos % (board->tiles.size());
+}
 
 int Player::getPos() const {return boardPos;}
 

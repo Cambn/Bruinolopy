@@ -1,14 +1,5 @@
 #include "gameboard.h"
-/*
-QVector<QIcon::Mode> GameBoard::iconModes()
-{
-    static const QVector<QIcon::Mode> result = {QIcon::Normal, QIcon::Active, QIcon::Disabled, QIcon::Selected};
-    return result;
-}
-QVector<QIcon::State> GameBoard::iconStates(){
-    static const QVector<QIcon::State> result = {QIcon::Off,QIcon::On};
-    return result;
-}*/
+
 QStringList GameBoard::iconLengthNames(){
     static const QStringList result = {tr("L1"),tr("L2"),tr("L3"),tr("L4")};
     return result;
@@ -40,18 +31,7 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
     //Player info
 
 }
-/*
-//changes the icon or the icon size, and make sure is updated
-void GameBoard::setIcon(const QIcon &icon){
-    this ->icon = icon;
-    updatePixmapLabels();
-}
-void GameBoard::setSize(const QSize &size){
-    if(size!=this ->size){
-        this ->size = size;
-        updatePixmapLabels();
-    }
-}*/
+
 QLabel *GameBoard::createPixmapLabel(){
     QLabel *label = new QLabel;
     label ->setEnabled(false);
@@ -96,3 +76,25 @@ void GameBoard::updatePixmapLabels(){
     }
 }
 */
+/*
+QVector<QIcon::Mode> GameBoard::iconModes()
+{
+    static const QVector<QIcon::Mode> result = {QIcon::Normal, QIcon::Active, QIcon::Disabled, QIcon::Selected};
+    return result;
+}
+QVector<QIcon::State> GameBoard::iconStates(){
+    static const QVector<QIcon::State> result = {QIcon::Off,QIcon::On};
+    return result;
+}*/
+/*
+//changes the icon or the icon size, and make sure is updated
+void GameBoard::setIcon(const QIcon &icon){
+    this ->icon = icon;
+    updatePixmapLabels();
+}
+void GameBoard::setSize(const QSize &size){
+    if(size!=this ->size){
+        this ->size = size;
+        updatePixmapLabels();
+    }
+}*/

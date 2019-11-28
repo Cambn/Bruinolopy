@@ -24,24 +24,15 @@ bool Tile::operator!=(const Tile& oth) const {
     return !(*this == oth);
 }
 
-QWidget* Tile::generateBoardView() const {
-return (new View(*this));
-}
-
-Tile::View::View(const Tile& tile) {
-    //:/tile/Tile/tile13.png
-    std::string filename= ":/tile/Tile"+(std::to_string(tile.tileNumber))+".png";
+QPixmap* Tile::generateBoardView() const {
+    std::string filename= ":/tile/tile"+(std::to_string(tileNumber))+".png";
     QString qfileName(QString::fromStdString(std::move(filename)));
-    image = QPixmap(qfileName);
+   return new QPixmap(qfileName);
 }
-
-void Tile::View::paintEvent(QPaintEvent *) {
-    QPainter p(this);
-    p.drawPixmap(QRect(0,0,160,192), image, QRect(0,0,160, 192));
-}
-
+//
 //
 //OwnableTile Stuff
+//
 //
 
 ownableTile::ownableTile(int _tileNum, Board* _board, MainWindow* _game):
@@ -80,4 +71,5 @@ Player* ownableTile::propOwner() const {return owner;}
 
 
 void ownableTile::transfer(Player* newOwner){owner = newOwner;}
+
 

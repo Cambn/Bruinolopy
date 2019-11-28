@@ -4,6 +4,8 @@
 #include "QLandingWindows.h"
 
 #include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QPainter>
 #include <QRect>
 #include <sstream>
@@ -83,10 +85,12 @@ int Property::currentRent() const {
 	}
 	return 0; //if unowned, no rent is due.
 }
-
+//
+//
 //Property::View class stuff
-
-Property::View::View(const Property& prop)  {
+//
+//
+Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  {
 
 
     //std::string fileName= "Assets\\Properties\\Prop"+std::to_string(prop.tileNumber)+".png";
@@ -98,7 +102,44 @@ Property::View::View(const Property& prop)  {
     std::string fileName= ":/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
     image = QPixmap(qfileName);
-    setMinimumSize(320,384);
+    setFixedSize(320,384);
+    //make label for name
+    string temp = prop.name;
+    QFont font("Kabel Heavy",29);
+    QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+    _name->setFont(font);
+    mainLayout->addWidget(_name,1,Qt::AlignHCenter);
+
+//    font = QFont("Kabel Heavy",5);
+//    temp = "\n";
+//    QLabel* spacer= new QLabel( QString::fromStdString(temp));
+//    mainLayout->addWidget(spacer);
+    //make label for cost
+    temp = "Cost: $"+ std::to_string(prop.cost)+"\n";
+    font = QFont("Kabel Heavy",20);
+    QLabel* line2 = new QLabel(QString::fromStdString(temp),this);
+    line2->setFont(font);
+    mainLayout->addWidget(line2, 4, Qt::AlignHCenter );
+    //make label for the rest
+    temp = "\t      Rent: $"+std::to_string(prop.rents[0])+ "\n" +
+           "With 1 House\t\t$"+std::to_string(prop.rents[1])+".\n" +
+           "With 2 Houses\t\t$"+std::to_string(prop.rents[2])+".\n" +
+           "With 3 Houses\t\t$"+std::to_string(prop.rents[3])+".\n" +
+           "With 4 Houses\t\t$"+std::to_string(prop.rents[4])+".\n" +
+           "           With HOTEL     $"+std::to_string(prop.rents[5])+".\n";
+
+    QLabel* rentsBlock = new QLabel(QString::fromStdString(temp),this);
+    font = QFont("Kabel Heavy", 15);
+    rentsBlock->setFont(font);
+    mainLayout->addWidget(rentsBlock,1,Qt::AlignHCenter);
+
+    temp =  "      Houses cost $"+std::to_string(prop.houseCost)+". each\n"+
+            "Hotels cost $"+std::to_string(prop.houseCost)+". plus 4 houses\n" ;
+    QLabel* bottomBlock = new QLabel(QString::fromStdString(temp),this);
+    bottomBlock->setFont(font);
+    mainLayout->addWidget(bottomBlock,1,Qt::AlignHCenter);
+
+
 }
 
 void Property::View::paintEvent(QPaintEvent *){
@@ -107,6 +148,7 @@ void Property::View::paintEvent(QPaintEvent *){
 
 
     p.drawPixmap(QRect(0,0,320,384),image,QRect(0,0,160,192));
+
 }
 
 //

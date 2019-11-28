@@ -13,13 +13,14 @@
 
 using std::string;
 
-Board::Board(MainWindow* game) : tiles(40,nullptr) {
+Board::Board(MainWindow* game) : tiles(16,nullptr) {
 
+    srand(time(nullptr));
 
-    string first("prop	1	purple	prop0	60	50	2	10	30	90	160	250");
-    string sec("prop	2	purple	prop1	60	50	4	20	60	180	320	450");
+    string first("prop	1	purple	Schoenberg	60	50	2	10	30	90	160	250");
+    string sec("prop	2	purple	Ostin Center	60	50	4	20	60	180	320	450");
     string third("prop	3	lightBlue	prop2	100	50	6	30	90	270	400	550");
-    string four("prop	4	lightBlue	prop3	100	50	6	30	90	270	400	550");
+    string four("prop	4	lightBlue	Psych. Tower	100	50	6	30	90	270	400	550");
     string five("prop	6	lightBlue	prop4	120	50	8	40	100	300	450	600");
     string six("prop	7	magenta	prop5	140	100	10	50	150	450	625	750");
     string sev("prop	8	magenta	prop6	140	100	10	50	150	450	625	750");
@@ -32,6 +33,7 @@ Board::Board(MainWindow* game) : tiles(40,nullptr) {
     tiles.at(2)= new Property (sec,this,game);
     tiles.at(3)= new Property(third,this,game);
     tiles.at(4)= new Property(four,this,game);
+    tiles.at(5)= new ChanceTile(5,this,game);
     tiles.at(6)= new Property(five,this,game);
     tiles.at(7)=new Property(six,this,game);
     tiles.at(8)=new Property(sev,this,game);
@@ -57,6 +59,13 @@ Board::Board(MainWindow* game) : tiles(40,nullptr) {
                               }
                              )
             );
+    chanceCards.emplace_back( new ChanceCard("Move Back 3 Spaces.",
+                                             [](Player* currPlayer) -> void {
+                                             currPlayer->move(-3);
+                                             currPlayer->land();
+                                             }
+                                            )
+                            );
 
 
 

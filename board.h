@@ -13,7 +13,7 @@ friend Player;
 friend class ChanceTile;
 		
 public:
-Board(MainWindow* game);
+Board(MainWindow* game = nullptr);
 
 Tile * getTile(int boardPos) ;
 //GameManager* getGM()const;

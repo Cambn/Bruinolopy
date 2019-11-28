@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QPainter>
 
+class QVBoxLayout;
 class Bank;
 class Player;
 
@@ -90,6 +91,7 @@ public:
     void paintEvent(QPaintEvent* ) override;
 private:
     QPixmap image;
+    QVBoxLayout* mainLayout;
 
 };
 

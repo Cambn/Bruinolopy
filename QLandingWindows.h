@@ -28,7 +28,7 @@ QLandingWindow(QObject* _game, QWidget* parent = nullptr);
 QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* parent = nullptr);
 
 
-virtual ~QLandingWindow();
+virtual ~QLandingWindow() = default;
 
 protected:
 

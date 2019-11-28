@@ -27,7 +27,7 @@ public:
     /**
     @return pointer to QWidget displaying the tile AS IT WILL APPEAR ON THE BOARD
     */
-    QWidget* generateBoardView() const;
+    QPixmap* generateBoardView() const;
 
     /**
     Call to implement desired behavior of a given tile.
@@ -37,33 +37,18 @@ public:
 
     /**
     @return pointer to QWidget displaying the tile.
+        intended to be a closer up view than the board view;
     */
     virtual QWidget* generateView() const= 0;
 
     virtual ~Tile() = default;
 
-    /**
-    nested class to use ONLY with generateBoardView();
-    these will be QWidgets on the board.
-    */
-    class View;
+
 protected:
 
 	int tileNumber;
     Board* board;
     MainWindow* game;
-
-};
-
-class Tile::View : public QWidget {
-    Q_OBJECT
-public:
-    View() = delete;
-    View(const Tile& tile);
-
-    void paintEvent(QPaintEvent *) override;
-private:
-    QPixmap image;
 
 };
 
@@ -113,10 +98,13 @@ private:
 class eventTile : public Tile {
 public:
     eventTile (int _tileNum, Board* _board, MainWindow* _game): Tile(_tileNum, _board, _game) {}
-    void landingEvent(Player& ) override {}
+
+    virtual void landingEvent(Player& ) override {}
 
     virtual ~eventTile() override = default;
 
 };
+
+
 
 #endif

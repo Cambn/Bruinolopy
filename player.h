@@ -48,12 +48,6 @@ public:
 	bool take(Player* target, int amt);
 
     /**
-    move player forward by val amount
-    @param val spaces to move forward.  Can be negative.
-    */
-    void move(int val);
-
-    /**
     @return current board position of player
     */
     int getPos() const;
@@ -69,12 +63,10 @@ public:
     @return false if not enough money to purchase property.
     */
     bool buyPropertyBank();
-
     /**
-    player can call when they are on a tile to trigger the tile's landing event.
+    @param newStatus : player's isDisabled is set to this.
     */
-    void land () ;
-
+    void setDisabled (bool newStatus) {isDisabled = newStatus;}
     /**
     sets player's movement's dice to designated Dice.
     Deletes old dice for memory managment, if desired.
@@ -151,17 +143,41 @@ public:
         swap(left.board, right.board);
         swap(left.boardPos, right.boardPos);
         swap(left.playerMoney, right.playerMoney);
+        swap(left.hasLost, right.hasLost);
+        swap(left.isDisabled, right.isDisabled);
+
+        swap(left.playerProperties, right.playerProperties);
+        swap(left.tempObjects, right.tempObjects);
+
         swap(left.name, right.name);
+        swap(left.charactor, right.charactor);
+        swap(left.movement, right.movement);
     }
 
 public slots:
+
+
+
     void buyBankProp ();
+
     void payRent ();
+
+    /**
+    move player forward by val amount
+    @param val spaces to move forward.  Can be negative.
+    */
+    void move(int val);
 
     /**
     moves the player via signal and then activates the new tile's landing event.
     */
     void go(int diceVal) {move(diceVal); land();}
+
+    /**
+    player can call when they are on a tile to trigger the tile's landing event.
+    */
+    void land () ;
+
 signals:
     void buyPropFail();
 private:
@@ -171,6 +187,7 @@ private:
     int boardPos;
     int playerMoney;
     bool hasLost;
+    bool isDisabled;
 
     std::vector<ownableTile*> playerProperties; //properties owned by player
     std::list<QObject*> tempObjects;

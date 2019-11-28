@@ -79,10 +79,11 @@ private:
 
     //data fields
     Board* board;
-    std::vector<Player*> players;
+
 
     std::list<QObject*> tempObjects;
 public:
+    std::vector<Player*> players;
     Bank* bank;
 };
 #endif // MAINWINDOW_H

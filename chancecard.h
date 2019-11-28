@@ -15,6 +15,7 @@ class ChanceTile : public eventTile {
 
     void landingEvent(Player & currPlayer) override;
 
+    QWidget* generateView() const override {return new QWidget;}
 
 
 };
@@ -34,10 +35,7 @@ public slots:
     description(std::move(_description)),
     effect(std::move(f))
     {}
-
-    void conduct_change(Player& currPlayer){
-        effect(&currPlayer);
-    }
+void conduct_change(Player& currPlayer);
 
 private:
     std::string description;

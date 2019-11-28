@@ -114,7 +114,7 @@ void MainWindow::addTempObject(QObject* temp) {
 bool MainWindow::eraseTempObject(QObject* temp) {
     for (auto iter = tempObjects.begin(); iter != tempObjects.begin(); ++iter){ //manual ranged for loop
         if (*iter == temp){//if we find temp
-           tempObjects.erase(iter); //erase it
+           tempObjects.remove(temp); //erase it
            return true;//to signal success
          }
      }

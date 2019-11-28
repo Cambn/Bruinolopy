@@ -9,14 +9,14 @@ QLandingWindow::QLandingWindow(QObject* _game, QWidget* parent):
     game(_game)
 {
 
-    if(dynamic_cast<MainWindow*>(game)){//if we passed it a game pointer
-            MainWindow* temp  = dynamic_cast<MainWindow*>(_game);
-            temp->addTempObject(this); //add it to the game's object management
-    }
-    else if(dynamic_cast<Player*>(game)){
-        Player* temp = dynamic_cast<Player*>(_game);//if we passed it a player pointer
-        temp->addTempObject(this);  //add it to the player's memory management
-    }
+//    if(dynamic_cast<MainWindow*>(game)){//if we passed it a game pointer
+//            MainWindow* temp  = dynamic_cast<MainWindow*>(_game);
+//            temp->addTempObject(this); //add it to the game's object management
+//    }
+//    else if(dynamic_cast<Player*>(game)){
+//        Player* temp = dynamic_cast<Player*>(_game);//if we passed it a player pointer
+//        temp->addTempObject(this);  //add it to the player's memory management
+//    }
 }
 
 QLandingWindow::QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* parent):
@@ -24,30 +24,30 @@ QLandingWindow::QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* par
     layout(new QGridLayout(this)),
     mainWidget(_mainWidget)
     {
-    if(dynamic_cast<MainWindow*>(game)){//if we passed it a game pointer
-            MainWindow* temp  = dynamic_cast<MainWindow*>(game);
-            temp->addTempObject(this); //add it to the game's object management
-    }
-    else if(dynamic_cast<Player*>(game)){
-        Player* temp = dynamic_cast<Player*>(game);//if we passed it a player pointer
-        temp->addTempObject(this);  //add it to the player's memory management
-    }
-    }
-
-
-QLandingWindow::~QLandingWindow() {
-    if(dynamic_cast<MainWindow*>(game)){
-            MainWindow* temp  = dynamic_cast<MainWindow*>(game);
-            temp->eraseTempObject(this);
-    }
-    else if(dynamic_cast<Player*>(game)){
-        Player* temp = dynamic_cast<Player*>(game);
-        temp->eraseTempObject(this);
+//    if(dynamic_cast<MainWindow*>(game)){//if we passed it a game pointer
+//            MainWindow* temp  = dynamic_cast<MainWindow*>(game);
+//            temp->addTempObject(this); //add it to the game's object management
+//    }
+//    else if(dynamic_cast<Player*>(game)){
+//        Player* temp = dynamic_cast<Player*>(game);//if we passed it a player pointer
+//        temp->addTempObject(this);  //add it to the player's memory management
+//    }
     }
 
-    delete layout;
-    delete mainWidget;
-}
+
+//QLandingWindow::~QLandingWindow() {
+//    if(dynamic_cast<MainWindow*>(game)){
+//            MainWindow* temp  = dynamic_cast<MainWindow*>(game);
+//            temp->eraseTempObject(this);
+//    }
+//    else if(dynamic_cast<Player*>(game)){
+//        Player* temp = dynamic_cast<Player*>(game);
+//        temp->eraseTempObject(this);
+//    }
+
+//    delete layout;
+//    delete mainWidget;
+//}
 
 
 //QLandingOptions Stuff

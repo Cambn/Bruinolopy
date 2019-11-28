@@ -48,7 +48,6 @@
     </qresource>
     <qresource prefix="/tile">
         <file>chance_deco.png</file>
-        <file>chancecard.png</file>
         <file>Tile/tile1.png</file>
         <file>Tile/tile2.png</file>
         <file>Tile/tile3.png</file>
@@ -70,6 +69,5 @@
         <file>Tile/tile20.png</file>
         <file>Tile/tile21.png</file>
         <file>Tile/tile22.png</file>
-        <file>Tile/tile23.png</file>
     </qresource>
 </RCC>
