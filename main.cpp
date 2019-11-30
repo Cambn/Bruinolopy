@@ -26,11 +26,12 @@ int main(int argc, char *argv[])
     QStringList ch = {"panda", "panda"};
 
   MainWindow game(2,n,ch,Statics(),nullptr);
+  game.show();
 
-  Player& jeff = *game.players.at(0);
-  Player& BIGMIKE= *game.players.at(1);
+//  Player& jeff = *game.players.at(0);
+//  Player& BIGMIKE= *game.players.at(1);
 
-    jeff.go(4);
+//    jeff.go(4);
 
      return a.exec();
 

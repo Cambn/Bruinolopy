@@ -41,7 +41,7 @@ GameBoard::GameBoard(Board& _board, QWidget *parent):QWidget(parent){
     for(int column = 0; column<BoardLength; ++column){
         for(int row = 0; row< BoardWidth; ++row){
             pixmapLabels[column][row] = createPixmapLabel();
-            makeTileImages(column,row, _board);
+            //makeTileImages(column,row, _board);
             mainLayout ->addWidget(pixmapLabels[column][row], row+1, column+1);
 
 
