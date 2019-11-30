@@ -2,7 +2,8 @@
 #define _BOARD_
 
 #include "tile.h"
-#include "chancecard.h"
+
+ class ChanceCard;
 
 #include <vector>
 
@@ -18,7 +19,7 @@ Board(MainWindow* game = nullptr);
 Tile * getTile(int boardPos) ;
 //GameManager* getGM()const;
 
-
+void buildChancecards(MainWindow* game);
 
 private:
 std::vector <Tile*> tiles;

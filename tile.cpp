@@ -25,7 +25,8 @@ bool Tile::operator!=(const Tile& oth) const {
 }
 
 QPixmap* Tile::generateBoardView() const {
-    std::string filename= ":/tile/tile"+(std::to_string(tileNumber))+".png";
+    //:/tile/Tile/tile1.png
+    std::string filename= ":/tile/Tile/tile"+(std::to_string(tileNumber))+".png";
     QString qfileName(QString::fromStdString(std::move(filename)));
    return new QPixmap(qfileName);
 }

@@ -8,12 +8,16 @@
 #include <QHBoxLayout>
 #include <QGridLayout>
 #include <QPixmap>
+
+class Board;
+
 class GameBoard : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit GameBoard(QWidget *parent = nullptr);
+    GameBoard(Board& _board, QWidget* parent =nullptr);
 
    // void setIcon(const QIcon& icon);
     //void setSize(const QSize& size);
@@ -24,6 +28,12 @@ public:
     static QStringList iconWidthNames();
     //static QVector<>
 private:
+    /**
+    makes images for board tiles via Tile::generateBoardView()
+    @param board: place where we're getting the tile images.
+    */
+    void makeTileImages(int column, int row,Board& _board);
+
     QLabel *createHeaderLabel(const QString& text);
     //void updatePixmapLabels();
    // QLabel *createLandMark();

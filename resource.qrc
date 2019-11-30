@@ -45,6 +45,7 @@
         <file>purpleProperty.png</file>
         <file>redProperty.png</file>
         <file>yellowProperty.png</file>
+        <file>railroadProperty.png</file>
     </qresource>
     <qresource prefix="/tile">
         <file>chance_deco.png</file>
@@ -55,19 +56,11 @@
         <file>Tile/tile5.png</file>
         <file>Tile/tile6.png</file>
         <file>Tile/tile7.png</file>
-        <file>Tile/tile8.png</file>
         <file>Tile/tile9.png</file>
         <file>Tile/tile10.png</file>
         <file>Tile/tile11.png</file>
         <file>Tile/tile12.png</file>
         <file>Tile/tile13.png</file>
-        <file>Tile/tile14.png</file>
         <file>Tile/tile15.png</file>
-        <file>Tile/tile16.png</file>
-        <file>Tile/tile17.png</file>
-        <file>Tile/tile18.png</file>
-        <file>Tile/tile20.png</file>
-        <file>Tile/tile21.png</file>
-        <file>Tile/tile22.png</file>
     </qresource>
 </RCC>

@@ -49,7 +49,6 @@ bool hotelsLeft() const;
 
 private:
 int bankMoney;
-std::vector <Property*> properties;
 int housesRemaining;
 int hotelsRemaining;
 

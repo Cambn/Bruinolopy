@@ -121,6 +121,8 @@ public:
     */
     bool isDefeated() const {return (hasLost);}
 
+    void setBoard(Board* _board) {board = _board; }
+
     /**
     adds an object to temp objects
     @param temp will be inserted at end of tempObjects

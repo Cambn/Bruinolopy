@@ -10,11 +10,11 @@
 
 MainWindow::MainWindow(const int numPlayers, const QStringList& _names, const QStringList& _characters, const Statics& _static, QWidget* parent):
 QMainWindow(parent),
-board(new Board (this)),               //create board
-bank(new Bank(_static,numPlayers)),   //create bank
-players(numPlayers)             //appropriately size players vector
+players(numPlayers),             //appropriately size players vector
+bank(new Bank(_static,numPlayers)),       //create bank
+board(new Board(this))
 {
-//first construct players (which also constructs their Movement stuff)
+//first construct players (which also constructs their Movement stuff) but leave board null
 for (int i = 0 ; i<numPlayers ; ++i  ) {
     players.at(i) = new Player( _names[i],
                                 _characters[i],
@@ -26,10 +26,14 @@ for (int i = 0 ; i<numPlayers ; ++i  ) {
 }
 
 
+//now that rest of game is set up, build chance deck
+board->buildChancecards(this);
+
+
 
 //create the upper board /a map
 QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));
-boardArea = new GameBoard(boardGroupBox);
+boardArea = new GameBoard(*board, boardGroupBox);
 QVBoxLayout *boardLayout = new QVBoxLayout(boardGroupBox);
 boardLayout ->addWidget(boardArea);
 

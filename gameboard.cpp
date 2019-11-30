@@ -1,4 +1,6 @@
 #include "gameboard.h"
+#include "board.h"
+#include <QPixmap>
 
 QStringList GameBoard::iconLengthNames(){
     static const QStringList result = {tr("L1"),tr("L2"),tr("L3"),tr("L4")};
@@ -22,15 +24,67 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
     }*/
     for(int column = 0; column<BoardLength; ++column){
         for(int row = 0; row< BoardWidth; ++row){
+
             pixmapLabels[column][row] = createPixmapLabel();
+
             mainLayout ->addWidget(pixmapLabels[column][row], row+1, column+1);
+
         }
 
     }
 
-    //Player info
+}
+
+GameBoard::GameBoard(Board& _board, QWidget *parent):QWidget(parent){
+    QGridLayout *mainLayout = new QGridLayout(this);
+
+    for(int column = 0; column<BoardLength; ++column){
+        for(int row = 0; row< BoardWidth; ++row){
+            pixmapLabels[column][row] = createPixmapLabel();
+            makeTileImages(column,row, _board);
+            mainLayout ->addWidget(pixmapLabels[column][row], row+1, column+1);
+
+
+            }
+
+
+        }
+
+    }
+
+
+void GameBoard::makeTileImages(int column, int row, Board& _board) {
+    if (column ==0) {//if on the left side of gameBoard
+        int i = column + 4 - row;
+        QPixmap* image = _board.getTile(i) ->generateBoardView();
+        //pixmapLabels[0][0]->setPixmap(bg.scaled(pixmapLabels[0][0]->width(), pixmapLabels[0][0]->height(), Qt::IgnoreAspectRatio))
+        pixmapLabels[column][row]->setPixmap((*image).scaled(pixmapLabels[0][0]->width(), pixmapLabels[0][0]->height(), Qt::IgnoreAspectRatio));
+    }
+    else if (column ==BoardWidth) {//if on the right side of gameBoard
+        int i = column + 4 - row;
+        QPixmap* image = _board.getTile(i) ->generateBoardView();
+        pixmapLabels[column][row]->setPixmap((*image).scaled(pixmapLabels[0][0]->width(), pixmapLabels[0][0]->height(), Qt::IgnoreAspectRatio));
+    }
+    else if (row ==0) {//if on the top row of gameBoard, not counting the first and last column
+        int i = column + 4 - row;
+        QPixmap* image = _board.getTile(i) ->generateBoardView();
+        pixmapLabels[column][row]->setPixmap((*image).scaled(pixmapLabels[0][0]->width(), pixmapLabels[0][0]->height(), Qt::IgnoreAspectRatio));
+    }
+    else if (row ==BoardLength) {//if on the bottom row of gameBoard, not counting the first and last column
+        int i = column + 4 - row;
+        QPixmap* image = _board.getTile(i) ->generateBoardView();
+        pixmapLabels[column][row]->setPixmap((*image).scaled(pixmapLabels[0][0]->width(), pixmapLabels[0][0]->height(), Qt::IgnoreAspectRatio));
+
+    }
+    else {} //if on the inside, do nothing.
 
 }
+
+
+
+    //Player info
+
+
 
 QLabel *GameBoard::createPixmapLabel(){
     QLabel *label = new QLabel;

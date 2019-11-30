@@ -67,6 +67,10 @@ public slots:
    // void actionupdate(int idx);
     void playerwalk();
 
+public:
+    std::vector<Player*> players;
+    Bank* bank;
+
 private:
     int restnum;
     int turn;
@@ -82,8 +86,6 @@ private:
 
 
     std::list<QObject*> tempObjects;
-public:
-    std::vector<Player*> players;
-    Bank* bank;
+
 };
 #endif // MAINWINDOW_H

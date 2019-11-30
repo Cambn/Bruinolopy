@@ -2,7 +2,7 @@
 #include "player.h"
 
 Movement::Movement(QWidget *parent,int order, int money, QString address) :
-    QWidget(parent),position(0),modify_x(order),money(money)
+    QWidget(parent),position(0),modify_x(order),money(money), timer(nullptr), timer2(nullptr)
 {
     for (int i=0;i<12;i++){
         xAxis[i]+=(width+5)*modify_x;
@@ -20,9 +20,12 @@ Movement::Movement(QWidget *parent,int order, int money, QString address) :
 }
 
 Movement::Movement( Player& _player,int turnNumber, const QString& address, QWidget *parent) :
+
     QWidget(parent),
-    d(nullptr),
     player(&_player),
+    d(nullptr),
+    timer(nullptr),
+    timer2(nullptr),
     Img(new QPixmap(address)),
     position(player->getPos()),
     money(player->money()),

@@ -60,6 +60,12 @@ public:
 	*/
     int currentRent() const override;
 
+    /**
+    implements ownableTile::getCost() const
+    @return cost of property
+    */
+    int getCost() const override {return cost;}
+
 
 private:
 	std::string color;
@@ -116,7 +122,7 @@ private:
 };
 
 /**
-Railroad properties from regular game.  We will have 3.
+* Railroad properties from regular game.  We will have 2.
 */
 class Railroad : public ownableTile {
 public:
@@ -134,12 +140,40 @@ public:
     */
     int currentRent() const override;
 
+    /**implements ownableTile::getCost() const
+    @return cost of property
+    */
+    int getCost() const override {return cost;}
+
+    /**
+    @return name of this railroad
+    */
+    std::string getName() const {return name;}
+
     QWidget* generateView() const override;
 
+    class View;
 protected:
     int cost;
     std::string name;
-    int rents[3] {25,75,150}; // each railroad has same rent values;
+    int rents[2] {50,150}; // each railroad has same rent values;
 };
+
+class Railroad::View : public QWidget {
+Q_OBJECT
+public:
+View(const Railroad& rr);
+
+
+
+void paintEvent(QPaintEvent *event) override;
+
+private:
+QPixmap image;
+QVBoxLayout*  mainLayout;
+
+
+};
+
 
 #endif

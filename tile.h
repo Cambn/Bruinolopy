@@ -79,6 +79,11 @@ public:
     Player* propOwner() const;
 
     /**
+    @return cost of this tile
+    */
+    virtual int getCost() const = 0;
+
+    /**
     Changes owner of this tile to specified player.
     @param newOwner will become owner of this tile
     */

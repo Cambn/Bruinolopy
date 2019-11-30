@@ -92,9 +92,9 @@ bool Player::take(Player* target, int amt) {
 }
 
 bool Player::buyPropertyBank() {
-    Property* currProp = dynamic_cast<Property*>(getTile());//cast curr tile that player is on to property type
-    if(playerMoney >= currProp->cost && currProp->owner == nullptr) {//if player has at least enough money to buy and property unowned
-        bank->take(*this, currProp->cost); //charge player for property
+    ownableTile* currProp = dynamic_cast<ownableTile*>(getTile());//cast curr tile that player is on to property type
+    if(playerMoney >= currProp->getCost() && currProp->propOwner() == nullptr) {//if player has at least enough money to buy and property unowned
+        bank->take(*this, currProp->getCost()); //charge player for property
         playerProperties.push_back(currProp); //add to back of player's properties
         currProp->transfer(this);
         return true;

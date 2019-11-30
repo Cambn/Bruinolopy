@@ -92,12 +92,6 @@ int Property::currentRent() const {
 //
 Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  {
 
-
-    //std::string fileName= "Assets\\Properties\\Prop"+std::to_string(prop.tileNumber)+".png";
-    //QString qfileName(QString::fromStdString(fileName));
-    //image = QPixmap(qfileName);
-
-
 // :/properties/blueProperty.png
     std::string fileName= ":/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
@@ -110,10 +104,6 @@ Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  
     _name->setFont(font);
     mainLayout->addWidget(_name,1,Qt::AlignHCenter);
 
-//    font = QFont("Kabel Heavy",5);
-//    temp = "\n";
-//    QLabel* spacer= new QLabel( QString::fromStdString(temp));
-//    mainLayout->addWidget(spacer);
     //make label for cost
     temp = "Cost: $"+ std::to_string(prop.cost)+"\n";
     font = QFont("Kabel Heavy",20);
@@ -151,14 +141,6 @@ void Property::View::paintEvent(QPaintEvent *){
 
 }
 
-//
-// Utility tile stuff
-//
-
-Utility::Utility(const std::string& formattedLine, Board* _board, MainWindow* game):
-    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board,game)
-{}
-
 
 /**
 *
@@ -185,9 +167,48 @@ int Railroad::currentRent() const {
 }
 
 QWidget* Railroad::generateView() const {
-    return new QWidget();
+    return new View(*this);
 }
 
+
+Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
+    QString qfileName(":/properties/railroadProperty.png");
+    image = QPixmap(qfileName);
+
+    setFixedSize(320,384);
+
+    mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
+
+    string temp(rr.getName()+" Bus Line");
+    QFont font("Kabel Heavy",20);
+    QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+    _name->setStyleSheet("font-weight: bold ; color: black");
+    _name->setFont(font);
+    mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
+
+    temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
+    QLabel* _cost = new QLabel(QString::fromStdString(temp));
+    font = QFont("Kabel Heavy",15);
+    _cost->setFont(font);
+    mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
+
+
+    temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
+            "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
+    font = QFont("Kabel Heavy",15);
+    QLabel* block = new QLabel(QString::fromStdString(temp),this);
+    block->setFont(font);
+    mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
+
+}
+
+
+void Railroad::View::paintEvent(QPaintEvent*) {
+    QPainter p(this);
+
+
+    p.drawPixmap(QRect(0,0,320,384),image,QRect(0,0,160,192));
+}
 //
 //old code
 //
@@ -209,3 +230,12 @@ QWidget* Railroad::generateView() const {
 //    }
 
 //}
+
+//
+// Utility tile stuff
+//
+
+//Utility::Utility(const std::string& formattedLine, Board* _board, MainWindow* game):
+//    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board,game)
+//{}
+

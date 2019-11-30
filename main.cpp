@@ -21,13 +21,16 @@ int main(int argc, char *argv[])
     QApplication a(argc,argv);
 
 
-    MainWindow game (1,QStringList{"Jeff"}, QStringList {"panda"}, Statics());
 
-    game.players.at(0)->go(5);
+    QStringList n = {"jeff", "BIGMIKE"};
+    QStringList ch = {"panda", "panda"};
 
+  MainWindow game(2,n,ch,Statics(),nullptr);
 
+  Player& jeff = *game.players.at(0);
+  Player& BIGMIKE= *game.players.at(1);
 
-
+    jeff.go(4);
 
      return a.exec();
 
