@@ -1,27 +1,38 @@
 #ifndef SUBWINDOW_H
 #define SUBWINDOW_H
-#include "welcomewindow.h"
 #include "mainwindow.h"
 #include "gameboard.h"
 #include "playerinfodisplay.h"
 #include <QApplication>
+#include <QComboBox>
 
+class Statics;
+class WelcomeWindow;
 
 class subWindow : public QWidget{
     Q_OBJECT
+
 private:
     int num_player;
-    QVector<QString> names;
-    QVector<QString> charactors;
-    QVector<QComboBox*> Comboboxlist;
-    QVector<QString> token_list= {"Panda", "Brown Bear", "Polar Bear"};
+    QStringList names;
+    QStringList charactors;
+    QVector<QComboBox*> CBlist;
+    QVector<QLineEdit*> LElist;
+    QVector<QString> token_list= {"panda", "brown bear", "polar bear","grey bear"};
+    QVector<QComboBox*> firstCBlist;
+    subWindow* window2;
 
 public:
+    explicit subWindow(QWidget *parent = nullptr);
+    Statics s;
+    ~subWindow(){delete window2;}
+
 
 public slots:
     void comfirm_num(int);
     void GoSettingPage2();
     void GoGameboard();
+
 friend WelcomeWindow;
 };
 

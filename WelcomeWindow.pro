@@ -21,10 +21,11 @@ SOURCES += \
     bank.cpp \
     board.cpp \
     chancecard.cpp \
-    game.cpp \
+    dice.cpp \
     gameboard.cpp \
     main.cpp \
     mainwindow.cpp \
+    movement.cpp \
     player.cpp \
     playerinfodisplay.cpp \
     property.cpp \
@@ -37,9 +38,10 @@ HEADERS += \
     bank.h \
     board.h \
     chancecard.h \
-    game.h \
+    dice.h \
     gameboard.h \
     mainwindow.h \
+    movement.h \
     player.h \
     playerinfodisplay.h \
     property.h \

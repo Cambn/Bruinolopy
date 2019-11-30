@@ -3,23 +3,28 @@
 
 #include "tile.h"
 
+class ChanceCard;
+
 #include <vector>
 
+class MainWindow;
+
 class Board {
-		
+friend Player;
+friend class ChanceTile;
+
 public:
-Board();
+Board(MainWindow* game = nullptr);
 
 Tile * getTile(int boardPos) ;
+//GameManager* getGM()const;
 
-/**
-checks if both utilities are owned by same player
-for use calculating rent paid when landing on a utility tile.
-*/
-bool checkUtilitiesSameOwner();
+void buildChancecards(MainWindow* game);
 
 private:
 std::vector <Tile*> tiles;
+std::vector <ChanceCard*> chanceCards;
+
 };
 
 #endif

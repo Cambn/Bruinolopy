@@ -1,6 +1,7 @@
 #ifndef WELCOMEWINDOW_H
 #define WELCOMEWINDOW_H
-#include <iostream>
+#include "statics.h"
+#include "subwindow.h"
 #include <QLineEdit>
 #include <QComboBox>
 #include <QStringList>
@@ -23,12 +24,15 @@ class WelcomeWindow : public QWidget
 public:
     void resizeEvent(QResizeEvent *evt);
     explicit WelcomeWindow(QWidget *parent = nullptr);
-    ~WelcomeWindow(){delete music; delete sound;}
+    ~WelcomeWindow(){delete rule;delete record;delete game_setup;}
 
 private:
     QPushButton* sound;
     QMediaPlayer* music;
     void GeneralBtnSetup(QPushButton* &b, QHBoxLayout* &btnlayout);
+    QWidget* rule;
+    QWidget* record;
+    subWindow *game_setup;
 
 signals:
 

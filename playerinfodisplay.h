@@ -3,22 +3,53 @@
 #include <QLabel>
 #include <QWidget>
 #include <QGridLayout>
-//everthing inside a template is a duck typed
+#include "statics.h"
+#include "player.h"
+
+//the PlayerInfoDisplay class controls the lower half of the mainwindow which is used for displaying player info
+
 class PlayerInfoDisplay : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PlayerInfoDisplay(QWidget *parent = nullptr);
-    //~PlayerInfoDisplay();
-    static QStringList PlayerNames();
-private:
-    QLabel *createPlayerHeader(const QString& text);
-    QLabel *createPlayerPixmap();
+    /*
+     * constructor
+     * @*parent: parent
+     * @i: number of players
+     * @n: a list of player names
+     * @ch: a list of charactors chosen by players
+     * @stat: a statics class
+     * return a mainwindow */
+    explicit PlayerInfoDisplay(QWidget *parent = nullptr, int i=4, const QStringList& n={}, const QStringList& ch={},const Statics& stat=Statics());
 
-    enum{BoardLength = 4};
-    QLabel *playertext[BoardLength];
-    QLabel *playerPixmap[BoardLength];
+    /**
+    constructor
+    @param players: player vector whose info we will display
+    @param parent: parent widget
+    */
+    PlayerInfoDisplay(std::vector <Player*> _players, QWidget* parent = nullptr);
+    ~PlayerInfoDisplay();
+
+private:
+
+    /* create a header for a player info block
+     * @text: the content of the header
+     * return a label of the header*/
+    QLabel *createPlayerHeader(const QString& text);
+
+    /* fill in a player info block
+     * @text: the content of the block
+     * return a label of the block*/
+    QLabel *createPlayerPixmap(Player* p);
+
+
+    const short int numofplayer;
+    QGridLayout* mainLayout;
+    QVector<QLabel *>playerPixmap;
+    std::vector<Player*> players;
+
+    friend class MainWindow;
 };
 
 #endif // PLAYERINFODISPLAY_H

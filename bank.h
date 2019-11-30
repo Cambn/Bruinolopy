@@ -3,8 +3,8 @@
 
 #include "statics.h"
 
-#include <vector> 
-#include <memory> 
+#include <vector>
+#include <memory>
 
 
 class Player;
@@ -16,14 +16,11 @@ public:
 
 friend Property;
 
-Bank() {}
-//	moneyRemaining (Statics::getMONEY_MAX()- (Statics::getSTARTING_AMOUNT() * players.size())),
-//    housesRemaining(Statics::getHOUSES_MAX()),
-//	hotelsRemaining(Statics::getHOTELS_MAX())
+Bank(const Statics& seed, const size_t numPlayers);
 
 
 /**
-Bank pays a player from its moneyRemaining 
+Bank pays a player from its moneyRemaining
 @param payee player being paid
 @return true if successful
 */
@@ -52,7 +49,6 @@ bool hotelsLeft() const;
 
 private:
 int bankMoney;
-std::vector <Property*> properties;
 int housesRemaining;
 int hotelsRemaining;
 

@@ -3,8 +3,10 @@
 
 #include <string>
 
+class MainWindow;
 class Player;
-class QWidget;
+
+#include <QWidget>
 
 class Tile  {
 
@@ -12,9 +14,9 @@ public:
     friend class Board;
 
     Tile ()            : tileNumber(0)         {}
-    Tile (int _tileNum, Board* _board): tileNumber(_tileNum), board(_board)  {}
+    Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board), game(_game)  {}
 
-	
+
     //all comparisons just compare the tile number.  so we can sort tiles, if necessary.
     bool operator > (const Tile& oth) const;
     bool operator < (const Tile& oth) const;
@@ -22,6 +24,10 @@ public:
     bool operator !=(const Tile& oth) const;
     bool operator >=(const Tile& oth) const;
 
+    /**
+    @return pointer to QWidget displaying the tile AS IT WILL APPEAR ON THE BOARD
+    */
+    QPixmap* generateBoardView() const;
 
     /**
     Call to implement desired behavior of a given tile.
@@ -31,6 +37,7 @@ public:
 
     /**
     @return pointer to QWidget displaying the tile.
+        intended to be a closer up view than the board view;
     */
     virtual QWidget* generateView() const= 0;
 
@@ -39,11 +46,12 @@ public:
 
 protected:
 
-	int tileNumber;
+    int tileNumber;
     Board* board;
-
+    MainWindow* game;
 
 };
+
 
 /**
 abstract base class for tiles that can be purchased/ owned.
@@ -54,7 +62,7 @@ class ownableTile : public Tile {
 
 public:
 
-    ownableTile(int _tileNum, Board* _board);
+    ownableTile(int _tileNum, Board* _board, MainWindow* _game);
 
     virtual void landingEvent( Player& currPlayer) override;
 
@@ -69,6 +77,11 @@ public:
     @return owner of this tile
     */
     Player* propOwner() const;
+
+    /**
+    @return cost of this tile
+    */
+    virtual int getCost() const = 0;
 
     /**
     Changes owner of this tile to specified player.
@@ -89,10 +102,15 @@ private:
 
 class eventTile : public Tile {
 public:
+    eventTile (int _tileNum, Board* _board, MainWindow* _game): Tile(_tileNum, _board, _game) {}
 
+    //default behavior is to do nothing so we don't have to override for landing on Start tile.
+    virtual void landingEvent(Player& ) override {}
 
     virtual ~eventTile() override = default;
 
 };
+
+
 
 #endif

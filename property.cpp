@@ -4,13 +4,17 @@
 #include "QLandingWindows.h"
 
 #include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QPainter>
 #include <QRect>
 #include <sstream>
 
+class MainWindow;
+
 using std::string; using std::stringstream;
 
-Property::Property(const string& formattedLine, Board* _board) : ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board), houseCount(0)                                     {
+Property::Property(const string& formattedLine, Board* _board, MainWindow* _game) : ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board,_game), houseCount(0)                                     {
     stringstream buffer(formattedLine);
     string temp = "";
     stringstream vals;
@@ -48,55 +52,84 @@ QWidget*  Property::generateView() const{
 
 
 bool Property::buildHouse(Bank* bank) {
-	if (houseCount<4){ //trying to build a house
-		if (bank->housesLeft() && (owner->playerMoney >=houseCost)){//bank has houses left to build and owner has enough money
+    if (houseCount<4){ //trying to build a house
+        if (bank->housesLeft() && (owner->playerMoney >=houseCost)){//bank has houses left to build and owner has enough money
             bank->take(*owner, houseCost);//charge player for house
-			++houseCount;
+            ++houseCount;
             --bank->housesRemaining;
-			return true;
-		}
-		else {return false;} //no houses left do nothing
-		//TODO: figure out how to output error message 
-		
-	}
-	else if (houseCount==4 ) {//building a hotel
+            return true;
+        }
+        else {return false;} //no houses left do nothing
+        //TODO: figure out how to output error message
+
+    }
+    else if (houseCount==4 ) {//building a hotel
         if(bank->hotelsLeft() && (owner->playerMoney >=houseCost)) {//hotels left and owner has enough money
         bank->take(*owner,houseCost);//charge owner for a hotel
-		++houseCount;
+        ++houseCount;
         --bank->hotelsRemaining;
-		return true;
-		}
-		else {return false;} 
-		//TODO:figure out how to output error messsage
-		
-	}
-	else { return false;} 
-	//TODO: figure out how to output error message 
-	
+        return true;
+        }
+        else {return false;}
+        //TODO:figure out how to output error messsage
+
+    }
+    else { return false;}
+    //TODO: figure out how to output error message
+
 }
 
 int Property::currentRent() const {
     if(propOwner()) {//if property is owned
         return rents[houseCount]; //return rent corresponding to current number of houses
-	}
-	return 0; //if unowned, no rent is due.
+    }
+    return 0; //if unowned, no rent is due.
 }
-
+//
+//
 //Property::View class stuff
-
-Property::View::View(const Property& prop)  {
-
-
-    //std::string fileName= "Assets\\Properties\\Prop"+std::to_string(prop.tileNumber)+".png";
-    //QString qfileName(QString::fromStdString(fileName));
-    //image = QPixmap(qfileName);
-
+//
+//
+Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  {
 
 // :/properties/blueProperty.png
     std::string fileName= ":/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
     image = QPixmap(qfileName);
-    setMinimumSize(320,384);
+    setFixedSize(320,384);
+    //make label for name
+    string temp = prop.name;
+    QFont font("Kabel Heavy",29);
+    QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+    _name->setFont(font);
+    mainLayout->addWidget(_name,1,Qt::AlignHCenter);
+
+    //make label for cost
+    temp = "Cost: $"+ std::to_string(prop.cost)+"\n";
+    font = QFont("Kabel Heavy",20);
+    QLabel* line2 = new QLabel(QString::fromStdString(temp),this);
+    line2->setFont(font);
+    mainLayout->addWidget(line2, 4, Qt::AlignHCenter );
+    //make label for the rest
+    temp = "\t      Rent: $"+std::to_string(prop.rents[0])+ "\n" +
+           "With 1 House\t\t$"+std::to_string(prop.rents[1])+".\n" +
+           "With 2 Houses\t\t$"+std::to_string(prop.rents[2])+".\n" +
+           "With 3 Houses\t\t$"+std::to_string(prop.rents[3])+".\n" +
+           "With 4 Houses\t\t$"+std::to_string(prop.rents[4])+".\n" +
+           "           With HOTEL     $"+std::to_string(prop.rents[5])+".\n";
+
+    QLabel* rentsBlock = new QLabel(QString::fromStdString(temp),this);
+    font = QFont("Kabel Heavy", 15);
+    rentsBlock->setFont(font);
+    mainLayout->addWidget(rentsBlock,1,Qt::AlignHCenter);
+
+    temp =  "      Houses cost $"+std::to_string(prop.houseCost)+". each\n"+
+            "Hotels cost $"+std::to_string(prop.houseCost)+". plus 4 houses\n" ;
+    QLabel* bottomBlock = new QLabel(QString::fromStdString(temp),this);
+    bottomBlock->setFont(font);
+    mainLayout->addWidget(bottomBlock,1,Qt::AlignHCenter);
+
+
 }
 
 void Property::View::paintEvent(QPaintEvent *){
@@ -105,15 +138,8 @@ void Property::View::paintEvent(QPaintEvent *){
 
 
     p.drawPixmap(QRect(0,0,320,384),image,QRect(0,0,160,192));
+
 }
-
-//
-// Utility tile stuff
-//
-
-Utility::Utility(const std::string& formattedLine, Board* _board):
-    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board)
-{}
 
 
 /**
@@ -121,9 +147,9 @@ Utility::Utility(const std::string& formattedLine, Board* _board):
 * Railroad Stuff
 *
 */
-Railroad::Railroad(const std::string& formattedLine, Board* _board):
-    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board),
-    cost(200), name(formattedLine.substr(formattedLine.rfind('\t')))
+Railroad::Railroad(int _tileNum, std::string _name, Board* _board, MainWindow* _game):
+    ownableTile(_tileNum ,_board, _game),
+    cost(200), name(std::move(_name))
 {}
 
 int Railroad::checkOwnerRailroads(const Player& player) const{
@@ -141,9 +167,48 @@ int Railroad::currentRent() const {
 }
 
 QWidget* Railroad::generateView() const {
-    return new QWidget();
+    return new View(*this);
 }
 
+
+Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
+    QString qfileName(":/properties/railroadProperty.png");
+    image = QPixmap(qfileName);
+
+    setFixedSize(320,384);
+
+    mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
+
+    string temp(rr.getName()+" Bus Line");
+    QFont font("Kabel Heavy",20);
+    QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+    _name->setStyleSheet("font-weight: bold ; color: black");
+    _name->setFont(font);
+    mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
+
+    temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
+    QLabel* _cost = new QLabel(QString::fromStdString(temp));
+    font = QFont("Kabel Heavy",15);
+    _cost->setFont(font);
+    mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
+
+
+    temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
+            "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
+    font = QFont("Kabel Heavy",15);
+    QLabel* block = new QLabel(QString::fromStdString(temp),this);
+    block->setFont(font);
+    mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
+
+}
+
+
+void Railroad::View::paintEvent(QPaintEvent*) {
+    QPainter p(this);
+
+
+    p.drawPixmap(QRect(0,0,320,384),image,QRect(0,0,160,192));
+}
 //
 //old code
 //
@@ -165,3 +230,12 @@ QWidget* Railroad::generateView() const {
 //    }
 
 //}
+
+//
+// Utility tile stuff
+//
+
+//Utility::Utility(const std::string& formattedLine, Board* _board, MainWindow* game):
+//    ownableTile(std::stoi(formattedLine.substr(formattedLine.find('\t'),2)),_board,game)
+//{}
+
