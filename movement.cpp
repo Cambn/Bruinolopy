@@ -4,7 +4,9 @@
 #include <QDebug>
 
 Movement::Movement(Player* _player, QWidget *parent,int order, int money, QString address) :
+
     QWidget(parent),position(0),order(order), player(_player)
+
 {
     //modify the lower right cornor index by requirement
     int y_max=470;
