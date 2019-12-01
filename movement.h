@@ -10,6 +10,7 @@ class Player;
 
 //the movement class is part of the player class
 //it tracks the dice, the position
+class Player;
 
 class Movement : public QWidget
 {
@@ -17,7 +18,9 @@ class Movement : public QWidget
 
 public:
     friend class GameBoard;
-    explicit Movement(Player* _player,QWidget *parent = nullptr,int order=0,int money=0, QString address=":/fig/gb_panda.png");
+
+    explicit Movement(Player* _player, QWidget *parent = nullptr,int order=0,int money=0, QString address=":/fig/gb_panda.png");
+
     Dice* d;//a shallow copy to maindice
     void paintEvent(QPaintEvent *event) override;
     void increaseMoney(int a){money+=a;}
