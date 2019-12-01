@@ -1,9 +1,10 @@
 #include "movement.h"
+#include "bank.h"
 #include "player.h"
 #include <QDebug>
 
 Movement::Movement(Player* _player, QWidget *parent,int order, int money, QString address) :
-    QWidget(parent),position(0),order(order),money(money), player(_player)
+    QWidget(parent),position(0),order(order), player(_player)
 {
     //modify the lower right cornor index by requirement
     int y_max=470;
@@ -57,8 +58,8 @@ void Movement::walkbydice(){
     timer->start(250);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(one_step()));
     position+=d->getresult();//need to update pos in walkbydice otherwise when the signal for land() emits the position is still the initial one
-    if (position/Axis_length<(position+d->getresult())/Axis_length)
-        money+=increment;
+    if (position/Axis_length < (position + d->getresult())/Axis_length)
+        player->bank->pay(*player,increment); //pay movement's player the proper amount of money
 }
 
 void Movement::one_step(){

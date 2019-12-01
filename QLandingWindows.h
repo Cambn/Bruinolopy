@@ -23,9 +23,9 @@ Q_OBJECT
 
 public:
 
-QLandingWindow(QObject* _game, QWidget* parent = nullptr);
+QLandingWindow(QWidget* parent = nullptr);
 
-QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* parent = nullptr);
+QLandingWindow(QWidget* _mainWidget, QWidget* parent = nullptr);
 
 
 virtual ~QLandingWindow() = default;
@@ -51,7 +51,6 @@ class QLandingOptions : public QLandingWindow {
 public :
     QLandingOptions(QWidget* _mainWidget,
                     const QString& _prompt,
-                    QObject* _game,
                     const QString& leftOpt = "Yes",
                     const QString& rightOpt= "No",
                     QWidget* parent = nullptr);
@@ -60,7 +59,7 @@ public :
     QPushButton* getLeft() const{return left;  }
     QPushButton* getRight()const{return right; }
 
-    ~QLandingOptions() override;
+    ~QLandingOptions() override = default;
 private:
     QLabel* prompt;
     QPushButton* left;
@@ -76,11 +75,11 @@ class QLandNoOptions: public QLandingWindow {
 public:
     QLandNoOptions(QWidget* _mainWidget,
                    const QString& _message,
-                   QObject* _game,
+
                    const QString& buttonText= "Okay",
                    QWidget* parent = nullptr);
 
-    ~QLandNoOptions() override;
+    ~QLandNoOptions() override = default;
 
 private:
     QLabel* message;

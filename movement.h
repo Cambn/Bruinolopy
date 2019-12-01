@@ -20,8 +20,8 @@ public:
     explicit Movement(Player* _player,QWidget *parent = nullptr,int order=0,int money=0, QString address=":/fig/gb_panda.png");
     Dice* d;//a shallow copy to maindice
     void paintEvent(QPaintEvent *event) override;
-    void increaseMoney(int a){money+=a;}
-    int getmoney() const {return money;}
+//    void increaseMoney(int a){money+=a;}
+//    int getmoney() const {return money;}
     int getpos() const {return position%Axis_length;}
     //void changePos(int a){position=a;}
 
@@ -39,7 +39,6 @@ private:
     QRect *ImgRect;//the size of the drawn pic
     int position;
     int order;//modify the x value to avoid icon shown overlapped
-    int money;
     const double oldboard=4;
     double newboard=5;
     int yAxis[16];
@@ -49,7 +48,7 @@ private:
     int height=120*(oldboard/newboard);
     int step_walked=0;
     QString Img_address;
-    const int increment=1000;//if bank has money
+    const int increment=200;//amount collected on passing tile0.
     Player* player;
 };
 

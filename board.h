@@ -21,6 +21,8 @@ Tile * getTile(int boardPos) ;
 
 void buildChancecards(MainWindow* game);
 
+~Board();
+
 private:
 std::vector <Tile*> tiles;
 std::vector <ChanceCard*> chanceCards;

@@ -175,11 +175,11 @@ bool Player::eraseTempObject(QObject* temp) {
 void Player::buyBankProp() {
     if(buyPropertyBank()){//able to buy property
     QLandNoOptions* successMessage = new QLandNoOptions(playerProperties.back()->generateView(), //newest property will be at back of player's properties
-                                                         "Property purchased!",this) ;
+                                                         "Property purchased!") ;
     }
     else {
     QLandNoOptions* failureMessage= new QLandNoOptions(getTile()->generateView(),
-                                                       "Unable to purchase property (:/)", this);
+                                                       "Unable to purchase property (:/)");
         emit buyPropFail();
     }
 
@@ -189,4 +189,23 @@ void Player::buyBankProp() {
 void Player::payRent() {
     ownableTile* prop = dynamic_cast<ownableTile*> (getTile()); //prop is the tile the player is on.
     prop->propOwner()->take(this, prop->currentRent()); //owner of the property that the curr player is on takes appropriate amount of money from curr player .
+}
+
+void Player::buildHouse()  {
+    {
+        if (dynamic_cast<Property*>( getTile() )){//if we're on a property
+            Property* currProp = dynamic_cast<Property*>( getTile() );//cast currTile to property
+            if(currProp->buildHouse(bank)){//house build successful.
+                QLandNoOptions* successMessage = new QLandNoOptions(getTile()->generateView(),
+                                                                    "Property improved !");
+            }
+            else {//house build unsuccssful
+                QLandNoOptions* failureMessage = new QLandNoOptions(getTile()->generateView(),
+                                                                    "Property improved!");
+            }
+
+        }
+        else
+            throw std::logic_error("buildHouse on non property tile");
+    }
 }

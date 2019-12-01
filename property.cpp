@@ -60,7 +60,7 @@ bool Property::buildHouse(Bank* bank) {
             return true;
         }
         else {return false;} //no houses left do nothing
-        //TODO: figure out how to output error message
+
 
     }
     else if (houseCount==4 ) {//building a hotel
@@ -71,7 +71,7 @@ bool Property::buildHouse(Bank* bank) {
         return true;
         }
         else {return false;}
-        //TODO:figure out how to output error messsage
+
 
     }
     else { return false;}

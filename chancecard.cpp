@@ -14,7 +14,7 @@ void ChanceTile::landingEvent(Player &currPlayer) {
 
     cardNum = rand() % board->chanceCards.size();
 
-    board -> chanceCards.at(rand() % board->chanceCards.size()) ->conduct_change(currPlayer); //draw random card from the deck, activate it.
+    board -> chanceCards.at(cardNum) ->conduct_change(currPlayer); //draw random card from the deck, activate it.
 
 //    QLandNoOptions* popup = new QLandNoOptions (generateView(),
 //                                                "",
@@ -67,6 +67,8 @@ effect(std::move(f))
 
 
 void ChanceCard::conduct_change(Player& currPlayer){
+    content->show();
+
 
     effect(&currPlayer);
 

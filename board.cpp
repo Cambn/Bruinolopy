@@ -174,4 +174,9 @@ void Board::buildChancecards(MainWindow* game) {
 
 }
 
-
+Board::~Board() {
+    for (auto thing : chanceCards)
+        delete thing;
+    for (auto thing : tiles)
+        delete thing;
+}

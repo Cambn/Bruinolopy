@@ -57,11 +57,11 @@ MainWindow::MainWindow(QWidget *parent, int num, const QStringList& n, const QSt
 }
 
 void MainWindow::infoupdate(int idx){
-    playerArea->playerPixmap[idx]->setText("Charactor: "+playerArea->playerlist[idx]->getcharactor()+
-                   "\nMoney: "+QString::number(playerArea->playerlist[idx]->money())+
-                   "\nProperties:"+QString::number(playerArea->playerlist[idx]->getProp())+
-                   "\nHouses:"+QString::number(playerArea->playerlist[idx]->getHouse())+
-                   "\nHotels:"+QString::number(playerArea->playerlist[idx]->getHotel()));
+    playerArea->playerPixmap[idx]->setText("Charactor: "+players[idx]->getcharactor()+
+                   "\nMoney: "+QString::number(players[idx]->money())+
+                   "\nProperties:"+QString::number(players[idx]->getProp())+
+                   "\nHouses:"+QString::number(players[idx]->getHouse())+
+                   "\nHotels:"+QString::number(players[idx]->getHotel()));
     update();
 }
 
@@ -91,14 +91,17 @@ void MainWindow::actionupdate(int idx){
 
 void MainWindow::playerwalk()
     {
+    bool test = gameover();
 
     if(!gameover())
     {
+        int currPlayer = turn%numofplayer;
         if(looserlist[turn%numofplayer]==1){
             turn+=1;
             playerwalk();}
         else
-            {playerArea->playerlist[turn%numofplayer]->getmovement()->walkbydice();//turn()
+            {players[turn%numofplayer]->getmovement()->walkbydice();//turn()
+//            QObject::connect(this,SIGNAL(movehappened),this->players[currPlayer], SLOT(land()));
             emit movehappened(turn%numofplayer);
             infoupdate(turn%numofplayer);
             turn+=1;

@@ -180,6 +180,8 @@ public slots:
     */
     void land () ;
 
+    void buildHouse() ;
+
 signals:
     void buyPropFail();
 private:
