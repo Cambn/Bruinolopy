@@ -6,9 +6,9 @@
 #include <QMainWindow>
 #include <QGroupBox>
 #include <QBoxLayout>
+
 #include "gameboard.h"
 #include "playerinfodisplay.h"
-#include "chancecard.h"
 #include "movement.h"
 #include "statics.h"
 #include "dice.h"
@@ -18,7 +18,9 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+    friend class ChanceCard;
+    friend Board;
+    friend Bank;
 public:
     /*
      * constructor
@@ -28,8 +30,8 @@ public:
      * @ch: a list of charactors chosen by players
      * @stat: a statics class
      * @return a mainwindow */
-
     MainWindow(QWidget *parent = nullptr, int i=4, const QStringList& n={}, const QStringList& ch={},const Statics& stat=Statics());
+
     bool gameover();
     void infoupdate(int idx);//repaint playerinfo
     void gameStart();
@@ -45,15 +47,22 @@ public slots:
 
 
 private:
+    //visual elements
     GameBoard *boardArea;
     PlayerInfoDisplay *playerArea;
     Dice* maindice=new Dice(this);
+
+    //player stuff
     const int numofplayer;
     QStringList names;
     QStringList charactors;
-    Statics s;
+    std::vector<Player*> players;
+
+    //game info stuff
     int turn;
     int looserlist[4]={0,0,0,0};
-    ChanceCard* chancecard=new ChanceCard(this);
+    Bank* bank;
+    Board* board;
+
 };
 #endif // MAINWINDOW_H

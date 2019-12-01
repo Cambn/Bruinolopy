@@ -24,10 +24,10 @@ public:
     bool operator !=(const Tile& oth) const;
     bool operator >=(const Tile& oth) const;
 
-    /**
-    @return pointer to QWidget displaying the tile AS IT WILL APPEAR ON THE BOARD
-    */
-    QPixmap* generateBoardView() const;
+//    /**
+//    @return pointer to QWidget displaying the tile AS IT WILL APPEAR ON THE BOARD
+//    */
+//    QPixmap* generateBoardView() const;
 
     /**
     Call to implement desired behavior of a given tile.

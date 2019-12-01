@@ -17,7 +17,7 @@ public:
 Board(MainWindow* game = nullptr);
 
 Tile * getTile(int boardPos) ;
-//GameManager* getGM()const;
+
 
 void buildChancecards(MainWindow* game);
 

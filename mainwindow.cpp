@@ -1,24 +1,120 @@
 #include "mainwindow.h"
-//#include "ui_mainwindow.h"
+#include "bank.h"
+#include "board.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+#include <QDebug>
+
+MainWindow::MainWindow(QWidget *parent, int num, const QStringList& n, const QStringList& ch, const Statics& stat)
+    : QMainWindow(parent),numofplayer(num),names(n),charactors(ch),turn(0),
+      players(numofplayer,nullptr),
+      bank(new Bank(stat,numofplayer)),
+      board(new Board(this))
 {
-    QWidget *centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
+    //first construct players
+    for (int i = 0 ; i<numofplayer ; ++i  ) {
+        players.at(i) = new Player( n[i],
+                                    ch[i],
+                                    numofplayer,
+                                    stat.getSTARTING_AMOUNT(),
+                                    bank,
+                                    board                   );
 
-    QGridLayout *mainLayout = new QGridLayout(centralWidget);
+    }
+    //now that everything else is set up, build chance deck
+    board->buildChancecards(this);
+
+    //create the upper board /a map
     QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));
     boardArea = new GameBoard(boardGroupBox);
     QVBoxLayout *boardLayout = new QVBoxLayout(boardGroupBox);
     boardLayout ->addWidget(boardArea);
 
-    mainLayout ->addWidget(boardGroupBox,0,0,1,2);
-
+    //create the lower board /an info section
     QGroupBox *playerGroupBox = new QGroupBox(tr("Player"));
-    playerArea = new PlayerInfoDisplay(playerGroupBox);
-    QVBoxLayout *playerLayout = new QVBoxLayout(playerGroupBox);
-    playerLayout ->addWidget(playerArea);
-    mainLayout ->addWidget(playerGroupBox,1,0,1,2);
+    playerArea = new PlayerInfoDisplay(players,playerGroupBox); //STOPPED HERE
 
+    //set layout
+    QWidget *centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    mainLayout ->addWidget(boardGroupBox);
+    QHBoxLayout *playerLayout = new QHBoxLayout(playerGroupBox);
+    playerLayout ->addWidget(playerArea);
+    mainLayout ->addWidget(playerGroupBox);
+
+    //test movement
+
+    for (int i=0; i<numofplayer;i++){
+        playerArea->playerlist[i]->getmovement()->d=maindice;
+        playerArea->playerlist[i]->getmovement()->setParent(boardArea);
+    }
+    QHBoxLayout *dicelayout = new QHBoxLayout;
+    dicelayout->addWidget(maindice);
+    playerLayout->addLayout(dicelayout);
+
+    QObject::connect(maindice->next,SIGNAL(clicked()),this,SLOT(playerwalk()));
+    QObject::connect(this,SIGNAL(movehappened(int)),this,SLOT(actionupdate(int)));
 }
+
+void MainWindow::infoupdate(int idx){
+    playerArea->playerPixmap[idx]->setText("Charactor: "+playerArea->playerlist[idx]->getcharactor()+
+                   "\nMoney: "+QString::number(playerArea->playerlist[idx]->money())+
+                   "\nProperties:"+QString::number(playerArea->playerlist[idx]->getProp())+
+                   "\nHouses:"+QString::number(playerArea->playerlist[idx]->getHouse())+
+                   "\nHotels:"+QString::number(playerArea->playerlist[idx]->getHotel()));
+    update();
+}
+
+bool MainWindow::gameover(){
+    int temp=0;
+    for (int i=0; i<numofplayer; i++)
+    {
+        if (playerArea->playerlist[i]->money()>0)
+            temp+=1;
+        else
+            looserlist[i]=1;
+    }
+
+    if(temp==1)
+        return true;
+    else
+        return false;
+}
+
+
+void MainWindow::actionupdate(int idx){
+//    int position=playerArea->playerlist[idx]->getPos();
+//    if(position==12){
+//        chancecard->conduct_change(playerArea->playerlist[idx]);
+//    }
+}
+
+void MainWindow::playerwalk()
+    {
+
+    if(!gameover())
+    {
+        if(looserlist[turn%numofplayer]==1){
+            turn+=1;
+            playerwalk();}
+        else
+            {playerArea->playerlist[turn%numofplayer]->getmovement()->walkbydice();//turn()
+            emit movehappened(turn%numofplayer);
+            infoupdate(turn%numofplayer);
+            turn+=1;
+        }
+    }
+    else //gameover
+    {
+        int winner=0;
+        for (int i=0; i<4; i++)
+        {if(!looserlist[i]){
+                winner=i;
+                break;
+            }}
+        maindice->infobar->setText("Game is over.\n"+playerArea->playerlist[winner]->getname()+" wins.");
+        repaint();
+        return;}
+    }
+
+

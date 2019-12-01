@@ -35,7 +35,7 @@ WelcomeWindow::WelcomeWindow(QWidget *parent) : QWidget(parent)
     const QSize soundbutton_size= QSize(50,50);
     sound->setMinimumSize(soundbutton_size);
     sound->move(50,25);
-    QPixmap soundpic(":/fig/sound");
+    QPixmap soundpic(":/images/Misc/sound.png");
     soundpic.scaled(size(),Qt::IgnoreAspectRatio);
     QIcon SoundIcon(soundpic);
     sound->setIcon(SoundIcon);
@@ -52,14 +52,14 @@ void WelcomeWindow::soundclick(){
 
     if (!music->isMuted()){
         music->setMuted(1);
-        QPixmap mutepic(":/fig/mute");
+        QPixmap mutepic(":/images/Misc/mute.png");
         mutepic.scaled(size(),Qt::IgnoreAspectRatio);
         QIcon MuteIcon(mutepic);
         sound->setIcon(MuteIcon);}
     else
     {
         music->setMuted(0);
-        QPixmap soundpic(":/fig/sound");
+        QPixmap soundpic(":/images/Misc/sound.png");
         soundpic.scaled(size(),Qt::IgnoreAspectRatio);
         QIcon SoundIcon(soundpic);
         sound->setIcon(SoundIcon);
@@ -73,7 +73,7 @@ void WelcomeWindow::GeneralBtnSetup(QPushButton* &b, QHBoxLayout* &btnlayout){
     b->setMinimumSize(b_size);
     b->setFont(buttonfont);
     btnlayout->addWidget(b);
-    QPixmap pawpic(":/fig/paw");
+    QPixmap pawpic(":/images/Misc/paw.png");
     pawpic.scaled(size(),Qt::IgnoreAspectRatio);
     QIcon PawIcon(pawpic);
     b->setIcon(PawIcon);
@@ -160,7 +160,7 @@ void WelcomeWindow::GoSettingPage(){
     this->hide();
     game_setup->show();
 
-    QPixmap bkgnd(":/fig/setting_bkgd.jpg");
+    QPixmap bkgnd(":/images/Misc/records_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette(); //copy current, not create new
     p.setBrush(QPalette::Background, bkgnd);
@@ -172,7 +172,7 @@ void WelcomeWindow::GoRulePage(){
     rule = new QWidget;
     rule->setWindowTitle("Rule");
     rule->setFixedSize(1200,900);
-    QPixmap bkgnd(":/fig/rules_bkgd.jpg");
+    QPixmap bkgnd(":/images/Misc/rules.png");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette();
     p.setBrush(QPalette::Background, bkgnd);
@@ -185,7 +185,7 @@ void WelcomeWindow::GoRecordsPage(){
     record->setWindowTitle("Records");
     record->show();
     record->setFixedSize(1200,900);
-    QPixmap bkgnd(":/fig/records_bkgd.jpg");
+    QPixmap bkgnd(":/images/Misc/records_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette(); //copy current, not create new
     p.setBrush(QPalette::Background, bkgnd);
@@ -196,7 +196,7 @@ void WelcomeWindow::GoRecordsPage(){
 //reset the background size each time the window size changed
 void WelcomeWindow::resizeEvent(QResizeEvent *)
 {
-QPixmap bkgnd(":/fig/uclaCover.jpg");
+QPixmap bkgnd(":/images/Misc/uclaCover.jpg");
 bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
 QPalette p = palette(); //copy current, not create new
 p.setBrush(QPalette::Background, bkgnd);

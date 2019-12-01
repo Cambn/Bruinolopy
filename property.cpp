@@ -93,7 +93,7 @@ int Property::currentRent() const {
 Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  {
 
 // :/properties/blueProperty.png
-    std::string fileName= ":/properties/"+prop.color+"Property.png";
+    std::string fileName= ":/images/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
     image = QPixmap(qfileName);
     setFixedSize(320,384);
@@ -172,7 +172,7 @@ QWidget* Railroad::generateView() const {
 
 
 Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
-    QString qfileName(":/properties/railroadProperty.png");
+    QString qfileName(":/images/properties/railroadProperty.png");
     image = QPixmap(qfileName);
 
     setFixedSize(320,384);

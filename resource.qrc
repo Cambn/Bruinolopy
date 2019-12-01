@@ -1,77 +1,55 @@
 <RCC>
-    <qresource prefix="/fig">
-        <file>uclaCover.jpg</file>
-        <file>paw.png</file>
-        <file>mute.png</file>
-        <file>sound.png</file>
-        <file>brownbear.png</file>
-        <file>panda.png</file>
-        <file>polarbear.png</file>
-        <file>records_bkgd.jpg</file>
-        <file>rules.png</file>
-        <file>rules_bkgd.jpg</file>
-        <file>setting_bkgd.jpg</file>
-    </qresource>
     <qresource prefix="/sound">
         <file>welcomemusic.mp3</file>
     </qresource>
-    <qresource prefix="/properties">
-        <file>blueProperty.png</file>
-        <file>greenProperty.png</file>
-        <file>lightBlueProperty.png</file>
-        <file>magentaProperty.png</file>
-        <file>orangeProperty.png</file>
-        <file>purpleProperty.png</file>
-        <file>redProperty.png</file>
-        <file>yellowProperty.png</file>
-    </qresource>
     <qresource prefix="/">
-        <file>images/bear.png</file>
-        <file>images/blueProperty.png</file>
-        <file>images/brownbear.png</file>
-        <file>images/chance_deco.png</file>
-        <file>images/chancecard.png</file>
-        <file>images/dice1.png</file>
-        <file>images/dice2.png</file>
-        <file>images/dice3.png</file>
-        <file>images/dice4.png</file>
-        <file>images/dice5.png</file>
-        <file>images/dice6.png</file>
-        <file>images/dicksonCourt.jpg</file>
-        <file>images/Fowler.png</file>
-        <file>images/gb_brown bear.png</file>
-        <file>images/gb_grey bear.png</file>
-        <file>images/gb_panda.png</file>
-        <file>images/gb_polar bear.png</file>
-        <file>images/greenProperty.png</file>
-        <file>images/greybear.png</file>
-        <file>images/InstramuralField.png</file>
-        <file>images/Jail.png</file>
-        <file>images/Kerckhoff.png</file>
-        <file>images/lightBlueProperty.png</file>
-        <file>images/magentaProperty.png</file>
-        <file>images/Mathias Garden.png</file>
-        <file>images/msb.png</file>
-        <file>images/MusicB.jpg</file>
-        <file>images/mute.png</file>
-        <file>images/orangeProperty.png</file>
-        <file>images/panda.png</file>
-        <file>images/paw.png</file>
-        <file>images/polarbear.png</file>
-        <file>images/powell.jpg</file>
-        <file>images/purpleProperty.png</file>
-        <file>images/Railway.png</file>
-        <file>images/records_bkgd.jpg</file>
-        <file>images/redProperty.png</file>
-        <file>images/rolling.gif</file>
-        <file>images/royceHall.png</file>
-        <file>images/rules.png</file>
-        <file>images/rules_bkgd.jpg</file>
-        <file>images/ScreenShot.png</file>
-        <file>images/setting_bkgd.jpg</file>
-        <file>images/SociologyB.jpg</file>
-        <file>images/sound.png</file>
-        <file>images/uclaCover.jpg</file>
-        <file>images/yellowProperty.png</file>
+        <file>images/Misc/brownbear.png</file>
+        <file>images/Misc/chance_deco.png</file>
+        <file>images/Misc/dice1.png</file>
+        <file>images/Misc/dice2.png</file>
+        <file>images/Misc/dice3.png</file>
+        <file>images/Misc/dice4.png</file>
+        <file>images/Misc/dice5.png</file>
+        <file>images/Misc/dice6.png</file>
+        <file>images/Misc/gb_brown bear.png</file>
+        <file>images/Misc/gb_grey bear.png</file>
+        <file>images/Misc/gb_panda.png</file>
+        <file>images/Misc/gb_polar bear.png</file>
+        <file>images/Misc/greybear.png</file>
+        <file>images/Misc/mute.png</file>
+        <file>images/Misc/panda.png</file>
+        <file>images/Misc/paw.png</file>
+        <file>images/Misc/polarbear.png</file>
+        <file>images/Misc/records_bkgd.jpg</file>
+        <file>images/Misc/rolling.gif</file>
+        <file>images/Misc/rules.png</file>
+        <file>images/Misc/rules_bkgd.jpg</file>
+        <file>images/Misc/ScreenShot.png</file>
+        <file>images/Misc/setting_bkgd.jpg</file>
+        <file>images/Misc/sound.png</file>
+        <file>images/Misc/uclaCover.jpg</file>
+        <file>images/properties/blueProperty.png</file>
+        <file>images/properties/greenProperty.png</file>
+        <file>images/properties/lightBlueProperty.png</file>
+        <file>images/properties/magentaProperty.png</file>
+        <file>images/properties/orangeProperty.png</file>
+        <file>images/properties/purpleProperty.png</file>
+        <file>images/properties/redProperty.png</file>
+        <file>images/properties/yellowProperty.png</file>
+        <file>images/tiles/bear.png</file>
+        <file>images/tiles/chancecard.png</file>
+        <file>images/tiles/dicksonCourt.jpg</file>
+        <file>images/tiles/Fowler.png</file>
+        <file>images/tiles/InstramuralField.png</file>
+        <file>images/tiles/Jail.png</file>
+        <file>images/tiles/Kerckhoff.png</file>
+        <file>images/tiles/Mathias Garden.png</file>
+        <file>images/tiles/msb.png</file>
+        <file>images/tiles/MusicB.jpg</file>
+        <file>images/tiles/powell.jpg</file>
+        <file>images/tiles/Railway.png</file>
+        <file>images/tiles/royceHall.png</file>
+        <file>images/tiles/SociologyB.jpg</file>
+        <file>images/properties/railroadProperty.png</file>
     </qresource>
 </RCC>

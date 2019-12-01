@@ -24,12 +24,13 @@ bool Tile::operator!=(const Tile& oth) const {
     return !(*this == oth);
 }
 
-QPixmap* Tile::generateBoardView() const {
-    //:/tile/Tile/tile1.png
-    std::string filename= ":/tile/Tile/tile"+(std::to_string(tileNumber))+".png";
-    QString qfileName(QString::fromStdString(std::move(filename)));
-   return new QPixmap(qfileName);
-}
+//QPixmap* Tile::generateBoardView() const {
+////    //:/tile/Tile/tile1.png
+////    std::string filename= ":/tile/Tile/tile"+(std::to_string(tileNumber))+".png";
+////    QString qfileName(QString::fromStdString(std::move(filename)));
+////   return new QPixmap(qfileName);
+//    return new QWidget(game);
+//}
 //
 //
 //OwnableTile Stuff

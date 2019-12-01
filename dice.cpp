@@ -14,7 +14,7 @@ Dice::Dice(QWidget *parent) : QWidget(parent){
    infobar->setFixedSize(300,40);
    rollStart = new QPushButton("Roll",this);
    rollStart->setFixedSize(100,90);
-   animation = new QMovie(":/dice/rolling.gif");
+   animation = new QMovie(":/images/Misc/rolling.gif");
    animatedisplay = new QLabel(this);
    animatedisplay->setFixedSize(100,100);
    next = new QPushButton("Next",this);
@@ -44,12 +44,12 @@ void Dice::roll_clicked(){
 void Dice::dice_result_shown(){
     qsrand(time(0));
     int dice_result = qrand() % 6 + 1;
-    QPixmap dice_side1(":/dice/dice1.png");
-    QPixmap dice_side2(":/dice/dice2.png");
-    QPixmap dice_side3(":/dice/dice3.png");
-    QPixmap dice_side4(":/dice/dice4.png");
-    QPixmap dice_side5(":/dice/dice5.png");
-    QPixmap dice_side6(":/dice/dice6.png");
+    QPixmap dice_side1(":/images/Misc/dice1.png");
+    QPixmap dice_side2(":/images/Misc/dice2.png");
+    QPixmap dice_side3(":/images/Misc/dice3.png");
+    QPixmap dice_side4(":/images/Misc/dice4.png");
+    QPixmap dice_side5(":/images/Misc/dice5.png");
+    QPixmap dice_side6(":/images/Misc/dice6.png");
     QVector<QPixmap> die_list{dice_side1, dice_side2, dice_side3, dice_side4, dice_side5, dice_side6};
     QPixmap current_dice(die_list[dice_result-1]);
     animatedisplay->clear();

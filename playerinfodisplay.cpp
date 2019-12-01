@@ -6,13 +6,13 @@
 
 PlayerInfoDisplay::PlayerInfoDisplay( std::vector <Player*>  _players, QWidget* parent) :
     QWidget(parent), numofplayer(_players.size()),
-    players(std::move(_players))
+    playerlist(std::move(_players))
 {
     playerPixmap.resize(numofplayer);
     mainLayout = new QGridLayout(this);
     for(int column = 0; column<numofplayer;++column){
-        mainLayout ->addWidget(createPlayerHeader(players[column]->getname()), 0, column+1); //names
-        playerPixmap[column] = createPlayerPixmap(players[column]);
+        mainLayout ->addWidget(createPlayerHeader(playerlist[column]->getname()), 0, column+1); //names
+        playerPixmap[column] = createPlayerPixmap(playerlist[column]);
         mainLayout ->addWidget(playerPixmap[column], 1, column+1);
     }
 

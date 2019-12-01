@@ -47,7 +47,7 @@ private:
     const short int numofplayer;
     QGridLayout* mainLayout;
     QVector<QLabel *>playerPixmap;
-    std::vector<Player*> players;
+    std::vector<Player*> playerlist;
 
     friend class MainWindow;
 };

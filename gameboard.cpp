@@ -30,48 +30,49 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
     int a = pixmapLabels[1][1]->width();
     int b = pixmapLabels[1][1]->height();
 
-    QPixmap lb1(":/Fowler.png");
+    QPixmap lb1(":/images/tiles/Fowler.png");
     pixmapLabels[1][0]->setPixmap(lb1.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb2(":/Railway.png");
+    QPixmap lb2(":/images/tiles/Railway.png");
     pixmapLabels[2][0]->setPixmap(lb2.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb3(":/royceHall.png");
+    QPixmap lb3(":/images/tiles/royceHall.png");
     pixmapLabels[3][0]->setPixmap(lb3.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb4(":/Jail.png");
+    QPixmap lb4(":/images/tiles/Jail.png");
     pixmapLabels[4][0]->setPixmap(lb4.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb5(":/SociologyB.jpg");
+    QPixmap lb5(":/images/tiles/SociologyB.jpg");
     pixmapLabels[4][1]->setPixmap(lb5.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb6(":/MusicB.jpg");
+    QPixmap lb6(":/images/tiles/MusicB.jpg");
     pixmapLabels[4][2]->setPixmap(lb6.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb7(":/dicksonCourt.jpg");
+    QPixmap lb7(":/images/tiles/dicksonCourt.jpg");
     pixmapLabels[4][3]->setPixmap(lb7.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb8(":/powell.jpg");
+    QPixmap lb8(":/images/tiles/powell.jpg");
     pixmapLabels[3][4]->setPixmap(lb8.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb9(":/Railway.png");
+    QPixmap lb9(":/images/tiles/Railway.png");
     pixmapLabels[2][4]->setPixmap(lb9.scaled(a,b,Qt::IgnoreAspectRatio));
 
-    QPixmap lb10(":/Kerckhoff.png");
+    QPixmap lb10(":/images/tiles/Kerckhoff.png");
     pixmapLabels[1][4]->setPixmap(lb10.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb11(":/bear.png");
+    QPixmap lb11(":/images/tiles/bear.png");
     pixmapLabels[0][3]->setPixmap(lb11.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb12(":/InstramuralField.png");
+    QPixmap lb12(":/images/tiles/InstramuralField.png");
     pixmapLabels[0][2]->setPixmap(lb12.scaled(a,b, Qt::IgnoreAspectRatio));
 
-    QPixmap lb13(":/msb.png");
+    QPixmap lb13(":/images/tiles/msb.png");
     pixmapLabels[0][1]->setPixmap(lb13.scaled(a,b, Qt::IgnoreAspectRatio));
 
 
-
-
+    QPixmap chanceLabel(":/images/tiles/chancecard.png");
+    pixmapLabels[0][0]->setPixmap(chanceLabel.scaled(a,b, Qt::IgnoreAspectRatio));
+    pixmapLabels[4][4]->setPixmap(chanceLabel.scaled(a,b, Qt::IgnoreAspectRatio));
 
 
 

@@ -17,7 +17,7 @@ void subWindow::GoSettingPage2(){
     window2->s=this->s;
     window2->setFixedSize(1600,900);
     window2->setWindowTitle("Game Set up");
-    QPixmap bkgnd(":/fig/setting_bkgd.jpg");
+    QPixmap bkgnd(":/images/Misc/setting_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette(); //copy current, not create new
     p.setBrush(QPalette::Background, bkgnd);
@@ -35,10 +35,10 @@ void subWindow::GoSettingPage2(){
         combobox->setMaximumSize(200,50);
         txt->setMaximumSize(300,50);
         window2->CBlist.append(combobox);
-        combobox->addItem(QIcon(":/fig/panda.png"),"Panda");
-        combobox->addItem(QIcon(":/fig/brownbear.png"),"Brown Bear");
-        combobox->addItem(QIcon(":/fig/polarbear.png"),"Polar Bear");
-        combobox->addItem(QIcon(":/fig/greybear.png"),"Grey Bear");
+        combobox->addItem(QIcon(":/images/Misc/panda.png"),"Panda");
+        combobox->addItem(QIcon(":/images/Misc/brownbear.png"),"Brown Bear");
+        combobox->addItem(QIcon(":/images/Misc/polarbear.png"),"Polar Bear");
+        combobox->addItem(QIcon(":/images/Misc/greybear.png"),"Grey Bear");
         lb2->setFont(labelfont);
         txt->setFont(labelfont);
         combobox->setFont(labelfont);

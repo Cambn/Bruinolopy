@@ -19,7 +19,7 @@ Player::Player(const QString &_name, const QString& _character, int turnNumber, 
     hasLost(false), isDisabled(false),
     playerProperties(),
     name(_name), charactor(_character),
-    movement(new Movement(*this, turnNumber, QString(":/fig/gb_" + _character + ".png")))
+    movement(new Movement(parent, turnNumber,money(), QString(":/images/Misc/gb_" + _character + ".png")))
     {
 
 
