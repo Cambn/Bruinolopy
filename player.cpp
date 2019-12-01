@@ -10,16 +10,16 @@
 class Board;
 
 
-Player::Player() : bank(nullptr), board(nullptr), boardPos(0),
+Player::Player() : bank(nullptr), board(nullptr),
     playerMoney(1500), playerProperties(),name() {}
 
 Player::Player(const QString &_name, const QString& _character, int turnNumber, int startingAmount, Bank* _bank, Board* _board,  QWidget* parent):
     QWidget(parent), bank(_bank),
-    board(_board),  boardPos(0) , playerMoney(startingAmount),
+    board(_board) , playerMoney(startingAmount),
     hasLost(false), isDisabled(false),
     playerProperties(),
     name(_name), charactor(_character),
-    movement(new Movement(parent, turnNumber,money(), QString(":/images/Misc/gb_" + _character + ".png")))
+    movement(new Movement(this, parent, turnNumber,money(), QString(":/images/Misc/gb_" + _character + ".png")))
     {
 
 
@@ -30,7 +30,7 @@ Player::Player(const QString &_name, const QString& _character, int turnNumber, 
 Player::Player(const Player& oth){
     bank = oth.bank;
     board = oth.board;
-    boardPos = oth.boardPos;
+
     playerMoney = oth.playerMoney;
     hasLost = oth.hasLost;
     isDisabled = oth.isDisabled;
@@ -93,7 +93,7 @@ bool Player::take(Player* target, int amt) {
 
 bool Player::buyPropertyBank() {
     ownableTile* currProp = dynamic_cast<ownableTile*>(getTile());//cast curr tile that player is on to property type
-    if(playerMoney >= currProp->getCost() && currProp->propOwner() == nullptr) {//if player has at least enough money to buy and property unowned
+    if(money() >= currProp->getCost() && currProp->propOwner() == nullptr) {//if player has at least enough money to buy and property unowned
         bank->take(*this, currProp->getCost()); //charge player for property
         playerProperties.push_back(currProp); //add to back of player's properties
         currProp->transfer(this);
@@ -103,16 +103,16 @@ bool Player::buyPropertyBank() {
 }
 
 void Player::move(int val) {
-   int unadjustedPos = (boardPos+val);
-   boardPos = unadjustedPos % (board->tiles.size());
+   int unadjustedPos = (getPos()+val);
+   int newPos = unadjustedPos % (board->tiles.size());
 }
 
-int Player::getPos() const {return boardPos;}
+int Player::getPos() const {return movement->getpos();}
 
-Tile* Player::getTile() const {return board->getTile(this->getPos());}
+Tile* Player::getTile() const {return board->getTile(this->movement->getpos());}
 
 void Player::land()  {
-    board->getTile(this->boardPos)->landingEvent(*this);
+    getTile()->landingEvent(*this);
 }
 
 void Player::setDice (Dice* newDice, bool deleteOld) {
@@ -178,7 +178,7 @@ void Player::buyBankProp() {
                                                          "Property purchased!",this) ;
     }
     else {
-    QLandNoOptions* failureMessage= new QLandNoOptions((board->getTile(getPos()))->generateView(),
+    QLandNoOptions* failureMessage= new QLandNoOptions(getTile()->generateView(),
                                                        "Unable to purchase property (:/)", this);
         emit buyPropFail();
     }

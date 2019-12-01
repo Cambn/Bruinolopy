@@ -36,6 +36,8 @@ public:
     void infoupdate(int idx);//repaint playerinfo
     void gameStart();
 
+
+
 signals:
     void movehappened(int);
 

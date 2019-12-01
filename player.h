@@ -16,6 +16,7 @@ Q_OBJECT
     friend class Property;
     friend  class Railroad;
 
+    friend Movement;
 
 public:
     Player();
@@ -142,7 +143,7 @@ public:
 
         swap(left.bank, right.bank);
         swap(left.board, right.board);
-        swap(left.boardPos, right.boardPos);
+
         swap(left.playerMoney, right.playerMoney);
         swap(left.hasLost, right.hasLost);
         swap(left.isDisabled, right.isDisabled);
@@ -185,7 +186,7 @@ private:
 
     Bank* bank;
     Board* board;
-    int boardPos;
+
     int playerMoney;
     bool hasLost;
     bool isDisabled;

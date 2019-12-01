@@ -5,8 +5,7 @@
 
 QLandingWindow::QLandingWindow(QObject* _game, QWidget* parent):
     QWidget(parent),
-    layout(new QGridLayout(this)),
-    game(_game)
+    layout(new QGridLayout(this))
 {
 
 //    if(dynamic_cast<MainWindow*>(game)){//if we passed it a game pointer

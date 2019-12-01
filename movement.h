@@ -6,6 +6,8 @@
 #include <QDateTime>
 #include "dice.h"
 
+class Player;
+
 //the movement class is part of the player class
 //it tracks the dice, the position
 
@@ -15,7 +17,7 @@ class Movement : public QWidget
 
 public:
     friend class GameBoard;
-    explicit Movement(QWidget *parent = nullptr,int order=0,int money=0, QString address=":/fig/gb_panda.png");
+    explicit Movement(Player* _player,QWidget *parent = nullptr,int order=0,int money=0, QString address=":/fig/gb_panda.png");
     Dice* d;//a shallow copy to maindice
     void paintEvent(QPaintEvent *event) override;
     void increaseMoney(int a){money+=a;}
@@ -48,6 +50,7 @@ private:
     int step_walked=0;
     QString Img_address;
     const int increment=1000;//if bank has money
+    Player* player;
 };
 
 #endif // MOVEMENT_H

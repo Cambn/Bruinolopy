@@ -1,8 +1,9 @@
 #include "movement.h"
+#include "player.h"
 #include <QDebug>
 
-Movement::Movement(QWidget *parent,int order, int money, QString address) :
-    QWidget(parent),position(0),order(order),money(money)
+Movement::Movement(Player* _player, QWidget *parent,int order, int money, QString address) :
+    QWidget(parent),position(0),order(order),money(money), player(_player)
 {
     //modify the lower right cornor index by requirement
     int y_max=470;
@@ -75,6 +76,7 @@ void Movement::one_step(){
         QObject::connect(timer,SIGNAL(timeout()),this,SLOT(showrollbutton()));
         timer->stop();
         timer->start(250);
+        QObject::connect(timer,SIGNAL(timeout()),this->player, SLOT(land()));
     }
 }
 
