@@ -14,13 +14,13 @@ MainWindow::MainWindow(QWidget *parent, int num, const QStringList& n, const QSt
     for (int i = 0 ; i<numofplayer ; ++i  ) {
         players.at(i) = new Player( n[i],
                                     ch[i],
-                                    numofplayer,
+                                    i,
                                     stat.getSTARTING_AMOUNT(),
                                     bank,
                                     board                   );
 
     }
-    //now that everything else is set up, build chance deck
+    //now that everything else is set up, build chance deck (it relies on everything else)
     board->buildChancecards(this);
 
     //create the upper board /a map
@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent, int num, const QStringList& n, const QSt
 
     //create the lower board /an info section
     QGroupBox *playerGroupBox = new QGroupBox(tr("Player"));
-    playerArea = new PlayerInfoDisplay(players,playerGroupBox); //STOPPED HERE
+    playerArea = new PlayerInfoDisplay(players,playerGroupBox);
 
     //set layout
     QWidget *centralWidget = new QWidget(this);

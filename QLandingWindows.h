@@ -37,7 +37,6 @@ QWidget* mainWidget;
 
 
 private:
-QObject* game;
 
 
 };

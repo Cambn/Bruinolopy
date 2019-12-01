@@ -174,33 +174,4 @@ void Board::buildChancecards(MainWindow* game) {
 
 }
 
-//{
-//    std::fstream tileBuilder(":/properties/tileBuilder.txt");//open appropriate txt file
-//    bool check = tileBuilder.is_open();
 
-//    if(check){ //file successfully open
-
-//        std::string currLine= "";
-//        std::getline(tileBuilder, currLine); //eat the first line of file that displays formatting and is garbage data
-
-//         while(!(tileBuilder.eof())){        //until end of file
-//         std::getline(tileBuilder,currLine); //put line into string
-//         std::stringstream buffer(currLine); //create ss from string
-//         std::string temp = "";
-//         buffer>>temp;
-//           if (temp == "prop") {//want to construct property
-//               Property* tempProp = new Property(currLine,this);
-//               tiles.at(tempProp->tileNumber) = tempProp;
-//           }
-//             if(temp == "rr") {//want to construct railroad
-//                 Railroad* tempProp = new Railroad(currLine,this);
-//                 tiles.at(tempProp->tileNumber) = tempProp;
-//             }
-
-
-//          }
-
-
-
-//    }
-//    else {throw 10;}

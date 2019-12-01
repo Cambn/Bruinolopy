@@ -1,6 +1,6 @@
 #include "welcomewindow.h"
 #include "mainwindow.h"
-
+#include "statics.h"
 
 #include <QApplication>
 #include <QLabel>
@@ -13,9 +13,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc,argv);
 
+    WelcomeWindow* game = new WelcomeWindow;
+    game-> show();
 
-WelcomeWindow* game = new WelcomeWindow;
-game->show();
+
+
+
 
      return a.exec();
 
