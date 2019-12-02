@@ -1,4 +1,4 @@
-#include "subwindow.h"
+#include "welcomewindow.h"
 
 
 WelcomeWindow::WelcomeWindow(QWidget *parent) : QWidget(parent)
@@ -84,57 +84,82 @@ void WelcomeWindow::GoSettingPage(){
     //stop the music
     if (!music->isMuted())
         music->setMuted(1);
-    subWindow *game_setup = new subWindow;
+    subWindow* game_setup = new subWindow();
+    game_setup->setAttribute(Qt::WA_DeleteOnClose);
     game_setup->num_player = 2;
     game_setup->setFixedSize(1600,900);
     game_setup->setWindowTitle("Game Set Up");
-
     QFont labelfont("Times",20);
-
     QHBoxLayout *layout1 = new QHBoxLayout;
-    QLabel *lb = new QLabel("Plese choose the number of players: ");
+    QLabel *lb = new QLabel("Please choose the number of players: ",this);
     lb->setFont(labelfont);
-    QSpinBox *spinBox_num = new QSpinBox;
+    QSpinBox *spinBox_num = new QSpinBox();
     spinBox_num->setRange(2,4);
     layout1->addWidget((lb));
     layout1->addWidget((spinBox_num));
     QObject::connect(spinBox_num, SIGNAL(valueChanged(int)), game_setup, SLOT(comfirm_num(int)));
 
+    QHBoxLayout *layout5 = new QHBoxLayout;
+    QLabel *lb5 = new QLabel("Please choose initial amount of money each player has: ");
+    lb5->setFont(labelfont);
+    QComboBox *c4 = new QComboBox;
+    game_setup->firstCBlist.append(c4);
+    c4->addItem("500");
+    c4->addItem("1000");
+    c4->addItem("1500");
+    layout5->addWidget((lb5));
+    layout5->addWidget((c4));
+
     QHBoxLayout *layout2 = new QHBoxLayout;
-    QLabel *lb2 = new QLabel("Plese choose the maximun number of money existed: ");
+    QLabel *lb2 = new QLabel("Please choose the maximun number of money existed: ");
     lb2->setFont(labelfont);
     QComboBox *c1 = new QComboBox;
-    c1->addItem("100000");
-    c1->addItem("200000");
-    c1->addItem("300000");
+    game_setup->firstCBlist.append(c1);
+    c1->addItem("5000");
+    c1->addItem("8000");
+    c1->addItem("12000");
     layout2->addWidget((lb2));
     layout2->addWidget((c1));
 
     QHBoxLayout *layout3 = new QHBoxLayout;
-    QLabel *lb3 = new QLabel("Plese choose the maximun number of house allowed: ");
+    QLabel *lb3 = new QLabel("Please choose the maximun number of house allowed: ");
     lb3->setFont(labelfont);
     QComboBox *c2 = new QComboBox;
+    game_setup->firstCBlist.append(c2);
+    c2->addItem("10");
+    c2->addItem("20");
     c2->addItem("40");
-    c2->addItem("80");
-    c2->addItem("120");
     layout3->addWidget((lb3));
     layout3->addWidget((c2));
 
+    QHBoxLayout *layout4 = new QHBoxLayout;
+    QLabel *lb4 = new QLabel("Please choose the maximun number of hotel allowed: ");
+    lb4->setFont(labelfont);
+    QComboBox *c3 = new QComboBox;
+    game_setup->firstCBlist.append(c3);
+    c3->addItem("2");
+    c3->addItem("4");
+    c3->addItem("8");
+    layout4->addWidget((lb4));
+    layout4->addWidget((c3));
+
     QVBoxLayout* layout= new QVBoxLayout;
     QPushButton *comfirm = new QPushButton("Comfirm");
-    QHBoxLayout *layout4 = new QHBoxLayout;
-    layout4->addWidget(comfirm);
+    QHBoxLayout *layout6 = new QHBoxLayout;
+    layout6->addWidget(comfirm);
     comfirm->setMaximumSize(QSize(200,50));
     QObject::connect(comfirm, SIGNAL(clicked()), game_setup, SLOT(GoSettingPage2()));
     layout->addLayout(layout1);
+    layout->addLayout(layout5);
     layout->addLayout(layout2);
     layout->addLayout(layout3);
     layout->addLayout(layout4);
+    layout->addLayout(layout6);
     layout->setSpacing(50);
     layout->setAlignment(Qt::AlignCenter);
     game_setup->setLayout(layout);
-    game_setup->show();
     this->hide();
+    game_setup->show();
 
     QPixmap bkgnd(":/fig/setting_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
@@ -145,27 +170,29 @@ void WelcomeWindow::GoSettingPage(){
 
 
 void WelcomeWindow::GoRulePage(){
-    QWidget *a = new QWidget;
-    a->setWindowTitle("Rule");
-    a->setFixedSize(1200,900);
+    QWidget* rule = new QWidget;
+    rule->setAttribute(Qt::WA_DeleteOnClose);
+    rule->setWindowTitle("Rule");
+    rule->setFixedSize(1200,900);
     QPixmap bkgnd(":/fig/rules_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
-    QPalette p = palette(); //copy current, not create new
+    QPalette p = palette();
     p.setBrush(QPalette::Background, bkgnd);
-    a->setPalette(p);
-    a->show();
+    rule->setPalette(p);
+    rule->show();
 }
 
 void WelcomeWindow::GoRecordsPage(){
-    QWidget *a = new QWidget;
-    a->setWindowTitle("Records");
-    a->show();
-    a->setFixedSize(1200,900);
+    QWidget* record = new QWidget;
+    record->setAttribute(Qt::WA_DeleteOnClose);
+    record->setWindowTitle("Records");
+    record->show();
+    record->setFixedSize(1200,900);
     QPixmap bkgnd(":/fig/records_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette(); //copy current, not create new
     p.setBrush(QPalette::Background, bkgnd);
-    a->setPalette(p);
+    record->setPalette(p);
 }
 
 

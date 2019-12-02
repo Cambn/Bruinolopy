@@ -8,9 +8,28 @@
         <file>panda.png</file>
         <file>polarbear.png</file>
         <file>records_bkgd.jpg</file>
-        <file>rules.png</file>
-        <file>rules_bkgd.jpg</file>
         <file>setting_bkgd.jpg</file>
+        <file>greybear.png</file>
+        <file>gb_brown bear.png</file>
+        <file>gb_grey bear.png</file>
+        <file>gb_panda.png</file>
+        <file>gb_polar bear.png</file>
+        <file>rules_bkgd.jpg</file>
+        <file>chance_deco.png</file>
+        <file>chancecard.png</file>
+        <file>dicksonCourt.jpg</file>
+        <file>MusicB.jpg</file>
+        <file>powell.jpg</file>
+        <file>SociologyB.jpg</file>
+        <file>Fowler.png</file>
+        <file>InstramuralField.png</file>
+        <file>Jail.png</file>
+        <file>Kerckhoff.png</file>
+        <file>Mathias Garden.png</file>
+        <file>msb.png</file>
+        <file>Railway.png</file>
+        <file>royceHall.png</file>
+        <file>bear.png</file>
     </qresource>
     <qresource prefix="/sound">
         <file>welcomemusic.mp3</file>
@@ -24,6 +43,19 @@
         <file>purpleProperty.png</file>
         <file>redProperty.png</file>
         <file>yellowProperty.png</file>
+        <file>Railway.png</file>
+        <file>railroadProperty.png</file>
+    </qresource>
+    <qresource prefix="/txt">
         <file>tileBuilder.txt</file>
+    </qresource>
+    <qresource prefix="/dice">
+        <file>dice1.png</file>
+        <file>dice2.png</file>
+        <file>dice3.png</file>
+        <file>dice4.png</file>
+        <file>dice5.png</file>
+        <file>dice6.png</file>
+        <file>rolling.gif</file>
     </qresource>
 </RCC>

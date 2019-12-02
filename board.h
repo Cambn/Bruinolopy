@@ -1,25 +1,26 @@
-#ifndef _BOARD_
-#define _BOARD_
-
-#include "tile.h"
+#ifndef BOARD_H
+#define BOARD_H
 
 #include <vector>
 
+class ChanceCard;
+class MainWindow;
+class Player;
+class Tile;
+
 class Board {
-		
+friend Player;
+friend class ChanceTile;
+
 public:
-Board();
-
+Board(MainWindow* game = nullptr);
 Tile * getTile(int boardPos) ;
-
-/**
-checks if both utilities are owned by same player
-for use calculating rent paid when landing on a utility tile.
-*/
-bool checkUtilitiesSameOwner();
+void buildChancecards(MainWindow* game);
+MainWindow* w;
 
 private:
 std::vector <Tile*> tiles;
+std::vector <ChanceCard*> chanceCards;
 };
 
 #endif

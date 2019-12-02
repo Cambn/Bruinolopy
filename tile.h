@@ -1,98 +1,56 @@
-#ifndef _TILE_
-#define _TILE_
-
+#ifndef TILE_H
+#define TILE_H
+#include <QDebug>
 #include <string>
+#include <QWidget>
+#include "board.h"
+#include "chancecard.h"
 
+class MainWindow;
 class Player;
-class QWidget;
 
 class Tile  {
 
 public:
     friend class Board;
-
-    Tile ()            : tileNumber(0)         {}
-    Tile (int _tileNum, Board* _board): tileNumber(_tileNum), board(_board)  {}
-
-	
-    //all comparisons just compare the tile number.  so we can sort tiles, if necessary.
-    bool operator > (const Tile& oth) const;
-    bool operator < (const Tile& oth) const;
-    bool operator ==(const Tile& oth) const;
-    bool operator !=(const Tile& oth) const;
-    bool operator >=(const Tile& oth) const;
-
-
-    /**
-    Call to implement desired behavior of a given tile.
-    (e.g. a popup window for landing on a property w/ the option to buy.)
-    */
-    virtual void landingEvent( Player& currPlayer) =0;
-
-    /**
-    @return pointer to QWidget displaying the tile.
-    */
-    virtual QWidget* generateView() const= 0;
-
-    virtual ~Tile() = default;
-
-
+    Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board), game(_game)  {}
+    virtual void landingEvent(Player* currPlayer){}
+    virtual ~Tile(){}
 protected:
-
-	int tileNumber;
+    int tileNumber;
     Board* board;
-
-
+    MainWindow* game;
 };
 
-/**
-abstract base class for tiles that can be purchased/ owned.
-Includes regular properties, utilities and railroads.
-implements landing event as an option to purchase or charges rent.
-*/
+
 class ownableTile : public Tile {
 
 public:
-
-    ownableTile(int _tileNum, Board* _board);
-
-    virtual void landingEvent( Player& currPlayer) override;
-
-
-    /**
-    returns tile's rent to be paid.  Calculation varies on subtype of ownableTile
-    @return rent due for this tile.
-    */
+    ownableTile(int _tileNum, Board* _board, MainWindow* _game);
+    virtual void landingEvent( Player* currPlayer);
     virtual int currentRent() const = 0;
-
-    /**
-    @return owner of this tile
-    */
+    virtual QWidget* generateView() const {return nullptr;}
     Player* propOwner() const;
-
-    /**
-    Changes owner of this tile to specified player.
-    @param newOwner will become owner of this tile
-    */
+    virtual int getCost() const = 0;
     void transfer( Player* newOwner);
-
     virtual ~ownableTile() override= default;
-
+    std::string getName() const {return name;}
+    //160x192 -> 320x384
 protected:
-    Player* owner;
-
-private:
-
+    Player* owner=nullptr;
+    std::string name;
 };
 
 
 
-class eventTile : public Tile {
-public:
-
-
-    virtual ~eventTile() override = default;
-
+class ChanceTile : public Tile{
+ public:
+    ChanceTile(int _tileNum, Board* _board, MainWindow* _game) :Tile ( _tileNum,_board,_game) {}
+    void landingEvent(Player* currPlayer) {
+        int cardNum = rand() % board->chanceCards.size();
+        board -> chanceCards.at(cardNum)->conduct_change(currPlayer);
+    }
 };
+
 
 #endif

@@ -1,10 +1,9 @@
-#ifndef _BANK_
-#define _BANK_
+#ifndef _BANK_H
+#define _BANK_H
 
 #include "statics.h"
-
-#include <vector> 
-#include <memory> 
+#include <vector>
+#include <memory>
 
 
 class Player;
@@ -14,16 +13,12 @@ class Bank
 {
 public:
 
-friend Property;
+friend class Property;
 
-Bank() {}
-//	moneyRemaining (Statics::getMONEY_MAX()- (Statics::getSTARTING_AMOUNT() * players.size())),
-//    housesRemaining(Statics::getHOUSES_MAX()),
-//	hotelsRemaining(Statics::getHOTELS_MAX())
-
+Bank(Statics& seed, const size_t numPlayers);
 
 /**
-Bank pays a player from its moneyRemaining 
+Bank pays a player from its moneyRemaining
 @param payee player being paid
 @return true if successful
 */
@@ -49,10 +44,8 @@ checks if there are any hotels in the hotel pool
 */
 bool hotelsLeft() const;
 
-
 private:
 int bankMoney;
-std::vector <Property*> properties;
 int housesRemaining;
 int hotelsRemaining;
 

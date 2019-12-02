@@ -13,40 +13,42 @@ void subWindow::GoSettingPage2(){
             firstCBlist[2]->currentText().toInt(),firstCBlist[3]->currentText().toInt());
     s=a;
     this->hide();
-    window2 = new subWindow();
+    subWindow* window2 = new subWindow();
+    window2->setAttribute(Qt::WA_DeleteOnClose);
     window2->s=this->s;
     window2->setFixedSize(1600,900);
     window2->setWindowTitle("Game Set up");
-    QPixmap bkgnd(":/images/Misc/setting_bkgd.jpg");
+
+    QPixmap bkgnd(":/fig/setting_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette(); //copy current, not create new
     p.setBrush(QPalette::Background, bkgnd);
     window2->setPalette(p);
     window2->comfirm_num(num_player);
     QVBoxLayout *layout = new QVBoxLayout();
-    for (int a = 0 ; a < window2->num_player ; ++a){
+    for (int numberofplayer = 0 ; numberofplayer < window2->num_player ; ++numberofplayer){
         QVBoxLayout *layout2 = new QVBoxLayout();
         QFont labelfont("Times",15);
-        QLabel *lb2 = new QLabel("Please enter the nickname of player "+ QString::number(a+1) +":\n",this);
-        QLineEdit *txt = new QLineEdit(this);
-        for (size_t i = 0; i <LElist.length();i++){
-            if(txt == LElist[i]){
+        QLabel *lb2 = new QLabel("Please enter the nickname of player "+ QString::number(numberofplayer+1) +":\n",this);
 
-            }
-        }
+        QLineEdit *txt = new QLineEdit(this);
+       // txt->maxLength(20);
         window2->LElist.append(txt);
         txt->setText("Please give a nickname");
         QComboBox *combobox = new QComboBox(this);
         combobox->setMaximumSize(200,50);
         txt->setMaximumSize(300,50);
         window2->CBlist.append(combobox);
-        combobox->addItem(QIcon(":/images/Misc/panda.png"),"Panda");
-        combobox->addItem(QIcon(":/images/Misc/brownbear.png"),"Brown Bear");
-        combobox->addItem(QIcon(":/images/Misc/polarbear.png"),"Polar Bear");
-        combobox->addItem(QIcon(":/images/Misc/greybear.png"),"Grey Bear");
+
+        combobox->addItem(QIcon(":/fig/panda.png"),"Panda");
+        combobox->addItem(QIcon(":/fig/brownbear.png"),"Brown Bear");
+        combobox->addItem(QIcon(":/fig/polarbear.png"),"Polar Bear");
+        combobox->addItem(QIcon(":/fig/greybear.png"),"Grey Bear");
+
         lb2->setFont(labelfont);
         txt->setFont(labelfont);
         combobox->setFont(labelfont);
+
         layout2->addWidget(lb2);
         layout2->addWidget(txt);
         layout2->addWidget(combobox);
@@ -70,7 +72,8 @@ void subWindow::GoGameboard(){
         charactors.append(token_list[CBlist[i]->currentIndex()]);
     }
 
-    MainWindow* w=new MainWindow(this,LElist.length(),names,charactors,s);
+    MainWindow* w=new MainWindow(nullptr,LElist.length(),names,charactors,s);
+    w->setAttribute(Qt::WA_DeleteOnClose);
     w->setFixedSize(1600,900);
     w->setWindowTitle("Bruinopoly");
     w->show();

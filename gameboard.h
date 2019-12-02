@@ -2,12 +2,13 @@
 #define GAMEBOARD_H
 
 #include <QWidget>
-#include <QIcon>
 #include <QStringList>
 #include <QLabel>
-#include <QHBoxLayout>
-#include <QGridLayout>
-#include <QPixmap>
+#include <QLayout>
+
+
+//the GameBoard class constructs the UI of the upperhalf of the mainwindow
+
 class GameBoard : public QWidget
 {
     Q_OBJECT
@@ -15,26 +16,16 @@ class GameBoard : public QWidget
 public:
     explicit GameBoard(QWidget *parent = nullptr);
 
-   // void setIcon(const QIcon& icon);
-    //void setSize(const QSize& size);
-   // static QVector<QIcon::Mode> iconModes();
-
-    //static QVector<QIcon::State> iconStates();
-    static QStringList iconLengthNames();
-    static QStringList iconWidthNames();
-    //static QVector<>
 private:
-    QLabel *createHeaderLabel(const QString& text);
-    //void updatePixmapLabels();
-   // QLabel *createLandMark();
+    //return one box-shaped label* for a tile
     QLabel *createPixmapLabel();
 
-    enum{BoardLength = 4, BoardWidth = 4};
-   // QIcon icon;
-   // QSize size;
-    QLabel *LengthLabels[BoardWidth];
-    QLabel *WidthLabels[BoardLength];
+    //set the n and m for the n*m map
+    enum{BoardLength = 5, BoardWidth = 5};
+
+    //A label* array storing all the box-shaped label*'s
     QLabel *pixmapLabels[BoardWidth][BoardLength];
+
 
 };
 

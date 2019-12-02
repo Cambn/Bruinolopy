@@ -1,26 +1,39 @@
 #include "playerinfodisplay.h"
+#include <QDebug>
 
-PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent) :
-    QWidget(parent)
+
+
+PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent, MainWindow* w, int i, const QStringList& n, const QStringList& ch, const int i_money) :
+    QWidget(parent),main(w),numofplayer(i),names(n),charactors(ch),initial_money(i_money)
 {
-    QGridLayout *mainLayout = new QGridLayout(this);
-    for(int column = 0; column<BoardLength;++column){
-        mainLayout ->addWidget(createPlayerHeader(PlayerInfoDisplay::PlayerNames().at(column)), 0, column+1);
-        playerPixmap[column] = createPlayerPixmap();
+   playerPixmap.resize(numofplayer);
+    mainLayout = new QGridLayout(this);
+    for(int column = 0; column<numofplayer;++column){
+        mainLayout ->addWidget(createPlayerHeader(names[column]), 0, column+1);
+        playerPixmap[column] = createPlayerPixmap(main->playerlist[column]);
+        playerPixmap[column]->setParent(this);
         mainLayout ->addWidget(playerPixmap[column], 1, column+1);
     }
+
 }
+
+
+
 QLabel *PlayerInfoDisplay::createPlayerHeader(const QString &text){
-    QLabel *label = new QLabel(tr("<b>%1</b>").arg(text));
+    QLabel *label = new QLabel(tr("<b>%1</b>").arg(text),this);
     label ->setAlignment(Qt::AlignCenter);
     return label;
+
 }
-QStringList PlayerInfoDisplay::PlayerNames(){
-    static const QStringList result = {tr("Player1: "),tr("Player2: "),tr("Player3: "),tr("Player4: ")};
-    return result;
-}
-QLabel *PlayerInfoDisplay::createPlayerPixmap(){
-    QLabel *label = new QLabel;
+
+
+QLabel *PlayerInfoDisplay::createPlayerPixmap(Player* p){
+    QLabel *label = new QLabel(this);
+    label->setText("Charactor: "+p->getcharactor()+
+                   "\nMoney: "+QString::number(p->money())+
+                   "\nProperties:"+QString::number(p->getProp())+
+                   "\nHouses:"+QString::number(p->getHouse())+
+                   "\nHotels:"+QString::number(p->getHotel()));
     //QFrame *custom = new QFrame;
     label ->setEnabled(false);
     label ->setAlignment(Qt::AlignCenter);
@@ -31,5 +44,5 @@ QLabel *PlayerInfoDisplay::createPlayerPixmap(){
     label ->setBackgroundRole(QPalette::Base);
     label ->setAutoFillBackground(true);
     label ->setMinimumSize(130,60);
-return label;
+    return label;
 }

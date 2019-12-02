@@ -1,7 +1,6 @@
 TYPE(/t)TILE_NO(/t)COLOR(/t)NAME(/t)COST(/t)HOUSE_COST(/t)RENTS(/n)
 prop	1	purple	prop0	60	50	2	10	30	90	160	250
 prop	3	purple	prop1	60	50	4	20	60	180	320	450
-rr    5   rr1
 prop	6	lightBlue	prop2	100	50	6	30	90	270	400	550
 prop	8	lightBlue	prop3	100	50	6	30	90	270	400	550
 prop	9	lightBlue	prop4	120	50	8	40	100	300	450	600
