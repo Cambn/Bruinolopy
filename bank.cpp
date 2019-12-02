@@ -9,7 +9,8 @@ Bank::Bank(Statics& seed, size_t numPlayers)  :
     {}
 
 bool Bank::pay(Player& payee, int amt) {
-    if (bankMoney >= amt){//enough money left in bank
+    if(payee.isDefeated){return false;}//player dead then dont take money
+    else if (bankMoney >= amt){//enough money left in bank
         bankMoney -= amt; //adjust bank money
         payee.playerMoney += amt; //adjust player money
         return true; //fxn was successful
@@ -18,7 +19,7 @@ bool Bank::pay(Player& payee, int amt) {
 }
 
 void Bank::take(Player& payer, int amt) {
-    if (payer.playerMoney >= amt) {//player has enough money
+  if (payer.playerMoney >= amt) {//player has enough money
         bankMoney += amt;
         payer.playerMoney -= amt;
     }

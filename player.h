@@ -51,6 +51,11 @@ public:
     }
 
     Bank* bank;
+    void setPlayerPropertiesDefault(){
+        for(auto properties: playerProperties){
+            properties->transfer(nullptr);
+        }
+    }
 
 
 
@@ -72,8 +77,8 @@ private:
     int hotel=0;
     int disable=0;
     int playerMoney;
-    std::vector<ownableTile*> playerProperties; //properties owned by player
 
+ std::vector<ownableTile*> playerProperties; //properties owned by player
 };
 
 

@@ -54,7 +54,7 @@ void MainWindow::infoupdate(){
     {
         std::string temp("");
         std::for_each(playerlist[i]->playerProperties.begin(),playerlist[i]->playerProperties.end(),
-                      [&temp](ownableTile* prop)->void{temp+= (prop->getName()+"\t");});
+                      [&temp](ownableTile* prop)-> void { temp += (prop->getName()+ "\t"+',' );});
         playerArea->playerPixmap[i]->setText("Charactor: "+playerlist[i]->getcharactor()+
                    "\nMoney: "+QString::number(playerlist[i]->money())+
                    "\nProperties:"+QString::fromStdString(temp)+
@@ -69,6 +69,9 @@ bool MainWindow::gameover(){
         if (playerlist[i]->money()<=0){
             looserlist[i]=1;
             playerlist[i]->isDefeated = true;
+
+            playerlist[i]->setPlayerPropertiesDefault();// make the properties unowned if the player is dead
+
         }
         else{
             temp+=1;
