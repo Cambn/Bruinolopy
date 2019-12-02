@@ -15,9 +15,11 @@ public:
     friend class Board;
     Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board), game(_game)  {}
     virtual void landingEvent(Player* currPlayer){}
+
     virtual ~Tile(){}
 protected:
     int tileNumber;
+    std::string name;
     Board* board;
     MainWindow* game;
 };
@@ -34,11 +36,11 @@ public:
     virtual int getCost() const = 0;
     void transfer( Player* newOwner);
     virtual ~ownableTile() override= default;
-    std::string getName() const {return name;}
+    virtual std::string getName() const = 0;
     //160x192 -> 320x384
 protected:
     Player* owner=nullptr;
-    std::string name;
+
 };
 
 

@@ -25,7 +25,7 @@ public:
     bool buildHouse(Bank* bank);
     int currentRent() const override;
     int getCost() const override {return cost;}
-
+    std::string getName() const {return name;}
 
 private:
     std::string color;
