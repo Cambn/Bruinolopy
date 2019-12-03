@@ -27,7 +27,7 @@ class Record{
     int ranking;
     QString PlayerName;
     int moneyRemaining;
-    QString filename ="PlayerHistory.txt";
+    QString filename =":/txt/tileBuilder.txt";
     QFile file;
   protected:
 };

@@ -20,6 +20,7 @@ QString Record::getPlayerName() const{
 int Record::getPlayerMoney() const{
     return moneyRemaining;
 }
+/*
 QWidget Record::getPlayerInfo(QWidget* parent){
 
     QFile file("/");
@@ -48,3 +49,4 @@ QWidget Record::getPlayerInfo(QWidget* parent){
     layout ->addWidget(_ranking);
 
 }
+*/

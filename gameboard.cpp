@@ -1,100 +1,89 @@
 #include "gameboard.h"
-/*
-QVector<QIcon::Mode> GameBoard::iconModes()
-{
-    static const QVector<QIcon::Mode> result = {QIcon::Normal, QIcon::Active, QIcon::Disabled, QIcon::Selected};
-    return result;
-}
-QVector<QIcon::State> GameBoard::iconStates(){
-    static const QVector<QIcon::State> result = {QIcon::Off,QIcon::On};
-    return result;
-}*/
-QStringList GameBoard::iconLengthNames(){
-    static const QStringList result = {tr("L1"),tr("L2"),tr("L3"),tr("L4")};
-    return result;
-}
-QStringList GameBoard::iconWidthNames(){
-    static const QStringList result = {tr("W1"),tr("W2"),tr("W3"),tr("W4")};
-    return result;
-}
+
+
 GameBoard::GameBoard(QWidget *parent):QWidget(parent){
     QGridLayout *mainLayout = new QGridLayout(this);
-    //game board
-    /*
-    for(int row =0; row < BoardWidth;++row){
-        WidthLabels[row]=createHeaderLabel(GameBoard::iconWidthNames().at(row));
-        mainLayout ->addWidget(WidthLabels[row], row+1, 0);
-    }
-    for(int column = 0; column<BoardLength;++column){
-        LengthLabels[column]=createHeaderLabel(GameBoard::iconLengthNames().at(column));
-        mainLayout ->addWidget(LengthLabels[column], 0, column+1);
-    }*/
+
+    //create blocks
     for(int column = 0; column<BoardLength; ++column){
         for(int row = 0; row< BoardWidth; ++row){
             pixmapLabels[column][row] = createPixmapLabel();
+            pixmapLabels[column][row]->setParent(this);
             mainLayout ->addWidget(pixmapLabels[column][row], row+1, column+1);
-
         }
-        //mainLayout->addWidget(createHeaderLabel())
+    }
+    for(int column = 0; column<BoardLength; ++column){
+        for(int row = 0; row< BoardWidth; ++row){
+            pixmapLabels[column][row]->setFixedSize(pixmapLabels[0][0]->size());
+        }
     }
 
-    //Player info
+    for(int column = 1; column<BoardLength-1; ++column){
+        for(int row = 1; row< BoardWidth-1; ++row){
+           pixmapLabels[column][row]->hide();
+       }
+    }
+
+    int a = pixmapLabels[1][1]->width();
+    int b = pixmapLabels[1][1]->height();
+
+
+
+    QPixmap bg=  QPixmap(":/fig/chancecard.png");
+    pixmapLabels[0][0]->setPixmap(bg.scaled(a,b, Qt::IgnoreAspectRatio));
+    pixmapLabels[4][4]->setPixmap(bg.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb1(":/fig/Fowler.png");
+    pixmapLabels[1][0]->setPixmap(lb1.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb2(":/fig/Railway.png");
+    pixmapLabels[2][0]->setPixmap(lb2.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb3(":/fig/royceHall.png");
+    pixmapLabels[3][0]->setPixmap(lb3.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb4(":/fig/Jail.png");
+    pixmapLabels[4][0]->setPixmap(lb4.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb5(":/fig/SociologyB.jpg");
+    pixmapLabels[4][1]->setPixmap(lb5.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb6(":/fig/MusicB.jpg");
+    pixmapLabels[4][2]->setPixmap(lb6.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb7(":/fig/dicksonCourt.jpg");
+    pixmapLabels[4][3]->setPixmap(lb7.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb8(":/fig/powell.jpg");
+    pixmapLabels[3][4]->setPixmap(lb8.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb9(":/fig/Railway.png");
+    pixmapLabels[2][4]->setPixmap(lb9.scaled(a,b,Qt::IgnoreAspectRatio));
+
+    QPixmap lb10(":/fig/Kerckhoff.png");
+    pixmapLabels[1][4]->setPixmap(lb10.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb11(":/fig/bear.png");
+    pixmapLabels[0][3]->setPixmap(lb11.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb12(":/fig/InstramuralField.png");
+    pixmapLabels[0][2]->setPixmap(lb12.scaled(a,b, Qt::IgnoreAspectRatio));
+
+    QPixmap lb13(":/fig/msb.png");
+    pixmapLabels[0][1]->setPixmap(lb13.scaled(a,b, Qt::IgnoreAspectRatio));
+
 
 }
-/*
-//changes the icon or the icon size, and make sure is updated
-void GameBoard::setIcon(const QIcon &icon){
-    this ->icon = icon;
-    updatePixmapLabels();
-}
-*/
-void GameBoard::setSize(const QSize &size){
-        this ->size = size;
 
-        //updatePixmapLabels();
-
-}
 QLabel *GameBoard::createPixmapLabel(){
-    QLabel *label = new QLabel;
-    label ->setEnabled(false);
+    QLabel *label = new QLabel(this);
     label ->setAlignment(Qt::AlignCenter);
     label ->setFrameShape(QFrame::Box);
     label ->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     label ->setBackgroundRole(QPalette::Base);
     label ->setAutoFillBackground(true);
-    label ->setMinimumSize(130,130);
+    label ->setMinimumSize(1488/BoardWidth,520/BoardLength);
     return label;
 }
 
 
-//convert the string into a pointer to QLabel object
-QLabel *GameBoard::createHeaderLabel(const QString &text){
-    QLabel *label = new QLabel(tr("<b>%1</b>").arg(text));
-    label ->setAlignment(Qt::AlignCenter);
-    return label;
-}
-/*
-void GameBoard::updatePixmapLabels(){
-    QWindow *window = nullptr;
-    if(const QWidget *nativeParent = nativeParentWidget()){
-        window = nativeParent ->windowHandle();
-    }
-    for(int column=0;column<BoardLength; ++column){
-        for(int row = 0; row <BoardWidth; ++row){
-          const QPixmap pixmap(5,5);
-        QLabel *pixmapLabel= pixmapLabels[column][row];
-        pixmapLabel ->setPixmap(pixmap);
-        pixmapLabel ->setEnabled(!pixmap.isNull());
-        QString toolTip;
-        if(!pixmap.isNull()){
-            const QSize actualSize = icon.actualSize(size);
-            toolTip = tr("Size: %1x%2\nActual Size: %3x%4\nDevice pixel ratio: %5")
-                    .arg(size.width()).arg(size.height()).arg(actualSize.width()).
-                    arg(actualSize.height()).arg(pixmap.devicePixelRatioF());
-
-        }
-        pixmapLabel ->setToolTip(toolTip);
-    }
-    }
-}
-*/
