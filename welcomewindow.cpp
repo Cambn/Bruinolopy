@@ -174,11 +174,28 @@ void WelcomeWindow::GoRulePage(){
     rule->setAttribute(Qt::WA_DeleteOnClose);
     rule->setWindowTitle("Rule");
     rule->setFixedSize(1200,900);
+    QHBoxLayout *layout_rule = new QHBoxLayout;
+    QLabel *lb_text = new QLabel;
+    lb_text->setText("Welcom To Bruinopoly!\n");
+     lb_text->setText(
+                      "\n>It's OUR UCLA version of the Monopoly Game.\n"
+                      "\n>On the game-setup page,you can choose the number of plays. Also, you can give nicknames and choose characters. \n"
+                      "\n>The game process is just like a normal Monopoly, where every player rolls a die and moves.\n"
+                      "\n>You can buy properties and build houses. When landing on others' properties, you will pay a rent.\n"
+                      "\n>There are some special tokens on the board: When you land on chance card, a random event would show up.\n"
+                      "\n>When you own two railways, you can choose to take the transportation when landing on them.\n"
+                      "\n>If the chance card says GO TO JAIL, you would need to stay in jail for three turns.\n"
+                      "\n>The game will end when there is only one player remaining with a positive balance.\n"
+                      "\n>Have fun !"
+                      );
+    lb_text->setStyleSheet("QLabel { font: 28pt}");
+    layout_rule->addWidget(lb_text);
     QPixmap bkgnd(":/fig/rules_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette();
     p.setBrush(QPalette::Background, bkgnd);
     rule->setPalette(p);
+    rule->setLayout(layout_rule);
     rule->show();
 }
 
