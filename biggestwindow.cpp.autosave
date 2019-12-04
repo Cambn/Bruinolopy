@@ -1,6 +1,0 @@
-#include "biggestwindow.h"
-
-biggestwindow::biggestwindow()
-{
-
-}
