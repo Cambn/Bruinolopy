@@ -47,7 +47,7 @@ public:
     /**
     @return name of property
     */
-    std::string getName() const {return name;}
+    std::string getName() const override{return name;}
 
 private:
     std::string color;

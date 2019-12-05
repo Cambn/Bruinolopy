@@ -35,6 +35,11 @@ public:
     bool gameover();
     Bank* bank;
 
+    /**
+    Handles updating record at end of the game.
+    */
+    void updateRecord() const;
+
 signals:
     void movehappened(int);
 
