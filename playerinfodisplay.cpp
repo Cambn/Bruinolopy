@@ -8,6 +8,7 @@ PlayerInfoDisplay::PlayerInfoDisplay(QWidget *parent, MainWindow* w, int i, cons
 {
    playerPixmap.resize(numofplayer);
     mainLayout = new QGridLayout(this);
+    //create player info bar
     for(int column = 0; column<numofplayer;++column){
         mainLayout ->addWidget(createPlayerHeader(names[column]), 0, column+1);
         playerPixmap[column] = createPlayerPixmap(main->playerlist[column]);

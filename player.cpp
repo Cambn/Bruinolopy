@@ -1,10 +1,16 @@
 #include "movement.h"
 #include "qlandingwindow.h"
 #include "mainwindow.h"
+#include <QDebug>
 
 Player::Player(QWidget *parent, Bank* b,Board* b2, const QString& ch, const QString& name, int money, int order, const QString& path)
     : QWidget(parent),bank(b),board(b2),charactor(ch),name(name),playerMoney(money)
 {movement=new Movement(this,this,order,path);}
+
+Player::~Player(){
+    for(size_t i;i<playerProperties.size();i++)
+        delete playerProperties[i];
+}
 
 int Player::money() const
 {return playerMoney;}
@@ -21,6 +27,17 @@ int Player::getProp() const{return property;}
 int Player::getHouse() const{return house;}
 
 int Player::getHotel() const{return hotel;}
+
+Tile* Player::getTile() const {return board->getTile(this->getPos());}
+
+int Player::isDisable(){return disable;}
+
+void Player::changeDisable(){
+    if (disable==3){// if in jail 3 turns, stop being in jail
+        disable=0;}
+    else{//if less than 3 turns in jail, add one turn
+        disable++;}
+}
 
 QString Player::getname() const{return name;}
 
@@ -85,12 +102,22 @@ void Player::payRent() {
     prop->propOwner()->take(this, prop->currentRent()); //owner of the property that the curr player is on takes appropriate amount of money from curr player .
     board->w->infoupdate();
 }
+
 void Player::buildHouse()  {
     {
-        if (dynamic_cast<Property*>( getTile() )){//if we're on a property
+        if (dynamic_cast<Property*>( getTile() ))//if land on a property
+        {//if we're on a property
             Property* currProp = dynamic_cast<Property*>( getTile() );//cast currTile to property
-        currProp->buildHouse(this->bank);
-            }
+            int build_result=currProp->buildHouse(this->bank);
+            if(build_result==1)// build house successfully
+                {house++;
+                board->w->infoupdate();}
+            else if(build_result==2)//build hotel successfully
+                {
+                hotel++;
+                house-=4;
+                board->w->infoupdate();}
+                }
         else{
             throw std::logic_error("buildHouse on non property tile");
     }

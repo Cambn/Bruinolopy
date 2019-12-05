@@ -12,6 +12,8 @@ class Dice : public QWidget{
 public:
     Dice(QWidget * parent = nullptr);
     ~Dice();
+
+    //return the result of dice
     int getresult(){return result;}
     QPushButton *next;
     QPushButton *rollStart;

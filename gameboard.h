@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QLayout>
 
-
+class MainWindow;
 //the GameBoard class constructs the UI of the upperhalf of the mainwindow
 
 class GameBoard : public QWidget
@@ -25,7 +25,6 @@ private:
 
     //A label* array storing all the box-shaped label*'s
     QLabel *pixmapLabels[BoardWidth][BoardLength];
-
 
 };
 

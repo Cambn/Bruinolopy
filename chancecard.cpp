@@ -18,7 +18,10 @@ effect(std::move(f))
 {
 }
 
+ChanceCard::~ChanceCard(){delete content;}
+
 void ChanceCard::conduct_change(Player* currPlayer){
+    //set chance card popup window
     content = new QDialog(this);
     content->setAttribute(Qt::WA_DeleteOnClose);
     content->setWindowTitle("Chance Card");

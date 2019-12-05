@@ -39,24 +39,14 @@ class Player;
 
 class ChanceCard : public QWidget {
 public slots:
-    /**
-    Constructs a chance card taking in the following
-    @param _description : description of the effect of the card
-    @param f: function of return type void with argument (Player* currPlayer)
-              that the chanceCard will call when it is drawn.
-    */
+    //@_description the text shown on chance card
+    //@_f: the corresponding change made by the chance card
     ChanceCard(std::string _description, std::function<void(Player*)> f);
 
-    /**
-    calls member effect on currPlayer
-    @param currPlayer: player whom this chance card is acting upon.
-    */
-    void conduct_change(Player* currPlayer);
+    ~ChanceCard();
 
-    /**
-    deletes member "content"
-    */
-    ~ChanceCard() {delete content;}
+    //pop up window and conduct f on currPlayer
+    void conduct_change(Player* currPlayer);
 private:
     std::string description;
     std::function<void(Player*)> effect;

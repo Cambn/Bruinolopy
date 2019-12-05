@@ -8,14 +8,17 @@
 MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStringList& ch, const Statics& stat)
     : QMainWindow(parent),numofplayer(i),names(n),charactors(ch),s(stat),turn(0)
 {
+
     bank=new Bank(s,numofplayer);
     board->buildChancecards(this);
+
     //create a player pointer list
     playerlist.resize(numofplayer);
     for (int i=0; i<numofplayer;i++){
         Player* p=new Player(this,bank,board,charactors[i],names[i],s.getSTARTING_AMOUNT(),i,":/fig/gb_"+charactors[i]+".png");
         playerlist[i]=p;
     }
+
     //create the upper board /a map
     QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));
     boardArea = new GameBoard(boardGroupBox);
@@ -36,8 +39,7 @@ MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStri
     mainLayout ->addWidget(playerGroupBox);
 
 
-    //test movement
-
+    //set movement
     for (int i=0; i<numofplayer;i++){
         playerlist[i]->getmovement()->d=maindice;
         playerlist[i]->getmovement()->setParent(this);
@@ -54,17 +56,20 @@ MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStri
 
 
 void MainWindow::infoupdate(){
+    //repaint infor section
     for (int i=0;i<numofplayer;i++)
     {
         std::string temp("");
         std::for_each(playerlist[i]->playerProperties.begin(),playerlist[i]->playerProperties.end(),
-                      [&temp](ownableTile* prop)-> void { temp += (prop->getName()+ "\t"+',' );});
+                      [&temp](ownableTile* prop)-> void { temp += (prop->getName()+',');});
         playerArea->playerPixmap[i]->setText("Charactor: "+playerlist[i]->getcharactor()+
                    "\nMoney: "+QString::number(playerlist[i]->money())+
                    "\nProperties:"+QString::fromStdString(temp)+
                    "\nHouses:"+QString::number(playerlist[i]->getHouse())+
                    "\nHotels:"+QString::number(playerlist[i]->getHotel()));
-    update();}}
+    update();}
+
+}
 
 bool MainWindow::gameover(){
     int temp=0;
@@ -103,26 +108,25 @@ void MainWindow::waitasec()
 }
 
 
-
 void MainWindow::playerwalk()
     {
-    if(!gameover())
+    if(!gameover())//if game is not over
     {
-        if(looserlist[turn%numofplayer]==1)//already lost
+        if(looserlist[turn%numofplayer]==1)//if current player already lost, next player call the func
         {
             turn+=1;
             playerwalk();}
-        else
-            if(playerlist[turn%numofplayer]->isDisable())//player in jail
+        else// if current player is alive
+            if(playerlist[turn%numofplayer]->isDisable())//if player in jail
             {
                 maindice->infobar->setText(playerlist[turn%numofplayer]->getname()+" is in jail. Wait for " +QString::number(4-playerlist[turn%numofplayer]->isDisable()) +" turns");
                 playerlist[turn%numofplayer]->changeDisable();
                 maindice->rollStart->show();
                 turn+=1;
             }
-            else{
+            else{//move
                 maindice->infobar->setText("");
-                {playerlist[turn%numofplayer]->getmovement()->walkbydice();//turn()
+                {playerlist[turn%numofplayer]->getmovement()->walkbydice();
                 t->start(1000);
                 turn+=1;
             }
@@ -132,7 +136,7 @@ void MainWindow::playerwalk()
     else //gameover
     {
         int winner=0;
-        for (int i=0; i<4; i++)
+        for (int i=0; i<4; i++)//find winner
         {if(!looserlist[i]){
                 winner=i;
                 break;

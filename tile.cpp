@@ -7,9 +7,26 @@
 #include <QPainter>
 
 
+Tile::Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board), game(_game)  {}
+
+void Tile::landingEvent(Player* currPlayer){}
+
+int Tile::getNum(){return tileNumber;}
+
+Tile::~Tile(){delete board;}
+
+ChanceTile::ChanceTile(int _tileNum, Board* _board, MainWindow* _game) :Tile ( _tileNum,_board,_game) {}
+
+void ChanceTile::landingEvent(Player* currPlayer) {
+    int cardNum = rand() % board->chanceCards.size();
+    board -> chanceCards.at(cardNum)->conduct_change(currPlayer);
+}
+
+
 ownableTile::ownableTile(int _tileNum, Board* _board, MainWindow* _game):
     Tile(_tileNum, _board, _game), owner(nullptr)
     {}
+
 
 void ownableTile::landingEvent( Player* currPlayer){
     if(!propOwner()) { //property is unowned
@@ -24,12 +41,14 @@ void ownableTile::landingEvent( Player* currPlayer){
 
     }
     else if (propOwner() == currPlayer) {//player lands on their own tile
-        if (dynamic_cast<Property*>(this)){
-            QLandingOptions* buildHouse = new QLandingOptions(
+        if (dynamic_cast<Property*>(this)){//if land on a property
+            Property* prop=dynamic_cast<Property*>(this);
+            if (!prop->getHotel())//if the property can still build house/hotel on
+            {   QLandingOptions* buildHouse = new QLandingOptions(
                                                 generateView(),
                                                 "Build a house/hotel on this property?",
                                             currPlayer,"Yes", "No");
-            QObject::connect(buildHouse->getLeft(),&QPushButton::clicked, currPlayer, &Player::buildHouse);
+                QObject::connect(buildHouse->getLeft(),&QPushButton::clicked, currPlayer, &Player::buildHouse);}
         }
         else if (dynamic_cast<Railroad*>(this)) {} //cant build houses on railroad so do nothing.
     }
@@ -38,7 +57,6 @@ void ownableTile::landingEvent( Player* currPlayer){
         std::string popupMessage ("Rent due:" +std::to_string(currentRent())+"!"); //generate message that asks for proper rent.
         NoOptionWindow(game,QString::fromStdString(popupMessage));
         this->owner->take(currPlayer, this->currentRent()); //owner of tile takes appropriate rent from person who landed on it.
-
     }
 }
 

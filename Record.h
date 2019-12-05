@@ -31,8 +31,6 @@ Note : FFTCB = Non important change. Feel Free to Change Back.
         * Changed Font for labels to give a little bit of pizzazz.
     In 2nd Constructor:
         *Changed text that is printed a little. FFTCB.
-
-
 */
 class Player;
 

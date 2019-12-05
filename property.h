@@ -11,8 +11,8 @@ class QVBoxLayout;
 class Bank;
 class Player;
 
-/**
-represents normal property tiles
+/*
+represents normal property tiles derived from ownableTile
 */
 class Property : public ownableTile{
 public:
@@ -20,49 +20,72 @@ public:
     friend Player;
     class View;
 
+    /*
+    for use for building a property from a line of "tileBuilder.txt"
+    @param formattedLine properly formatted line from tileBuilder.txt
+    */
     Property(const std::string& formattedLine, Board* _board, MainWindow* game);
     Property(const Property& oth) = default;
 
-    /**
-    returns QWidget that is the "property card" view of a property.
+    /*
+    generates a QWidget with the approperiate property tile painted onto it
+    @return pointer to viewing window to allow for manipulation.
     */
     QWidget* generateView () const override;
 
-    /**
-    adds a house to this's houseCount and charges the owner appropriately
-    @param bank: checks here if there are houses left to build.
+    /*
+    adds a house/hotel as appropriate if there are any remaining in the bank
+    and deducts the appropriate amount from their moneyRemaining.
+    @param bank of this game.
+    @return true if house is successfuly built.
     */
-    bool buildHouse(Bank* bank);
+    int buildHouse(Bank* bank);
 
-    /**
-    @return currentRent: rent that should be charged for landing here
+    /*
+    returns rent amount taking into account current number of houses
+    @return 0 if unowned, otherwise the appropriate rent.
     */
     int currentRent() const override;
 
-    /**
-    @return cost: how much this property costs to buy
+    /*
+    implements ownableTile::getCost() const
+    @return cost of property
     */
     int getCost() const override {return cost;}
 
-    /**
+    /*
     @return name of property
     */
+
     std::string getName() const override{return name;}
+
+    /*
+    @return hotel number of property
+    */
+    int getHotel(){return hotelCount;}
+
+    /*
+    @return house number of property
+    */
+    int getHouse(){return houseCount;}
+
 
 private:
     std::string color;
     std::string name;
     int houseCount;
+    int hotelCount=0;
     int cost;
     int houseCost;
     int rents[6];
 
 
 };
-/**
+
+/*
 A minimal class to allow Property to be displayed. Upon being created with Property::generateView(),
-the View instance will create a pixmap from the appropriate image for the calling property
-and draw appropriate labels.
+the View instance will create a pixmap from the appropriate image for the calling property.
+
 */
 class Property::View : public QWidget {
    Q_OBJECT
@@ -70,7 +93,6 @@ public:
     View() = delete;
     View(const Property& prop);
     std::string getName() const {return name;}
-    //160x192 -> 320x384
     void paintEvent(QPaintEvent* ) override;
 private:
     QPixmap image;
@@ -79,27 +101,40 @@ private:
 };
 
 
+/*
+ Railroad properties from regular game.  We will have 2.
+*/
 class Railroad : public ownableTile {
 public:
     Railroad( int _tileNum, std::string name, Board* _board, MainWindow* game);
 
-
+    /*
+    checks how many Railroads owner has to calculate rent.
+    @param player checks # of railroads they own
+    @return int number of railroads they own.
+    */
     int checkOwnerRailroads(const Player& player) const;
 
-
+    /*
+    @return rent that must be paid to owner.
+    */
     int currentRent() const override;
 
-
+    /*implements ownableTile::getCost() const
+    @return cost of railroad
+    */
     int getCost() const override {return cost;}
 
-
+    //@return name of railroad
     std::string getName() const {return name;}
+
+    //@return popup window of railroad
     QWidget* generateView() const override;
     class View;
 protected:
     int cost;
     std::string name;
-    int rents[15]={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15}; // each railroad has same rent values;
+    int rents[2]={100,300}; // each railroad has same rent values;
 };
 
 

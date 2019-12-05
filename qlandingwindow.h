@@ -10,9 +10,16 @@
 
 class MainWindow;
 
+//generates a QDialog showing the no-option statement, delete on closed
 void NoOptionWindow(QWidget*parent, QString statement);
 
 
+/*
+Base class for my custom popup windows.
+Stores a gridlayout and a QWidget.
+Displays QWidget in 0,0 of GridLayout.
+Registers window to tempObjects in a mainWindow for memory management.
+*/
 class QLandingWindow: public QWidget {
 Q_OBJECT
 public:
@@ -27,6 +34,12 @@ QObject* game;
 };
 
 
+
+/*
+   A window class for use in displaying a message that allows the player two options.
+    For example, buying a property or not buying a property.
+      displays its elements in a column.
+*/
 class QLandingOptions : public QLandingWindow {
    Q_OBJECT
 
