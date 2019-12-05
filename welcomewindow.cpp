@@ -85,21 +85,23 @@ void WelcomeWindow::GoSettingPage(){
     if (!music->isMuted())
         music->setMuted(1);
     subWindow* game_setup = new subWindow();
-    game_setup->setAttribute(Qt::WA_DeleteOnClose);
+    game_setup->setAttribute(Qt::WA_DeleteOnClose);//take care of the memory
     game_setup->num_player = 2;
     game_setup->setFixedSize(1600,900);
     game_setup->setWindowTitle("Game Set Up");
-    QFont labelfont("Times",20);
+
     QHBoxLayout *layout1 = new QHBoxLayout;
     QLabel *lb = new QLabel("Please choose the number of players: ",this);
+    QFont labelfont("Times",20);
     lb->setFont(labelfont);
+
     QSpinBox *spinBox_num = new QSpinBox();
     spinBox_num->setRange(2,4);
     layout1->addWidget((lb));
     layout1->addWidget((spinBox_num));
     QObject::connect(spinBox_num, SIGNAL(valueChanged(int)), game_setup, SLOT(comfirm_num(int)));
 
-    QHBoxLayout *layout5 = new QHBoxLayout;
+    QHBoxLayout *layout2 = new QHBoxLayout;
     QLabel *lb5 = new QLabel("Please choose initial amount of money each player has: ");
     lb5->setFont(labelfont);
     QComboBox *c4 = new QComboBox;
@@ -107,10 +109,10 @@ void WelcomeWindow::GoSettingPage(){
     c4->addItem("500");
     c4->addItem("1000");
     c4->addItem("1500");
-    layout5->addWidget((lb5));
-    layout5->addWidget((c4));
+    layout2->addWidget((lb5));
+    layout2->addWidget((c4));
 
-    QHBoxLayout *layout2 = new QHBoxLayout;
+    QHBoxLayout *layout3 = new QHBoxLayout;
     QLabel *lb2 = new QLabel("Please choose the maximun number of money existed: ");
     lb2->setFont(labelfont);
     QComboBox *c1 = new QComboBox;
@@ -118,10 +120,10 @@ void WelcomeWindow::GoSettingPage(){
     c1->addItem("5000");
     c1->addItem("8000");
     c1->addItem("12000");
-    layout2->addWidget((lb2));
-    layout2->addWidget((c1));
+    layout3->addWidget((lb2));
+    layout3->addWidget((c1));
 
-    QHBoxLayout *layout3 = new QHBoxLayout;
+    QHBoxLayout *layout4 = new QHBoxLayout;
     QLabel *lb3 = new QLabel("Please choose the maximun number of house allowed: ");
     lb3->setFont(labelfont);
     QComboBox *c2 = new QComboBox;
@@ -129,10 +131,10 @@ void WelcomeWindow::GoSettingPage(){
     c2->addItem("10");
     c2->addItem("20");
     c2->addItem("40");
-    layout3->addWidget((lb3));
-    layout3->addWidget((c2));
+    layout4->addWidget((lb3));
+    layout4->addWidget((c2));
 
-    QHBoxLayout *layout4 = new QHBoxLayout;
+    QHBoxLayout *layout5 = new QHBoxLayout;
     QLabel *lb4 = new QLabel("Please choose the maximun number of hotel allowed: ");
     lb4->setFont(labelfont);
     QComboBox *c3 = new QComboBox;
@@ -140,8 +142,8 @@ void WelcomeWindow::GoSettingPage(){
     c3->addItem("2");
     c3->addItem("4");
     c3->addItem("8");
-    layout4->addWidget((lb4));
-    layout4->addWidget((c3));
+    layout5->addWidget((lb4));
+    layout5->addWidget((c3));
 
     QVBoxLayout* layout= new QVBoxLayout;
     QPushButton *comfirm = new QPushButton("Comfirm");
@@ -150,10 +152,10 @@ void WelcomeWindow::GoSettingPage(){
     comfirm->setMaximumSize(QSize(200,50));
     QObject::connect(comfirm, SIGNAL(clicked()), game_setup, SLOT(GoSettingPage2()));
     layout->addLayout(layout1);
-    layout->addLayout(layout5);
     layout->addLayout(layout2);
     layout->addLayout(layout3);
     layout->addLayout(layout4);
+    layout->addLayout(layout5);
     layout->addLayout(layout6);
     layout->setSpacing(50);
     layout->setAlignment(Qt::AlignCenter);
@@ -174,28 +176,11 @@ void WelcomeWindow::GoRulePage(){
     rule->setAttribute(Qt::WA_DeleteOnClose);
     rule->setWindowTitle("Rule");
     rule->setFixedSize(1200,900);
-    QHBoxLayout *layout_rule = new QHBoxLayout;
-    QLabel *lb_text = new QLabel;
-    lb_text->setText("Welcom To Bruinopoly!\n");
-     lb_text->setText(
-                      "\n>It's OUR UCLA version of the Monopoly Game.\n"
-                      "\n>On the game-setup page,you can choose the number of plays. Also, you can give nicknames and choose characters. \n"
-                      "\n>The game process is just like a normal Monopoly, where every player rolls a die and moves.\n"
-                      "\n>You can buy properties and build houses. When landing on others' properties, you will pay a rent.\n"
-                      "\n>There are some special tokens on the board: When you land on chance card, a random event would show up.\n"
-                      "\n>When you own two railways, you can choose to take the transportation when landing on them.\n"
-                      "\n>If the chance card says GO TO JAIL, you would need to stay in jail for three turns.\n"
-                      "\n>The game will end when there is only one player remaining with a positive balance.\n"
-                      "\n>Have fun !"
-                      );
-    lb_text->setStyleSheet("QLabel { font: 28pt}");
-    layout_rule->addWidget(lb_text);
     QPixmap bkgnd(":/fig/rules_bkgd.jpg");
     bkgnd = bkgnd.scaled(size(), Qt::IgnoreAspectRatio);
     QPalette p = palette();
     p.setBrush(QPalette::Background, bkgnd);
     rule->setPalette(p);
-    rule->setLayout(layout_rule);
     rule->show();
 }
 

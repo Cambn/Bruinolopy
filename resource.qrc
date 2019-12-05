@@ -48,7 +48,6 @@
     </qresource>
     <qresource prefix="/txt">
         <file>tileBuilder.txt</file>
-        <file>record.txt</file>
     </qresource>
     <qresource prefix="/dice">
         <file>dice1.png</file>

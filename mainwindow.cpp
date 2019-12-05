@@ -85,8 +85,9 @@ bool MainWindow::gameover(){
         return false;
     }
 }
+/* the function for the player to land on the tile
 
-
+*/
 void MainWindow::actionupdate(int idx){
     int position=playerlist[idx]->getPos();
     board->getTile(position)->landingEvent(playerlist[idx]);

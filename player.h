@@ -32,7 +32,7 @@ public:
     void pay(Player* payee, int amt);
     void take(Player* target, int amt);
     bool buyPropertyBank();
-    Tile* getTile() const {return board->getTile(this->getPos());}
+    Tile* Player::getTile() const {return board->getTile(this->getPos());}
     int money() const;
     int getPos() const;
     int getProp() const;
@@ -63,7 +63,8 @@ public slots:
     void buyBankProp ();
     void payRent ();
     void buildHouse() ;
-
+    //get called if the player has two railroads and decided to transport
+    void transferPlayer_Railroad();
 signals:
     void buyPropFail();
 

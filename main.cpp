@@ -1,8 +1,6 @@
 #include "welcomewindow.h"
 #include "dice.h"
 
-#include <QFile>
-
 
 //Yuxin Qian
 //Group members: Hao Zheng, Daniel Becerra, Yuxin Qian, Chuqi Bian
@@ -14,20 +12,5 @@ int main(int argc, char *argv[])
    WelcomeWindow w;
 
     w.show();
-
-
     return a.exec();
 }
-
-
-//    QFile test(":/txt/tileBuilder.txt");
-
-//    if (test.open(QIODevice::ReadWrite)) {
-
-//        QLabel* ree = new QLabel("Ree");
-//        ree->show();
-//    }
-//    else {
-//        QLabel* ree = new QLabel ("REEEEEEEEE");
-//        ree->show();
-//    }

@@ -19,36 +19,14 @@ public:
 
     friend Player;
     class View;
-
     Property(const std::string& formattedLine, Board* _board, MainWindow* game);
     Property(const Property& oth) = default;
-
-    /**
-    returns QWidget that is the "property card" view of a property.
-    */
     QWidget* generateView () const override;
-
-    /**
-    adds a house to this's houseCount and charges the owner appropriately
-    @param bank: checks here if there are houses left to build.
-    */
     bool buildHouse(Bank* bank);
-
-    /**
-    @return currentRent: rent that should be charged for landing here
-    */
     int currentRent() const override;
-
-    /**
-    @return cost: how much this property costs to buy
-    */
     int getCost() const override {return cost;}
-
-    /**
-    @return name of property
-    */
-    std::string getName() const {return name;}
-
+    std::string getName() const override{return name;}
+    int checkOwnerRailroads(const Player& player) const override {return 0;}
 private:
     std::string color;
     std::string name;
@@ -61,8 +39,8 @@ private:
 };
 /**
 A minimal class to allow Property to be displayed. Upon being created with Property::generateView(),
-the View instance will create a pixmap from the appropriate image for the calling property
-and draw appropriate labels.
+the View instance will create a pixmap from the appropriate image for the calling property.
+
 */
 class Property::View : public QWidget {
    Q_OBJECT
@@ -77,6 +55,13 @@ private:
     QVBoxLayout* mainLayout;
     std::string name;
 };
+/*
+class TransportView : public Property::View{
+public:
+private:
+
+};
+*/
 
 
 class Railroad : public ownableTile {
@@ -84,9 +69,7 @@ public:
     Railroad( int _tileNum, std::string name, Board* _board, MainWindow* game);
 
 
-    int checkOwnerRailroads(const Player& player) const;
-
-
+    int checkOwnerRailroads(const Player& player) const override;
     int currentRent() const override;
 
 

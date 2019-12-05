@@ -57,6 +57,7 @@ private:
     int step_walked=0;
     QString Img_address;
     const int increment=1000;//if bank has money
+    QVector<int> railroadPos;
 };
 
 #endif // MOVEMENT_H
