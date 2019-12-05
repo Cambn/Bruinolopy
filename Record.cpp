@@ -1,5 +1,6 @@
 #include "Record.h"
 #include <fstream>
+#include "player.h"
 using std::string;using std::stringstream;
 Record::Record(){
 
@@ -11,6 +12,15 @@ Record::Record(const QString& _PlayerName,int _PlayerRanking,int _money):
         stream<<"Rank:"<<'\t'<< QString::number(ranking)<< '\t'<< "Name"<<'\t'<< PlayerName<<'\t'<<"Money "<<QString::number(moneyRemaining);
     }
 }
+
+Record::Record(const Player& player, int _PlayerRanking):
+    PlayerName(player.getname()), ranking(_PlayerRanking), moneyRemaining(player.money()), file(filename){
+    if (file.open(QIODevice::ReadWrite)){
+        QTextStream stream (&file);
+        stream<<"Rank:"<<'\t'<< QString::number(ranking)<< '\t'<< "Name"<<'\t'<< PlayerName<<'\t'<<"Money "<<QString::number(moneyRemaining);
+    }
+}
+
 int Record::getPlayerRanking() const{
     return ranking;
 }

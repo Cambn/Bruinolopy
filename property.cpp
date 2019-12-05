@@ -148,7 +148,10 @@ int Railroad::checkOwnerRailroads(const Player& player) const{
 }
 
 int Railroad::currentRent() const {
-    return rents[checkOwnerRailroads(*owner)];
+    if(checkOwnerRailroads(*owner) > 0){ //douuble check
+         return rents[checkOwnerRailroads(*owner) -1 ];//eg. if own 2 railroads proper rent to be charged is rents[1]
+    }
+    else return 0;
 }
 
 QWidget* Railroad::generateView() const {

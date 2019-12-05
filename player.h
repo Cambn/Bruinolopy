@@ -32,7 +32,7 @@ public:
     void pay(Player* payee, int amt);
     void take(Player* target, int amt);
     bool buyPropertyBank();
-    Tile* Player::getTile() const {return board->getTile(this->getPos());}
+    Tile* getTile() const {return board->getTile(this->getPos());}
     int money() const;
     int getPos() const;
     int getProp() const;

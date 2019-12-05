@@ -116,4 +116,16 @@ void Board::buildChancecards(MainWindow* game) {
           }
          }
          )
-        );}
+        );
+
+}
+
+Board::~Board() {
+    for (auto tile: tiles) {//for all tiles on the board
+        delete tile;        //delete
+    }
+
+    for (auto card: chanceCards) {//for all chance cards in deck
+         delete card;             //delete
+    }
+}
