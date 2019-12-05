@@ -6,6 +6,7 @@
 #include <QLayout>
 #include <QPainter>
 #include <QRect>
+#include <QDebug>
 #include <sstream>
 
 class MainWindow;
@@ -49,30 +50,37 @@ QWidget*  Property::generateView() const{
 
 
 
-bool Property::buildHouse(Bank* bank) {
-    if (houseCount<4){ //trying to build a house
-        if (bank->housesLeft() && (owner->money() >=houseCost)){//bank has houses left to build and owner has enough money
-            bank->take(*owner, houseCost);//charge player for house
-            ++houseCount;
-            --bank->housesRemaining;
-            return true;
+int Property::buildHouse(Bank* bank) {
+    if (houseCount < 4)//if need to build house
+    {
+        if (bank->housesLeft() && (owner->money() >=houseCost))//if bank has houses left and player has money
+        {
+            bank->take(*owner, houseCost);
+            houseCount+=1;
+            bank->housesRemaining-=1;
+            return 1;
         }
-        else {return false;} //no houses left do nothing
+        else
+        {   NoOptionWindow(owner,"Failed! No house left or insufficient money.");
+            return 0;}
     }
-    else if (houseCount==4 ) {//building a hotel
+    else if (houseCount == 4)//if need to build hotel
+    {
         if(bank->hotelsLeft() && (owner->money()>=houseCost)) {//hotels left and owner has enough money
-        bank->take(*owner,houseCost);//charge owner for a hotel
-        ++houseCount;
-        --bank->hotelsRemaining;
-        return true;
+            bank->take(*owner,houseCost);//charge owner for a hotel
+            houseCount+=1;
+            hotelCount+=1;
+            bank->hotelsRemaining-=1;
+            bank->housesRemaining+=4;
+            return 2;
         }
-        else {return false;}
-        //TODO:figure out how to output error messsage
-
+        else
+        {   NoOptionWindow(owner,"Failed! No hotel left or insufficient money.");
+            return 0;}
     }
-    else { return false;}
-    //TODO: figure out how to output error message
-
+    else
+    {   NoOptionWindow(owner,"Error: the housecount > 4");
+        return 0;}
 }
 
 int Property::currentRent() const {
@@ -88,6 +96,7 @@ Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  
     image = QPixmap(qfileName);
     setFixedSize(400,600);
     setWindowTitle("Property Purchase");
+
     //make label for name
     string temp = prop.name;
     QFont font("Kabel Heavy",15);
@@ -101,6 +110,7 @@ Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  
     QLabel* line2 = new QLabel(QString::fromStdString(temp),this);
     line2->setFont(font);
     mainLayout->addWidget(line2, 4, Qt::AlignHCenter );
+
     //make label for the rest
     temp = "\t      Rent: $"+std::to_string(prop.rents[0])+ "\n" +
            "With 1 House\t\t$"+std::to_string(prop.rents[1])+".\n" +
@@ -148,7 +158,7 @@ int Railroad::checkOwnerRailroads(const Player& player) const{
 }
 
 int Railroad::currentRent() const {
-    return rents[checkOwnerRailroads(*owner)];
+    return rents[checkOwnerRailroads(*owner)-1];
 }
 
 QWidget* Railroad::generateView() const {
@@ -157,13 +167,11 @@ QWidget* Railroad::generateView() const {
 
 
 Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
-  //COULD DO A CHCK IF OWNERS OWN TWO RAILROAD -> YES, THEN GOES TO THIS LOOP
-    if(rr.checkOwnerRailroads(rr.propOwner())==2){
     QString qfileName(":/properties/railroadProperty.png");
     image = QPixmap(qfileName);
 
     setFixedSize(400,600);
-    setWindowTitle("RailRoad Purchase");
+    setWindowTitle("Dining Hall Purchase");
 
     mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
 
@@ -174,56 +182,22 @@ Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
     _name->setFont(font);
     mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
 
-    // COST
-
     temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
     QLabel* _cost = new QLabel(QString::fromStdString(temp));
     font = QFont("Kabel Heavy",10);
     _cost->setFont(font);
     mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
 
-    // asking for transporting
-    temp = "Congrats little bruin! Now you own all the railroads.\nSo now you could choose to transport to another railroad with a tiny charge for maintainence.";
+
+    temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
+            "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
     font = QFont("Kabel Heavy",8);
     QLabel* block = new QLabel(QString::fromStdString(temp),this);
     block->setFont(font);
     mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
-    }
-    //NO, THEN GOES TO THIS LOOP
-    else{
-        QString qfileName(":/properties/railroadProperty.png");
-        image = QPixmap(qfileName);
 
-        setFixedSize(400,600);
-        setWindowTitle("RailRoad Transporting Systen");
-
-        mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
-
-        string temp(rr.getName()+" Bus Line");
-        QFont font("Kabel Heavy",12);
-        QLabel* _name = new QLabel(QString::fromStdString(temp),this);
-        _name->setStyleSheet("font-weight: bold ; color: black");
-        _name->setFont(font);
-        mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
-
-        // COST
-
-        temp = "Cost: $"  +std::to_string(10) +"\n\n";
-        QLabel* _cost = new QLabel(QString::fromStdString(temp));
-        font = QFont("Kabel Heavy",10);
-        _cost->setFont(font);
-        mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
-
-
-        temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
-                "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
-        font = QFont("Kabel Heavy",8);
-        QLabel* block = new QLabel(QString::fromStdString(temp),this);
-        block->setFont(font);
-        mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
-
-    }
 }
+
 
 void Railroad::View::paintEvent(QPaintEvent*) {
     QPainter p(this);

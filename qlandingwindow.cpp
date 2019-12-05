@@ -43,7 +43,7 @@ QLandingOptions::QLandingOptions(
         connect(left, &QPushButton::clicked, this, &QWidget::close);
         connect(right, &QPushButton::clicked, this, &QWidget::close);
     }
-QLandingOptions::
+
 QLandingOptions::~QLandingOptions() {
     delete prompt;
     delete left;

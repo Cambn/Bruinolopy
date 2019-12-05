@@ -14,9 +14,16 @@ friend class ChanceTile;
 
 public:
 Board(MainWindow* game = nullptr);
+
+//return the ptr of the tile on the idx
+//@boardPos the idx
 Tile * getTile(int boardPos) ;
+
+//construct chance card
 void buildChancecards(MainWindow* game);
+
 MainWindow* w;
+~Board();
 
 private:
 std::vector <Tile*> tiles;

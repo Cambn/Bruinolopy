@@ -22,6 +22,7 @@ Q_OBJECT
 
 public:
 
+
     Player(QWidget *parent=nullptr,
            Bank* b=nullptr,
            Board* board=nullptr,
@@ -29,28 +30,66 @@ public:
            const QString& name="",
            int money=0, int order=0,
            const QString& path=":/fig/gb_panda.png");
+    ~Player();
+
+    /*
+        pays another player, if possible
+        @param payee player being paid
+        @param amt to be paid
+        @return true if pay successful
+        */
     void pay(Player* payee, int amt);
+
+    /*
+        forcibly takes money from another player.  Can reduce their money to zero !!!
+        @param target to be taken from
+        @param amt to be taken
+        @return true if target was valid ptr
+        */
     void take(Player* target, int amt);
+
+    /*
+    attempts to buy property that player is currently on from bank.
+    @return false if not enough money to purchase property.
+    */
     bool buyPropertyBank();
-    Tile* Player::getTile() const {return board->getTile(this->getPos());}
+
+
+    Tile* getTile() const;
+
+    /*
+        check player's money. doesn't allow modification.
+        @return gets playerMoney
+        */
     int money() const;
+
+    /*
+     @return current board position of player
+     */
     int getPos() const;
+
+    //return current properties number owned by player
     int getProp() const;
+    //return current house number owned by player
     int getHouse() const;
+    //return current hotel number owned by player
     int getHotel() const;
+    //return player's name
     QString getname()const;
+    //return player's charactor
     QString getcharactor() const;
+    //return a ptr pointing to player's movement class
     Movement* getmovement() const;
     bool isDefeated=0;
-    int isDisable(){return disable;}
-    void changeDisable(){
-        if (disable==3){
-            disable=0;}
-        else{
-            disable++;}
-    }
 
+    //@return the value of disable variable. >0 means the player is in jail with (4-return) turns left. otherwise not in jail
+    int isDisable();
+
+    //add disable by 1
+    void changeDisable();
     Bank* bank;
+
+    //clearup player's propertylist
     void setPlayerPropertiesDefault(){
         for(auto properties: playerProperties){
             properties->transfer(nullptr);
@@ -60,11 +99,10 @@ public:
 
 
 public slots:
-    void buyBankProp ();
+    void buyBankProp ();//buy the ownable prop
     void payRent ();
     void buildHouse() ;
-    //get called if the player has two railroads and decided to transport
-    void transferPlayer_Railroad();
+
 signals:
     void buyPropFail();
 
@@ -78,7 +116,6 @@ private:
     int hotel=0;
     int disable=0;
     int playerMoney;
-
  std::vector<ownableTile*> playerProperties; //properties owned by player
 };
 

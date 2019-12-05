@@ -11,6 +11,7 @@ Movement::Movement(QWidget *parent,Player* player,int order, QString address) :
     int add_y=140*(oldboard/newboard)+1;
     int add_x=382*(oldboard/newboard);
 
+    //set the index for movement
     for(int i=0;i<newboard;i++){
         yAxis[i]=y_max;
         xAxis[(i+Axis_length/4)%Axis_length]=x_max;
@@ -18,7 +19,6 @@ Movement::Movement(QWidget *parent,Player* player,int order, QString address) :
         yAxis[i+Axis_length/2]=y_max-Axis_length/4*add_y;
         xAxis[(i+Axis_length*3/4)%Axis_length]=x_max-Axis_length/4*add_x;
     }
-
     for(int i=0;i<newboard-2;i++){
         yAxis[i+Axis_length/4+1]=y_max-(i+1)*add_y;
         xAxis[(i+Axis_length/4+1+Axis_length/4)%Axis_length]=x_max-(i+1)*add_x;
@@ -26,8 +26,6 @@ Movement::Movement(QWidget *parent,Player* player,int order, QString address) :
         yAxis[i+Axis_length*3/4+1]=y_max-(Axis_length/4-1-i)*add_y;
         xAxis[i+1]=x_max-(Axis_length/4-1-i)*add_x;
     }
-
-
     for (int i=0;i<Axis_length;i++){
         xAxis[i]+=(width+4)*order;
     }
@@ -56,12 +54,13 @@ void Movement::walkbydice(){
     timer->start(100);
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(one_step()));
     position+=d->getresult();//need to update pos in walkbydice otherwise when the signal for land() emits the position is still the initial one
-    if (position/Axis_length>(position-d->getresult())/Axis_length)
+    if (position/Axis_length>(position-d->getresult())/Axis_length)//if pass the start point, receive money
         p->bank->pay(*p,increment);
 }
 
 void Movement::one_step(){
     int prev_pos=position-d->getresult();
+    //walk step by step until walked steps=die
     if (step_walked<d->getresult()){
         step_walked++;
         ImgRect ->setX(xAxis[(prev_pos+step_walked)%Axis_length]);
@@ -70,7 +69,7 @@ void Movement::one_step(){
         ImgRect->setWidth(width);
         repaint();
     }
-    else
+    else//stop working
     {
         QObject::connect(timer,SIGNAL(timeout()),this,SLOT(showrollbutton()));
         timer->stop();
@@ -78,10 +77,24 @@ void Movement::one_step(){
     }
 }
 
+
+int Movement::getpos() const {return position%Axis_length;}
+int Movement::getorder()const {return order;}
+
+
 void Movement::showrollbutton(){
     d->rollStart->show();
     timer->stop();
     step_walked=0;
+}
+
+void Movement::instant_trans(int new_pos){
+    position = new_pos;
+    ImgRect ->setX(xAxis[position]);
+    ImgRect ->setY(yAxis[position]);
+    ImgRect->setHeight(height);
+    ImgRect->setWidth(width);
+    repaint();
 }
 
 

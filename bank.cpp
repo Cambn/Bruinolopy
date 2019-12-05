@@ -25,7 +25,7 @@ void Bank::take(Player& payer, int amt) {
     }
     else {
         bankMoney += payer.playerMoney;
-        payer.playerMoney=0;
+        payer.playerMoney=-1;
     }
 }
 

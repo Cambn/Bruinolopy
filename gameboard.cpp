@@ -1,23 +1,27 @@
 #include "gameboard.h"
 
 
+
 GameBoard::GameBoard(QWidget *parent):QWidget(parent){
     QGridLayout *mainLayout = new QGridLayout(this);
 
-    //create blocks
+    //create picture blocks and text blocks
     for(int column = 0; column<BoardLength; ++column){
-        for(int row = 0; row< BoardWidth; ++row){
+        for(int row = 0; row<BoardWidth; ++row){
             pixmapLabels[column][row] = createPixmapLabel();
             pixmapLabels[column][row]->setParent(this);
             mainLayout ->addWidget(pixmapLabels[column][row], row+1, column+1);
         }
     }
+
+    //fix size of label
     for(int column = 0; column<BoardLength; ++column){
         for(int row = 0; row< BoardWidth; ++row){
             pixmapLabels[column][row]->setFixedSize(pixmapLabels[0][0]->size());
         }
     }
 
+    //hide labels in the middle
     for(int column = 1; column<BoardLength-1; ++column){
         for(int row = 1; row< BoardWidth-1; ++row){
            pixmapLabels[column][row]->hide();
@@ -26,8 +30,6 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
 
     int a = pixmapLabels[1][1]->width();
     int b = pixmapLabels[1][1]->height();
-
-
 
     QPixmap bg=  QPixmap(":/fig/chancecard.png");
     pixmapLabels[0][0]->setPixmap(bg.scaled(a,b, Qt::IgnoreAspectRatio));
@@ -72,7 +74,7 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
     QPixmap lb13(":/fig/msb.png");
     pixmapLabels[0][1]->setPixmap(lb13.scaled(a,b, Qt::IgnoreAspectRatio));
 
-
+    pixmapLabels[0][4]->setText("Start!");
 }
 
 QLabel *GameBoard::createPixmapLabel(){

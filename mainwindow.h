@@ -30,9 +30,14 @@ public:
                const QStringList& n={},
                const QStringList& ch={},
                const Statics& stat=Statics());
+    ~MainWindow(){delete bank;delete board;}
 
+    //return the player ptr pointing to i th player
     Player* getplayer(int i){return playerlist[i];}
+
+    //check if game is over
     bool gameover();
+
     Bank* bank;
 
 signals:
@@ -40,9 +45,9 @@ signals:
 
 
 public slots:
-    void playerwalk();
-    void actionupdate(int idx);
-    void waitasec();
+    void playerwalk();//let the player move
+    void actionupdate(int idx);//call landingevent
+    void waitasec();//wait one second to conduct landingevent after the player finish moving
     void infoupdate();//repaint playerinfo
 
 

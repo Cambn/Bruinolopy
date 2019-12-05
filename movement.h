@@ -11,6 +11,8 @@ class Player;
 //the movement class is part of the player class
 //it tracks the dice, the position
 
+
+
 class Movement : public QWidget
 {
     Q_OBJECT
@@ -23,30 +25,24 @@ public:
                       QString address=":/fig/gb_panda.png");
     Dice* d;//a shallow copy to maindice
     void paintEvent(QPaintEvent *event) override;
-    int getpos() const {return position%Axis_length;}
-    int getorder()const {return order;}
+
+    //return current position of the player
+    int getpos() const;
+    //return the order of the player in the playerlst
+    int getorder()const;
 
 public slots:
-    void walkbydice();
-    void one_step();
-    void showrollbutton();
-    void instant_trans(int new_pos){
-        position = new_pos;
-        ImgRect ->setX(xAxis[position]);
-        ImgRect ->setY(yAxis[position]);
-        ImgRect->setHeight(height);
-        ImgRect->setWidth(width);
-        repaint();
-    }
+    void walkbydice();//walk the steps rolled by the dice
+    void one_step();//walk one step
+    void showrollbutton();//let the next player roll the dice
+    void instant_trans(int new_pos);// move to another position instantly
 
 private:
-
     Player* p;
     QTimer* timer;
+
     QPixmap *Img;
     QRect *ImgRect;//the size of the drawn pic
-    int position;
-    int order;//modify the x value to avoid icon shown overlapped
     const double oldboard=4;
     double newboard=5;
     int yAxis[16];
@@ -54,10 +50,12 @@ private:
     int Axis_length=4*(newboard-1);
     int width=80*(oldboard/newboard);
     int height=120*(oldboard/newboard);
+
+    int position;
+    int order;//modify the x value to avoid icon shown overlapped
     int step_walked=0;
     QString Img_address;
-    const int increment=1000;//if bank has money
-    QVector<int> railroadPos;
+    const int increment=200;
 };
 
 #endif // MOVEMENT_H
