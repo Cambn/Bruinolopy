@@ -25,8 +25,8 @@ public:
     bool buildHouse(Bank* bank);
     int currentRent() const override;
     int getCost() const override {return cost;}
-    std::string getName() const {return name;}
-
+    std::string getName() const override{return name;}
+    int checkOwnerRailroads(const Player& player) const override {}
 private:
     std::string color;
     std::string name;
@@ -69,9 +69,7 @@ public:
     Railroad( int _tileNum, std::string name, Board* _board, MainWindow* game);
 
 
-    int checkOwnerRailroads(const Player& player) const;
-
-
+    int checkOwnerRailroads(const Player& player) const override;
     int currentRent() const override;
 
 

@@ -157,6 +157,8 @@ QWidget* Railroad::generateView() const {
 
 
 Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
+  //COULD DO A CHCK IF OWNERS OWN TWO RAILROAD -> NO, THEN GOES TO THIS LOOP
+    if(rr.checkOwnerRailroads(rr.propOwner())!=2){
     QString qfileName(":/properties/railroadProperty.png");
     image = QPixmap(qfileName);
 
@@ -172,6 +174,8 @@ Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
     _name->setFont(font);
     mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
 
+    // COST
+
     temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
     QLabel* _cost = new QLabel(QString::fromStdString(temp));
     font = QFont("Kabel Heavy",10);
@@ -179,13 +183,46 @@ Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
     mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
 
 
-    temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
-            "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
+    temp = "Congrats little bruin! Now you own all the railroads.\nSo now you could choose to transport to another railroad with a tiny charge for maintainence.";
     font = QFont("Kabel Heavy",8);
     QLabel* block = new QLabel(QString::fromStdString(temp),this);
     block->setFont(font);
     mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
+    }
+    //YES, THEN GOES TO THIS LOOP
+    else{
+        QString qfileName(":/properties/railroadProperty.png");
+        image = QPixmap(qfileName);
 
+        setFixedSize(400,600);
+        setWindowTitle("RailRoad Transporting Systen");
+
+        mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
+
+        string temp(rr.getName()+" Bus Line");
+        QFont font("Kabel Heavy",12);
+        QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+        _name->setStyleSheet("font-weight: bold ; color: black");
+        _name->setFont(font);
+        mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
+
+        // COST
+
+        temp = "Cost: $"  +std::to_string(10) +"\n\n";
+        QLabel* _cost = new QLabel(QString::fromStdString(temp));
+        font = QFont("Kabel Heavy",10);
+        _cost->setFont(font);
+        mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
+
+
+        temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
+                "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
+        font = QFont("Kabel Heavy",8);
+        QLabel* block = new QLabel(QString::fromStdString(temp),this);
+        block->setFont(font);
+        mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
+
+    }
 }
 
 void Railroad::View::paintEvent(QPaintEvent*) {

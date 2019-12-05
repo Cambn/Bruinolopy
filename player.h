@@ -63,7 +63,7 @@ public slots:
     void buyBankProp ();
     void payRent ();
     void buildHouse() ;
-
+    void transferPlayer_Railroad();
 signals:
     void buyPropFail();
 

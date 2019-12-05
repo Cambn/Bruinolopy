@@ -15,7 +15,6 @@ public:
     friend class Board;
     Tile (int _tileNum, Board* _board, MainWindow* _game): tileNumber(_tileNum), board(_board), game(_game)  {}
     virtual void landingEvent(Player* currPlayer){}
-
     virtual ~Tile(){}
 protected:
     int tileNumber;
@@ -29,7 +28,7 @@ class ownableTile : public Tile {
 
 public:
     ownableTile(int _tileNum, Board* _board, MainWindow* _game);
-    virtual void landingEvent( Player* currPlayer);
+    virtual void landingEvent( Player* currPlayer) override;
     virtual int currentRent() const = 0;
     virtual QWidget* generateView() const {return nullptr;}
     Player* propOwner() const;
@@ -37,6 +36,7 @@ public:
     void transfer( Player* newOwner);
     virtual ~ownableTile() override= default;
     virtual std::string getName() const = 0;
+    virtual int checkOwnerRailroads(const Player& player) const = 0;
     //160x192 -> 320x384
 protected:
     Player* owner=nullptr;

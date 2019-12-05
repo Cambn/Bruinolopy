@@ -25,7 +25,7 @@ public:
     void paintEvent(QPaintEvent *event) override;
     int getpos() const {return position%Axis_length;}
     int getorder()const {return order;}
-
+    int gerRailRoadPos(int i) const{ return ;}
 public slots:
     void walkbydice();
     void one_step();
@@ -57,6 +57,7 @@ private:
     int step_walked=0;
     QString Img_address;
     const int increment=1000;//if bank has money
+    QVector<int> railroadPos;
 };
 
 #endif // MOVEMENT_H

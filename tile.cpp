@@ -31,7 +31,18 @@ void ownableTile::landingEvent( Player* currPlayer){
                                             currPlayer,"Yes", "No");
             QObject::connect(buildHouse->getLeft(),&QPushButton::clicked, currPlayer, &Player::buildHouse);
         }
-        else if (dynamic_cast<Railroad*>(this)) {} //cant build houses on railroad so do nothing.
+        else if (dynamic_cast<Railroad*>(this)) {
+            //EMIT ANOTHER SLOT IN THE PLAYER CLASS TO CALL THE TRANSPORTATION
+             //check if the current owner ownes two railroads { }
+            if(this->checkOwnerRailroads(currPlayer)==2){
+                QLandingOptions* RailTransport = new QLandingOptions(
+                                                       generateView(),
+                                                       "So is that a yes or no?",
+                                                       currPlayer,"Yes","No");
+                QObject::connect(RailTransport->getLeft(),&QPushButton::clicked,currPlayer,&Player::transferPlayer_Railroad);
+            }
+            //check if the current owner ownes two railroads { }
+        } //cant build houses on railroad so do nothing.
     }
     else
     { //someone else owns the property so pay them rent

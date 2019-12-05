@@ -79,6 +79,11 @@ void Player::buyBankProp() {
         NoOptionWindow(this,"Unable to purchase property (:/)");
     }
 }
+//the slot implemented for railroad transporting
+void Player::transferPlayer_Railroad(){
+    this->take(this,10);
+    this->getmovement()->instant_trans(this->getmovement()->getpos());
+}
 
 void Player::payRent() {
     ownableTile* prop = dynamic_cast<ownableTile*> (getTile()); //prop is the tile the player is on.
