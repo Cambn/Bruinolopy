@@ -15,6 +15,7 @@ using std::string;
 
 Board::Board(MainWindow* game) :w(game),tiles(16,nullptr) {
 
+
     srand(time(nullptr));
 
     string first("prop	1	purple	Kerchoff	60	50	12	24	45	90	160	250");
@@ -80,7 +81,7 @@ void Board::buildChancecards(MainWindow* game) {
                                }
                               )
              );
-     chanceCards.emplace_back( new ChanceCard("Go to Jail",
+     chanceCards.emplace_back( new ChanceCard("Go to Jail! You will stay in the PIC lAB for three turns. ",
                                               [](Player* currPlayer) -> void {
                                               currPlayer->getmovement()->instant_trans(8);
                                               currPlayer->changeDisable();

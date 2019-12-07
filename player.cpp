@@ -124,3 +124,6 @@ void Player::buildHouse()  {
         }
 }
 
+QString Player::return_name(){
+    return name;
+}

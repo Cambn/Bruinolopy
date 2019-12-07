@@ -30,6 +30,7 @@
         <file>Railway.png</file>
         <file>royceHall.png</file>
         <file>bear.png</file>
+        <file>gameboadrCover.jpg</file>
     </qresource>
     <qresource prefix="/sound">
         <file>welcomemusic.mp3</file>

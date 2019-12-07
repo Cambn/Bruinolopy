@@ -48,13 +48,16 @@ void ownableTile::landingEvent( Player* currPlayer){
                                                 generateView(),
                                                 "Build a house/hotel on this property?",
                                             currPlayer,"Yes", "No");
+
                 QObject::connect(buildHouse->getLeft(),&QPushButton::clicked, currPlayer, &Player::buildHouse);}
         }
         else if (dynamic_cast<Railroad*>(this)) {} //cant build houses on railroad so do nothing.
     }
     else
     { //someone else owns the property so pay them rent
-        std::string popupMessage ("Rent due:" +std::to_string(currentRent())+"!"); //generate message that asks for proper rent.
+        std::string name = owner->return_name().toLocal8Bit().constData();
+        std::string popupMessage (" This property is owned by " + name + "\nRent due:" +std::to_string(currentRent())+"!");
+                //generate message that asks for proper rent.
         NoOptionWindow(game,QString::fromStdString(popupMessage));
         this->owner->take(currPlayer, this->currentRent()); //owner of tile takes appropriate rent from person who landed on it.
     }

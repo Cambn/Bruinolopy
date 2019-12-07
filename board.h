@@ -8,7 +8,7 @@ class MainWindow;
 class Player;
 class Tile;
 
-class Board {
+class Board{
 friend Player;
 friend class ChanceTile;
 

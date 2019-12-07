@@ -50,6 +50,7 @@ QLandingOptions::~QLandingOptions() {
     delete right;
 }
 
+
 void NoOptionWindow(QWidget*parent, QString statement){
     QDialog* content = new QDialog(parent);
     QHBoxLayout* layout = new QHBoxLayout;

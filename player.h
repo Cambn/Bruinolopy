@@ -102,6 +102,8 @@ public slots:
     void buyBankProp ();//buy the ownable prop
     void payRent ();
     void buildHouse() ;
+public:
+    QString return_name();
 
 signals:
     void buyPropFail();
