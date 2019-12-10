@@ -103,6 +103,7 @@ public slots:
     void buyBankProp ();//buy the ownable prop
     void payRent ();
     void buildHouse() ;
+    void transferPlayer_Railroad();//tranport the user to other railroad when gets called
 public:
     QString return_name();
 
