@@ -7,7 +7,7 @@
 #include <QLayout>
 
 class MainWindow;
-//the GameBoard class constructs the UI of the upperhalf of the mainwindow
+//the GameBoard class constructs the UI of the upperhalf of the Game Playing console
 
 class GameBoard : public QWidget
 {
