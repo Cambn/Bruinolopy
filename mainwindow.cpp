@@ -75,7 +75,7 @@ void MainWindow::infoupdate(){
         std::string temp("");
         int wordCount = 0;
         std::for_each(playerlist[i]->playerProperties.begin(),playerlist[i]->playerProperties.end(),
-                      [&temp, &wordCount](ownableTile* prop)-> void {
+                      [&temp, &wordCount](const ownableTile* prop)-> void {
 
                        ++wordCount;
 
