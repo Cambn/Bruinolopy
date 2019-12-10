@@ -1,6 +1,4 @@
 #include "welcomewindow.h"
-
-#include <QDirIterator>
 #include "dice.h"
 
 
@@ -14,11 +12,5 @@ int main(int argc, char *argv[])
    WelcomeWindow w;
 
     w.show();
-
-//    QDirIterator it (":",QDirIterator::Subdirectories);
-//    while (it.hasNext()) {
-//        qDebug() <<it.next();
-//    }
-
     return a.exec();
 }

@@ -35,21 +35,60 @@ public:
     Statics s;
    // void PlayNickNameArea(subWindow* window2, QVBoxLayout *layout,QWidget *parent, int numberofplayer);
     //checking functions
-    bool checking_inputEmpty();//checks if the player input is empty. Return true if is empty indeed
-    bool checking_Nickname();//check if the player name are the same. Return true if two are the same.
-    bool checking_Icon();//check if the player choose the same icon. Return true if icons are the same
+    bool checking_inputEmpty();
+    bool checking_Nickname();
+    bool checking_Icon();
 public slots:
     void comfirm_num(int);
     void GoSettingPage2();
     void GoGameboard();
     void checkValidation();//implement the checking
-
+    //void playerNameChanged();
+   // void playerIconChanged();
 
 signals:
-    //when checkings are passed, emit this signal to pass to the game board . 
     void succeed();
 
 friend WelcomeWindow;
 };
 
 #endif // SUBWINDOW_H
+/*
+#ifndef SUBWINDOW_H
+#define SUBWINDOW_H
+#include "mainwindow.h"
+#include "gameboard.h"
+#include "playerinfodisplay.h"
+#include <QApplication>
+#include <QComboBox>
+
+class Statics;
+class WelcomeWindow;
+
+class subWindow : public QWidget{
+    Q_OBJECT
+
+private:
+    int num_player;
+    QStringList names;
+    QStringList charactors;
+    QVector<QComboBox*> CBlist;
+    QVector<QLineEdit*> LElist;
+    QVector<QString> token_list= {"panda", "brown bear", "polar bear","grey bear"};
+    QVector<QComboBox*> firstCBlist;
+
+public:
+    explicit subWindow(QWidget *parent = nullptr);
+    Statics s;
+
+
+public slots:
+    void comfirm_num(int);
+    void GoSettingPage2();
+    void GoGameboard();
+
+friend WelcomeWindow;
+};
+
+#endif // SUBWINDOW_H
+*/

@@ -1,3 +1,4 @@
+//the base player class that stores player information
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -30,7 +31,6 @@ public:
            const QString& name="",
            int money=0, int order=0,
            const QString& path=":/fig/gb_panda.png");
-
     ~Player();
 
     /*
@@ -103,6 +103,7 @@ public slots:
     void buyBankProp ();//buy the ownable prop
     void payRent ();
     void buildHouse() ;
+    void transferPlayer_Railroad();
 public:
     QString return_name();
 

@@ -7,7 +7,7 @@
 #include "player.h"
 #include "mainwindow.h"
 
-//the PlayerInfoDisplay class controls the lower half of the mainwindow which is used for displaying player info
+//the PlayerInfoDisplay class is responsible for displaying player's up-to-date info during a game
 
 class PlayerInfoDisplay : public QWidget
 {

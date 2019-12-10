@@ -113,7 +113,7 @@ public:
     @param player checks # of railroads they own
     @return int number of railroads they own.
     */
-    int checkOwnerRailroads(const Player& player) const;
+    int checkOwnerRailroads(const Player* player) const;
 
     /*
     @return rent that must be paid to owner.
@@ -152,3 +152,4 @@ QVBoxLayout*  mainLayout;
 
 
 #endif
+
