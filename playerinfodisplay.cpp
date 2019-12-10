@@ -38,6 +38,7 @@ QLabel *PlayerInfoDisplay::createPlayerPixmap(Player* p){
                    "\nHouses:"+QString::number(p->getHouse())+
                    "\nHotels:"+QString::number(p->getHotel()));
 
+
     //QFrame *custom = new QFrame;
     label ->setEnabled(false);
     label ->setAlignment(Qt::AlignCenter);
