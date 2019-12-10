@@ -10,6 +10,14 @@ MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStri
     : QMainWindow(parent),numofplayer(i),names(n),charactors(ch),s(stat),turn(0)
 {
 
+    QPixmap bkgd(":/fig/gameboadrCover.jpg");
+    bkgd = bkgd.scaled(QSize(1000,1100), Qt::KeepAspectRatioByExpanding);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgd);
+    this->setPalette(palette);
+    this->setAutoFillBackground(true);
+
+
     bank=new Bank(s,numofplayer);
     board->buildChancecards(this);
 
@@ -23,11 +31,16 @@ MainWindow::MainWindow(QWidget *parent, int i, const QStringList& n, const QStri
     //create the upper board /a map
     QGroupBox *boardGroupBox = new QGroupBox(tr("Board"));
     boardArea = new GameBoard(boardGroupBox);
+
+
     QVBoxLayout *boardLayout = new QVBoxLayout(boardGroupBox);
     boardLayout ->addWidget(boardArea);
 
     //create the lower board /an info section
     QGroupBox *playerGroupBox = new QGroupBox(tr("Player"));
+
+    playerGroupBox->setStyleSheet("background-color:white;");
+
     playerArea = new PlayerInfoDisplay(playerGroupBox,this,numofplayer,names,charactors,s.getSTARTING_AMOUNT());
 
     //set layout
@@ -158,6 +171,8 @@ void MainWindow::playerwalk()
     }
 
 
+
+/*
 void MainWindow::updateRecord() const {
 
     Player* winner = nullptr;
@@ -230,7 +245,7 @@ void MainWindow::updateRecord() const {
     else throw ( std::exception("Unable to open record.txt"));
 
 }
-
+*/
 
 
 

@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QGroupBox>
 #include <QBoxLayout>
+#include <QMediaPlayer>
 #include "gameboard.h"
 #include "chancecard.h"
 #include "movement.h"
@@ -57,6 +58,7 @@ public slots:
 
 
 
+
 private:
     GameBoard *boardArea;
     PlayerInfoDisplay *playerArea;
@@ -68,6 +70,8 @@ private:
     QStringList names;
     QStringList charactors;
     Statics s;
+
+
     int turn;
     int looserlist[4]={0,0,0,0};
 };

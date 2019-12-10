@@ -19,7 +19,9 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
         for(int row = 0; row< BoardWidth; ++row){
             pixmapLabels[column][row]->setFixedSize(pixmapLabels[0][0]->size());
         }
+
     }
+
 
     //hide labels in the middle
     for(int column = 1; column<BoardLength-1; ++column){
@@ -30,6 +32,9 @@ GameBoard::GameBoard(QWidget *parent):QWidget(parent){
 
     int a = pixmapLabels[1][1]->width();
     int b = pixmapLabels[1][1]->height();
+
+
+
 
     QPixmap bg=  QPixmap(":/fig/chancecard.png");
     pixmapLabels[0][0]->setPixmap(bg.scaled(a,b, Qt::IgnoreAspectRatio));

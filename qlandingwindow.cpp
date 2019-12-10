@@ -48,6 +48,7 @@ QLandingOptions::QLandingOptions(
     }
 
 
+
 void NoOptionWindow(QWidget*parent, QString statement){
     QDialog* content = new QDialog(parent);
     QHBoxLayout* layout = new QHBoxLayout;

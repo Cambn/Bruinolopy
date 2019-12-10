@@ -53,7 +53,9 @@ public :
     QPushButton* getLeft() const{return left;  }
     QPushButton* getRight()const{return right; }
 
+
     ~QLandingOptions() override = default;
+
 private:
     QLabel* prompt;
     QPushButton* left;
