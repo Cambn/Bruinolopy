@@ -94,7 +94,7 @@ Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  
     std::string fileName= ":/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
     image = QPixmap(qfileName);
-    setFixedSize(400,600);
+    setFixedSize(400,480);
     setWindowTitle("Property Purchase");
 
     //make label for name
@@ -147,9 +147,10 @@ Railroad::Railroad(int _tileNum, std::string _name, Board* _board, MainWindow* _
     cost(200), name(std::move(_name))
 {}
 
-int Railroad::checkOwnerRailroads(const Player& player) const{
+int Railroad::checkOwnerRailroads(const Player* player) const{
     int railroadCount = 0;
-    for ( auto prop : player.playerProperties) {//go through player properties
+    if(propOwner()==nullptr){return 0;}
+    for ( auto prop : player->playerProperties) {//go through player properties
         if (dynamic_cast<Railroad*>(prop)){//see which ones are railroads
             ++railroadCount;                //count them
         }
@@ -158,7 +159,7 @@ int Railroad::checkOwnerRailroads(const Player& player) const{
 }
 
 int Railroad::currentRent() const {
-    return rents[checkOwnerRailroads(*owner)-1];
+    return rents[checkOwnerRailroads(owner)-1];
 }
 
 QWidget* Railroad::generateView() const {
@@ -167,35 +168,69 @@ QWidget* Railroad::generateView() const {
 
 
 Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
-    QString qfileName(":/properties/railroadProperty.png");
-    image = QPixmap(qfileName);
+    //owner owns all railroads
+    if(rr.checkOwnerRailroads(rr.propOwner())==2){
+        QString qfileName(":/properties/railroadProperty.png");
+        image = QPixmap(qfileName);
 
-    setFixedSize(400,600);
-    setWindowTitle("Dining Hall Purchase");
+        setFixedSize(400,600);
+        setWindowTitle("RailRoad Transportation System");
 
-    mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
+        mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
 
-    string temp(rr.getName()+" Bus Line");
-    QFont font("Kabel Heavy",12);
-    QLabel* _name = new QLabel(QString::fromStdString(temp),this);
-    _name->setStyleSheet("font-weight: bold ; color: black");
-    _name->setFont(font);
-    mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
+        string temp(rr.getName()+" Bus Line");
+        QFont font("Kabel Heavy",12);
+        QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+        _name->setStyleSheet("font-weight: bold ; color: black");
+        _name->setFont(font);
+        mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
 
-    temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
-    QLabel* _cost = new QLabel(QString::fromStdString(temp));
-    font = QFont("Kabel Heavy",10);
-    _cost->setFont(font);
-    mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
+        // COST
+
+        temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
+        QLabel* _cost = new QLabel(QString::fromStdString(temp));
+        font = QFont("Kabel Heavy",10);
+        _cost->setFont(font);
+        mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
+
+        // asking for transporting
+        temp = "Congrats Big Bruin! Now you own all the railroads:)\nWould you like to transport to another railroad,\nbut with a tiny charge for maintainence.";
+        font = QFont("Kabel Heavy",8);
+        QLabel* block = new QLabel(QString::fromStdString(temp),this);
+        block->setFont(font);
+        mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
+        }
+        //NO, THEN GOES TO THIS LOOP
+    else{
+        QString qfileName(":/properties/railroadProperty.png");
+        image = QPixmap(qfileName);
+
+        setFixedSize(400,600);
+        setWindowTitle("Dining Hall Purchase");
+
+        mainLayout->addSpacerItem(new QSpacerItem(319,130,QSizePolicy::Fixed,QSizePolicy::Fixed)); //block out the icon display portion of the card
+
+        string temp(rr.getName()+" Bus Line");
+        QFont font("Kabel Heavy",12);
+        QLabel* _name = new QLabel(QString::fromStdString(temp),this);
+        _name->setStyleSheet("font-weight: bold ; color: black");
+        _name->setFont(font);
+        mainLayout->addWidget(_name,1,Qt::AlignHCenter | Qt::AlignTop);
+
+        temp = "Cost: $"  +std::to_string(rr.cost) +"\n\n";
+        QLabel* _cost = new QLabel(QString::fromStdString(temp));
+        font = QFont("Kabel Heavy",10);
+        _cost->setFont(font);
+        mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
 
 
-    temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
-            "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
-    font = QFont("Kabel Heavy",8);
-    QLabel* block = new QLabel(QString::fromStdString(temp),this);
-    block->setFont(font);
-    mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
-
+        temp = "Rent\t\t\t$"+std::to_string(rr.rents[0]) + "\n\n" +
+                "If both R.R.'s are owned \t$"+std::to_string(rr.rents[1]);
+        font = QFont("Kabel Heavy",8);
+        QLabel* block = new QLabel(QString::fromStdString(temp),this);
+        block->setFont(font);
+        mainLayout->addWidget(block,1,Qt::AlignHCenter | Qt::AlignTop);
+    }
 }
 
 
