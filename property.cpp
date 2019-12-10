@@ -149,6 +149,7 @@ Railroad::Railroad(int _tileNum, std::string _name, Board* _board, MainWindow* _
 
 int Railroad::checkOwnerRailroads(const Player* player) const{
     int railroadCount = 0;
+    if(propOwner()==nullptr){return 0;}
     for ( auto prop : player->playerProperties) {//go through player properties
         if (dynamic_cast<Railroad*>(prop)){//see which ones are railroads
             ++railroadCount;                //count them
