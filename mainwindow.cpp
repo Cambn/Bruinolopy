@@ -74,11 +74,21 @@ void MainWindow::infoupdate(){
     for (int i=0;i<numofplayer;i++)
     {
         std::string temp("");
+        int wordCount = 0;
         std::for_each(playerlist[i]->playerProperties.begin(),playerlist[i]->playerProperties.end(),
-                      [&temp](ownableTile* prop)-> void { temp += (prop->getName()+',');});
+                      [&temp, &wordCount](ownableTile* prop)-> void {
+
+                       ++wordCount;
+
+                       if(wordCount%3 == 1 && wordCount !=1){ //every 3 words but not the first
+                        temp+="\n";
+                       }
+                       temp += prop->getName() + "   ";
+                       });
+
         playerArea->playerPixmap[i]->setText("Charactor: "+playerlist[i]->getcharactor()+
                    "\nMoney: "+QString::number(playerlist[i]->money())+
-                   "\nProperties:"+QString::fromStdString(temp)+
+                   "\nProperties: "+QString::fromStdString(temp)+
                    "\nHouses:"+QString::number(playerlist[i]->getHouse())+
                    "\nHotels:"+QString::number(playerlist[i]->getHotel()));
     update();}
@@ -245,10 +255,6 @@ void MainWindow::updateRecord() const {
     else throw ( std::exception("Unable to open record.txt"));
 
 }
-
-
-
-
 
 
 

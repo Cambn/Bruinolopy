@@ -219,7 +219,7 @@ void WelcomeWindow::GoRecordsPage(){
     record->setAttribute(Qt::WA_DeleteOnClose);
     record->setWindowTitle("Records");
     record->setFixedSize(1200,900);
-    QPixmap bkgnd(":/fig/monopolyBear.png");
+    QPixmap bkgnd(":/fig/records_bkgd.jpg");
     QPalette p = palette();
     p.setBrush(QPalette::Window, bkgnd);
     record->setPalette(p);
