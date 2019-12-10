@@ -113,7 +113,7 @@ void Player::transferPlayer_Railroad(){
         pos = 10;
     }
     else {pos = 2;}
-    this->take(this,10);
+    this->take(this,5);
     this->getmovement()->instant_trans(pos);
 }
 void Player::buildHouse()  {
