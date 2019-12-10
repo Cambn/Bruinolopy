@@ -194,7 +194,7 @@ Railroad::View::View(const Railroad& rr) : mainLayout(new QVBoxLayout(this)) {
         mainLayout->addWidget(_cost,1,Qt::AlignHCenter | Qt::AlignTop);
 
         // asking for transporting
-        temp = "Congrats little bruin! Now you own all the railroads.\nSo now you could choose to transport to another railroad with a tiny charge for maintainence.";
+        temp = "Congrats Big Bruin! Now you own all the railroads:D\nWould you like to transport to another railroad,\n but with a tiny charge for maintainence?";
         font = QFont("Kabel Heavy",8);
         QLabel* block = new QLabel(QString::fromStdString(temp),this);
         block->setFont(font);
