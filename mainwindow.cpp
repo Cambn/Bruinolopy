@@ -73,8 +73,13 @@ void MainWindow::infoupdate(){
     for (int i=0;i<numofplayer;i++)
     {
         std::string temp("");
-        std::for_each(playerlist[i]->playerProperties.begin(),playerlist[i]->playerProperties.end(),
-                      [&temp](ownableTile* prop)-> void { temp += (prop->getName()+',');});
+        for(auto index = playerlist[i]->playerProperties.begin();index != playerlist[i]->playerProperties.end();++index){
+
+            if( (index-playerlist[i]->playerProperties.begin()) % 3==0 && index != playerlist[i]->playerProperties.begin()){
+                temp +="\n" + (*index)->getName()+ ", ";
+            }
+            else {temp +=(*index)->getName()+ ", ";}
+        }
         playerArea->playerPixmap[i]->setText("Charactor: "+playerlist[i]->getcharactor()+
                    "\nMoney: "+QString::number(playerlist[i]->money())+
                    "\nProperties:"+QString::fromStdString(temp)+
