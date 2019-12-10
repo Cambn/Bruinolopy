@@ -35,7 +35,7 @@ void ownableTile::landingEvent( Player* currPlayer){
                                     "Unowned!\n Purchase this property?",
                                      game,
                                     "Yes",  "No");
-
+        propWindow ->setGeometry(750,300,225,125);
         QObject::connect(propWindow->getLeft(),&QPushButton::clicked,     //connects Yes button to player buy fxn
                          currPlayer, &Player::buyBankProp);
 
@@ -48,7 +48,7 @@ void ownableTile::landingEvent( Player* currPlayer){
                                                 generateView(),
                                                 "Build a house/hotel on this property?",
                                             currPlayer,"Yes", "No");
-
+                buildHouse ->setGeometry(750,300,225,125);
                 QObject::connect(buildHouse->getLeft(),&QPushButton::clicked, currPlayer, &Player::buildHouse);}
         }
         else if (dynamic_cast<Railroad*>(this)) {
@@ -58,8 +58,9 @@ void ownableTile::landingEvent( Player* currPlayer){
                     if(current->checkOwnerRailroads(currPlayer)==2){
                         QLandingOptions* RailTransport = new QLandingOptions(
                                                                generateView(),
-                                                               "So is that a yes or no?",
+                                                               "So is that a yes or no? Charge is $5.",
                                                                currPlayer,"Yes","No");
+                        RailTransport ->setGeometry(750,300,225,125);
                         QObject::connect(RailTransport->getLeft(),&QPushButton::clicked,currPlayer,&Player::transferPlayer_Railroad);
                     }
                     //check if the current owner ownes two railroads { }
