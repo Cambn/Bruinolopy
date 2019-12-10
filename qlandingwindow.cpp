@@ -1,28 +1,32 @@
+
 #include "qlandingwindow.h"
 #include "mainwindow.h"
 #include <QDialog>
 
-QLandingWindow::QLandingWindow(QObject* _game, QWidget* parent):
-    QWidget(parent),
-    layout(new QGridLayout(this)),
-    game(_game)
-{}
+QLandingWindow::QLandingWindow(QWidget* parent):
+    QDialog(parent),
+    layout(new QGridLayout(this))
+{
+    open();
+}
 
-QLandingWindow::QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* parent):
-    QWidget(parent),
+QLandingWindow::QLandingWindow(QWidget* _mainWidget, QWidget* parent):
+    QDialog(parent),
     layout(new QGridLayout(this)),
     mainWidget(_mainWidget)
-    {}
+    {
+        open();
+    }
 
 QLandingOptions::QLandingOptions(
         QWidget* _mainWidget,
         const QString& _prompt,
-        QObject* _game,
+        QWidget* parent  ,
         const QString& leftOpt,
-        const QString& rightOpt,
-        QWidget* parent          )
+        const QString& rightOpt
+        )
         :
-        QLandingWindow(_mainWidget,_game, parent),
+        QLandingWindow(_mainWidget, parent),
         prompt(new QLabel(_prompt, this)),
         left( new QPushButton(leftOpt,this)),
         right( new QPushButton(rightOpt,this))
@@ -37,18 +41,12 @@ QLandingOptions::QLandingOptions(
 
         sizeHint();
 
-        show();
+        open(); //open as modal dialog window
 
         //close window once we click a button
         connect(left, &QPushButton::clicked, this, &QWidget::close);
         connect(right, &QPushButton::clicked, this, &QWidget::close);
     }
-
-QLandingOptions::~QLandingOptions() {
-    delete prompt;
-    delete left;
-    delete right;
-}
 
 
 void NoOptionWindow(QWidget*parent, QString statement){
@@ -61,4 +59,6 @@ void NoOptionWindow(QWidget*parent, QString statement){
     content->setWindowTitle("Notice");
     content->show();
 }
+
+
 
