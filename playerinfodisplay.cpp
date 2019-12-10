@@ -32,6 +32,7 @@ QLabel *PlayerInfoDisplay::createPlayerPixmap(Player* p){
 
     QLabel *label = new QLabel(this);
     label->setStyleSheet("QLabel{font: 20 pt; color : blue; }");
+
     label->setText("Charactor: "+p->getcharactor()+
                    "\nMoney: "+QString::number(p->money())+
                    "\nProperties:"+QString::number(p->getProp())+
