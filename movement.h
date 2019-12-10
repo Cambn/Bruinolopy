@@ -8,10 +8,10 @@
 #include "player.h"
 
 class Player;
-//the movement class is part of the player class
-//it tracks the dice, the position
-
-
+//The movement is essentially the command for the player to "move" on the Game console
+//It tracks the dice, the board position
+//Everytime the dice is rolled, when emiting appropriate signal, this class will be called. 
+//Future implement: everytime chess activatied, make it jump. 
 
 class Movement : public QWidget
 {
