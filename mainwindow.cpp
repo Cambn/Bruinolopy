@@ -172,7 +172,7 @@ void MainWindow::playerwalk()
 
 
 
-/*
+
 void MainWindow::updateRecord() const {
 
     Player* winner = nullptr;
@@ -245,7 +245,7 @@ void MainWindow::updateRecord() const {
     else throw ( std::exception("Unable to open record.txt"));
 
 }
-*/
+
 
 
 

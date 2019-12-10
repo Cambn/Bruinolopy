@@ -215,6 +215,7 @@ void WelcomeWindow::GoRulePage(){
 
 void WelcomeWindow::GoRecordsPage(){
     QWidget* record = new QWidget;
+    record->setStyleSheet("color: white");
     record->setAttribute(Qt::WA_DeleteOnClose);
     record->setWindowTitle("Records");
     record->setFixedSize(1200,900);
@@ -227,10 +228,11 @@ void WelcomeWindow::GoRecordsPage(){
 
 
     QLabel* mainLabel = new QLabel("Highest Ending \t\tMoney of all Time:",record);
+    mainLabel->setStyleSheet("color: white");
 //    pageLayout->addWidget(mainLabel,0,0,2,-1);
-    mainLabel->setFont(QFont("Kabel Heavy",30));
+    mainLabel->setFont(QFont("Kabel Heavy",40));
     mainLabel->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-    mainLabel->setGeometry(150,0,900,50);
+    mainLabel->setGeometry(150,0,900,65);
 
 
     QFile recordInfo(":/record.txt");
@@ -257,17 +259,19 @@ void WelcomeWindow::GoRecordsPage(){
 
     //set text for labels for first place spot
     out.readLineInto(&temp);
-    QFont font("Kabel Heavy",20);
+    QFont font("Kabel Heavy",30);
     QStringList currLine(temp.split("SPACE"));
     firstPlaceBox->setText( currLine[0]+"\t"+currLine[1]); //set label's text to first name and their oney
     firstPlaceBox->setFont(font);
-    font = QFont("Kabel Heavy",10);
+    font = QFont("Kabel Heavy",20);
     firstLoserBox->setText("...and Losers in this game:\t" + currLine[2]); // set label to second name
     firstLoserBox->setFont(font);
+    firstLoserBox->setStyleSheet("color: white, border: 5px solid black");
     secondLoserBox->setText(currLine[3]);//              third name
     secondLoserBox->setFont(font);
     thirdLoserBox->setText(currLine[4]); //              last loser's name
     thirdLoserBox->setFont(font);
+
 
     //add stuff to layouts for first place spot.
     firstMainLayout->setAlignment(Qt::AlignHCenter);
@@ -284,7 +288,7 @@ void WelcomeWindow::GoRecordsPage(){
     QLabel* thirdPlaceL = new QLabel(record);
 
     //set text for second and third place spot
-    font = QFont("Kabel Heavy", 15);
+    font = QFont("Kabel Heavy", 25);
     out.readLineInto(&temp);
     currLine = temp.split("SPACE");
     secondPlaceL->setText(currLine[0] + "\t" + currLine[1]);
@@ -293,6 +297,7 @@ void WelcomeWindow::GoRecordsPage(){
     currLine = temp.split("SPACE");
     thirdPlaceL->setText(currLine[0] + "\t" + currLine[1]);
     thirdPlaceL->setFont(font);
+    thirdPlaceL->setStyleSheet("color: black");
 
     //add second and third place Labels to pageLayout
     pageLayout->addWidget(secondPlaceL,2,2,Qt::AlignHCenter);
