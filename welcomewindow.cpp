@@ -1,5 +1,9 @@
 #include "welcomewindow.h"
 
+#include <QFile>
+#include <QTextStream>
+#include <QString>
+
 
 WelcomeWindow::WelcomeWindow(QWidget *parent) : QWidget(parent)
 {
@@ -213,13 +217,96 @@ void WelcomeWindow::GoRecordsPage(){
     QWidget* record = new QWidget;
     record->setAttribute(Qt::WA_DeleteOnClose);
     record->setWindowTitle("Records");
-    record->show();
     record->setFixedSize(1200,900);
-    QPixmap bkgnd(":/fig/records_bkgd.jpg");
+    QPixmap bkgnd(":/fig/monopolyBear.png");
     QPalette p = palette();
-    p.setBrush(QPalette::Background, bkgnd);
+    p.setBrush(QPalette::Window, bkgnd);
     record->setPalette(p);
+
+    QGridLayout* pageLayout = new QGridLayout(record); //main layout for page
+
+
+    QLabel* mainLabel = new QLabel("Highest Ending \t\tMoney of all Time:",record);
+//    pageLayout->addWidget(mainLabel,0,0,2,-1);
+    mainLabel->setFont(QFont("Kabel Heavy",30));
+    mainLabel->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
+    mainLabel->setGeometry(150,0,900,50);
+
+
+    QFile recordInfo(":/record.txt");
+    if(!recordInfo.open(QFile::ReadOnly| QFile::Text)) {
+        qDebug() << "could not open :/record.txt";
+        return;
+    }
+
+    QTextStream out(&recordInfo);
+    QString temp("");
+
+
+    //make items for first place Box
+    QLabel* firstPlaceBox = new QLabel(record);
+    QLabel* firstLoserBox = new QLabel(record);
+    QLabel* secondLoserBox= new QLabel(record);
+    QLabel* thirdLoserBox = new QLabel(record);
+    //and set their colors because black isn't visible on the background
+
+
+
+    QVBoxLayout* firstMainLayout = new QVBoxLayout(record);
+    QHBoxLayout* firstSecondaryLayout = new QHBoxLayout(record);
+
+    //set text for labels for first place spot
+    out.readLineInto(&temp);
+    QFont font("Kabel Heavy",20);
+    QStringList currLine(temp.split("SPACE"));
+    firstPlaceBox->setText( currLine[0]+"\t"+currLine[1]); //set label's text to first name and their oney
+    firstPlaceBox->setFont(font);
+    font = QFont("Kabel Heavy",10);
+    firstLoserBox->setText("...and Losers in this game:\t" + currLine[2]); // set label to second name
+    firstLoserBox->setFont(font);
+    secondLoserBox->setText(currLine[3]);//              third name
+    secondLoserBox->setFont(font);
+    thirdLoserBox->setText(currLine[4]); //              last loser's name
+    thirdLoserBox->setFont(font);
+
+    //add stuff to layouts for first place spot.
+    firstMainLayout->setAlignment(Qt::AlignHCenter);
+    firstMainLayout->addWidget(firstPlaceBox);
+    firstSecondaryLayout->addWidget(firstLoserBox);
+    firstSecondaryLayout->addWidget(secondLoserBox);
+    firstSecondaryLayout->addWidget(thirdLoserBox);
+    firstMainLayout->addLayout(firstSecondaryLayout);
+    firstMainLayout->setContentsMargins(2,2,2,2);
+    pageLayout->addLayout(firstMainLayout,1,2,Qt::AlignHCenter);
+
+    //make items for second and third place spot
+    QLabel* secondPlaceL = new QLabel(record);
+    QLabel* thirdPlaceL = new QLabel(record);
+
+    //set text for second and third place spot
+    font = QFont("Kabel Heavy", 15);
+    out.readLineInto(&temp);
+    currLine = temp.split("SPACE");
+    secondPlaceL->setText(currLine[0] + "\t" + currLine[1]);
+    secondPlaceL->setFont(font);
+    out.readLineInto(&temp);
+    currLine = temp.split("SPACE");
+    thirdPlaceL->setText(currLine[0] + "\t" + currLine[1]);
+    thirdPlaceL->setFont(font);
+
+    //add second and third place Labels to pageLayout
+    pageLayout->addWidget(secondPlaceL,2,2,Qt::AlignHCenter);
+    pageLayout->addWidget(thirdPlaceL,3,2,Qt::AlignHCenter);
+
+
+    pageLayout->setAlignment(Qt::AlignCenter);
+    pageLayout->setContentsMargins(100,100,100,100);
+    pageLayout->setHorizontalSpacing(200);
+    pageLayout->setVerticalSpacing(150);
+    record->setLayout(pageLayout);
+    record->show();
 }
+
 
 
 void WelcomeWindow::resizeEvent(QResizeEvent *)

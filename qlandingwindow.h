@@ -2,6 +2,7 @@
 #define QLANDINGWINDOW_H
 
 #include <QWidget>
+#include <QDialog>
 #include <QPushButton>
 #include <QPainter>
 #include <QLabel>
@@ -18,19 +19,16 @@ void NoOptionWindow(QWidget*parent, QString statement);
 Base class for my custom popup windows.
 Stores a gridlayout and a QWidget.
 Displays QWidget in 0,0 of GridLayout.
-Registers window to tempObjects in a mainWindow for memory management.
 */
-class QLandingWindow: public QWidget {
+class QLandingWindow: public QDialog {
 Q_OBJECT
 public:
-QLandingWindow(QObject* _game, QWidget* parent = nullptr);
-QLandingWindow(QWidget* _mainWidget, QObject* game, QWidget* parent = nullptr);
+QLandingWindow( QWidget* parent = nullptr);
+QLandingWindow(QWidget* _mainWidget, QWidget* parent);
 virtual ~QLandingWindow() = default;
 protected:
 QGridLayout* layout;
 QWidget* mainWidget;
-private:
-QObject* game;
 };
 
 
@@ -46,16 +44,16 @@ class QLandingOptions : public QLandingWindow {
 public :
     QLandingOptions(QWidget* _mainWidget,
                     const QString& _prompt,
-                    QObject* _game,
+                    QWidget* parent,
                     const QString& leftOpt = "Yes",
-                    const QString& rightOpt= "No",
-                    QWidget* parent = nullptr);
+                    const QString& rightOpt= "No"
+                    );
 
     QLabel* getPrompt()    const{return prompt;}
     QPushButton* getLeft() const{return left;  }
     QPushButton* getRight()const{return right; }
 
-    ~QLandingOptions() override;
+    ~QLandingOptions() override = default;
 private:
     QLabel* prompt;
     QPushButton* left;

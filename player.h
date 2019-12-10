@@ -30,6 +30,7 @@ public:
            const QString& name="",
            int money=0, int order=0,
            const QString& path=":/fig/gb_panda.png");
+
     ~Player();
 
     /*

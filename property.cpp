@@ -94,7 +94,7 @@ Property::View::View(const Property& prop) : mainLayout(new QVBoxLayout(this))  
     std::string fileName= ":/properties/"+prop.color+"Property.png";
     QString qfileName(QString::fromStdString(fileName));
     image = QPixmap(qfileName);
-    setFixedSize(400,600);
+    setFixedSize(400,480);
     setWindowTitle("Property Purchase");
 
     //make label for name

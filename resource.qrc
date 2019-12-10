@@ -30,6 +30,7 @@
         <file>Railway.png</file>
         <file>royceHall.png</file>
         <file>bear.png</file>
+        <file>monopolyBear.png</file>
     </qresource>
     <qresource prefix="/sound">
         <file>welcomemusic.mp3</file>
@@ -57,5 +58,8 @@
         <file>dice5.png</file>
         <file>dice6.png</file>
         <file>rolling.gif</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>record.txt</file>
     </qresource>
 </RCC>
