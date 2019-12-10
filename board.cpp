@@ -81,7 +81,7 @@ void Board::buildChancecards(MainWindow* game) {
                                }
                               )
              );
-     chanceCards.emplace_back( new ChanceCard("Go to Jail!. ",
+     chanceCards.emplace_back( new ChanceCard("Go to Jail!",
                                               [](Player* currPlayer) -> void {
                                               currPlayer->getmovement()->instant_trans(8);
                                               currPlayer->changeDisable();
