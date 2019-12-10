@@ -7,13 +7,9 @@ Player::Player(QWidget *parent, Bank* b,Board* b2, const QString& ch, const QStr
     : QWidget(parent),bank(b),board(b2),charactor(ch),name(name),playerMoney(money)
 {movement=new Movement(this,this,order,path);}
 
-//player should not delete their properties or else they will be deleted from the board.
-//all properties will be deleted in board destructor.
-//
 Player::~Player(){
-    delete movement;
-//    for(size_t i=0;i<playerProperties.size();i++)
-//        delete playerProperties[i];
+    for(size_t i;i<playerProperties.size();i++)
+        delete playerProperties[i];
 }
 
 int Player::money() const
@@ -106,16 +102,7 @@ void Player::payRent() {
     prop->propOwner()->take(this, prop->currentRent()); //owner of the property that the curr player is on takes appropriate amount of money from curr player .
     board->w->infoupdate();
 }
-void Player::transferPlayer_Railroad(){
-    //first get the tail pos, then transfer
-    int pos = 2;
-    if(this->getmovement()->getpos()==2){
-        pos = 10;
-    }
-    else {pos = 2;}
-    this->take(this,5);
-    this->getmovement()->instant_trans(pos);
-}
+
 void Player::buildHouse()  {
     {
         if (dynamic_cast<Property*>( getTile() ))//if land on a property

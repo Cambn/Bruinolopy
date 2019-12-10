@@ -1,7 +1,6 @@
 #include "playerinfodisplay.h"
 #include <QDebug>
 #include <QFile>
-#include <QDialog>
 
 #include <algorithm>
 #include <utility>
@@ -156,23 +155,13 @@ void MainWindow::playerwalk()
                 break;
             }}
         maindice->infobar->setText("Game is over.\n"+playerlist[winner]->getname()+" wins.");
-        try {
-            updateRecord();
-        }
-
-        catch (std::exception& e) {
-            QDialog* recordError = new QDialog(this);
-            QLabel* label = new QLabel(QString::fromStdString(e.what()), recordError);
-            recordError->show();
-        }
-
         repaint();
         return;}
     }
 
 
 
-
+/*
 void MainWindow::updateRecord() const {
 
     Player* winner = nullptr;
@@ -181,18 +170,18 @@ void MainWindow::updateRecord() const {
             winner = player;         //set winner to winner
     }
 
-    QFile record(":/record.txt");
-    if (record.open(QFile::ReadOnly | QFile::Text)){//able to open file for writing
+    QFile record(":/txt/record.txt");
+    if (record.isOpen()){
             QString line("");
-            QTextStream stream(&record);                  //make textstream on record
+            QTextStream stream(&record); //make textstream on record
             std::vector <std::pair<QString,int>> winners; //store all the names and money from the file
-            std::vector <QString> losers(3," ");          //store losers name from first place game here
+            std::vector <QString> losers(4," ");    //store losers name from first place game here
 
 
 
             //process fist line
             stream.readLineInto(&line);
-            QStringList currLine(line.split("SPACE"));
+            QStringList currLine(line.split("\t"));
                  //add "player1,player1.money()" as first pair.
             winners.push_back(std::make_pair(currLine[0],currLine[1].toInt()));
             losers.push_back(currLine[2]);
@@ -201,13 +190,12 @@ void MainWindow::updateRecord() const {
 
             //all the rest have same structure so just do a loop.
             while(stream.readLineInto(&line)) {
-                currLine= (line.split("SPACE"));
+                currLine= (line.split("\t"));
                 winners.push_back(std::make_pair(currLine[0],currLine[1].toInt()));
             }
             //now that we have all values, check if winner made it into records.
             //moneys will be already sorted in descending order.
-            if (winner->money() > std::get<1>(winners.back())){     //if curr winner has more money than person with least money on records page
-                record.close(); record.open(QFile::WriteOnly | QFile::Text); //change open mode to write
+            if (winner->money() > std::get<1>(winners.back())){                         //if curr winner has more money than person with least money on records page
                 winners.back() = std::make_pair(winner->getname(), winner->money());    //replace last element of vector w/ curr winner
                 bool newMax = (winner->money() > std::get<1>(winners.front()));         //check if winner has new high score
 
@@ -228,24 +216,40 @@ void MainWindow::updateRecord() const {
                 }
                 //otherwise not high score so don't care about losers.
                 QTextStream out(&record);
-                out << std::get<0>(winners.front()) <<"SPACE" << std::get<1>(winners.front())
-                    <<"SPACE" << losers[0]<<"SPACE"<<losers[1]<<"SPACE"<<losers[2]<<"SPACE"<<losers[3]<<"\n";      //write first line to file
+                out << std::get<0>(winners.front()) <<"\t" << std::get<1>(winners.front())
+                    <<"\t" << losers[0]<<"\t"<<losers[1]<<"\t"<<losers[2]<<"\t"<<losers[3]<<"\n";      //write first line to file
 
                 for (size_t i=1; i< winners.size(); ++i){       //for second until last line
-                out<<std::get<0>(winners.at(i)) <<"SPACE" << std::get<1>(winners.at(i)) <<"\n"; //write "playerName\tplayerName->money()\n"
+                out<<std::get<0>(winners.at(i)) <<"\t" << std::get<1>(winners.at(i)) <<"\n"; //write "playerName\tplayerName->money()\n"
                 }
                 record.close();
+                return true;
             }
 
-            else { //this winner did not make into records . don't modify file.
-                record.close();
-            }
+
+//            //process second line
+//            stream.readLineInto(&line);
+//             currLine= (line.split("\t"));
+//             names.push_back(currLine[0]);
+//             moneys.push_back((currLine[1]));
+//             //third line
+//             stream.readLineInto(&line);
+//             currLine= (line.split("\t"));
+//             names.push_back(currLine[0]);
+//             moneys.push_back((currLine[1]));
+//             //fourth line
+//             stream.readLineInto(&line);
+//             currLine= (line.split("\t"));
+//             names.push_back(currLine[0]);
+//             moneys.push_back((currLine[1]));
+
 
     }
     else throw ( std::exception("Unable to open record.txt"));
 
-}
 
+}
+*/
 
 
 

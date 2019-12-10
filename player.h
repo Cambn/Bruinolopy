@@ -30,7 +30,6 @@ public:
            const QString& name="",
            int money=0, int order=0,
            const QString& path=":/fig/gb_panda.png");
-
     ~Player();
 
     /*
@@ -103,7 +102,6 @@ public slots:
     void buyBankProp ();//buy the ownable prop
     void payRent ();
     void buildHouse() ;
-    void transferPlayer_Railroad();//tranport the user to other railroad when gets called
 public:
     QString return_name();
 

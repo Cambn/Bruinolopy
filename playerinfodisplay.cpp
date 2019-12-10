@@ -31,12 +31,20 @@ QLabel *PlayerInfoDisplay::createPlayerHeader(const QString &text){
 QLabel *PlayerInfoDisplay::createPlayerPixmap(Player* p){
 
     QLabel *label = new QLabel(this);
-    label->setStyleSheet("QLabel{font: 20 pt; color : blue; }");
-    label->setText("Charactor: "+p->getcharactor()+
+    QPixmap bkg(":/fig/playerarea.jpg");
+    bkg.scaled(label->size());
+    label->setPixmap(bkg);
+
+    QLabel *label2 = new QLabel(label);
+    label2->setStyleSheet("QLabel{font: 20 pt; color : blue; }");
+
+    label2->setText("Charactor: "+p->getcharactor()+
                    "\nMoney: "+QString::number(p->money())+
                    "\nProperties:"+QString::number(p->getProp())+
                    "\nHouses:"+QString::number(p->getHouse())+
                    "\nHotels:"+QString::number(p->getHotel()));
+
+    label2->setAttribute(Qt::WA_TranslucentBackground, true);
 
     //QFrame *custom = new QFrame;
     label ->setEnabled(false);

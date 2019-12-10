@@ -32,7 +32,7 @@ Board::Board(MainWindow* game) :w(game),tiles(16,nullptr) {
     //bottom row
     tiles.at(0)= new Tile(0,this,game);
     tiles.at(1)= new Property(first,this,game);
-    tiles.at(2)= new Railroad(2,"Metro",this,game);
+    tiles.at(2)= new Railroad(2,"Railroad1",this,game);
     tiles.at(3)= new Property (sec,this,game);
 
     //right column
@@ -49,7 +49,7 @@ Board::Board(MainWindow* game) :w(game),tiles(16,nullptr) {
 
     //left column
     tiles.at(9)=new Property(parkPlace,this,game);
-    tiles.at(10)= new Railroad(10,"Big Blue",this,game);
+    tiles.at(10)= new Railroad(10,"Railroad2",this,game);
     tiles.at(11)= new Property(mathSci,this,game);
     tiles.at(12)=new ChanceTile(12,this,game);
 }
@@ -81,7 +81,7 @@ void Board::buildChancecards(MainWindow* game) {
                                }
                               )
              );
-     chanceCards.emplace_back( new ChanceCard("Go to Jail!",
+     chanceCards.emplace_back( new ChanceCard("Go to Jail!. ",
                                               [](Player* currPlayer) -> void {
                                               currPlayer->getmovement()->instant_trans(8);
                                               currPlayer->changeDisable();

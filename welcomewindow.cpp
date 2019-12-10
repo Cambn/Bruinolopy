@@ -1,9 +1,5 @@
 #include "welcomewindow.h"
 
-#include <QFile>
-#include <QTextStream>
-#include <QString>
-
 
 WelcomeWindow::WelcomeWindow(QWidget *parent) : QWidget(parent)
 {
@@ -205,7 +201,12 @@ void WelcomeWindow::GoRulePage(){
                      "\nIf the chance card says GO TO JAIL, you would need to stay in jail for three turns.\n"
                      "\nWhen you own both railways, you can choose to take the transportation when landing on them.\n"
                      "\nThe game will end when there is only one player remaining with positive money.\n"
-                     "\nHave fun !"
+                     "\nHave fun !\n"
+
+                     "\nPhoto Credit:\n"
+                     "Gameboard Block Pictures By Danusia Keusder，https://www.etsy.com/listing/192014616/ucla-illustrated-campus-map\n"
+                     "All the background images from Pixabay, a free right image webset.\n"
+                     "Background music from Free Music Achive, Starling by Podington Bear.\n"
                       );
     lb_text->setFixedSize(1000,600);
     lb_text->setStyleSheet("QLabel {background-color: rgba(255, 255, 255, 120); font : 10pt}");
@@ -215,97 +216,15 @@ void WelcomeWindow::GoRulePage(){
 
 void WelcomeWindow::GoRecordsPage(){
     QWidget* record = new QWidget;
-    record->setStyleSheet("color: white");
     record->setAttribute(Qt::WA_DeleteOnClose);
     record->setWindowTitle("Records");
-    record->setFixedSize(1200,900);
-    QPixmap bkgnd(":/fig/monopolyBear.png");
-    QPalette p = palette();
-    p.setBrush(QPalette::Window, bkgnd);
-    record->setPalette(p);
-
-    QGridLayout* pageLayout = new QGridLayout(record); //main layout for page
-
-
-    QLabel* mainLabel = new QLabel("Highest Ending \t\tMoney of all Time:",record);
-    mainLabel->setStyleSheet("color: white"); //make default color for all Labels in here white so we can see
-    mainLabel->setFont(QFont("Kabel Heavy",40));
-    mainLabel->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
-    mainLabel->setGeometry(150,0,900,65); //set position of main Label
-
-
-    QFile recordInfo(":/record.txt");
-    if(!recordInfo.open(QFile::ReadOnly| QFile::Text)) { //cant open record file
-        qDebug() << "could not open :/record.txt";
-        delete record; //clean up
-        return;        //bail
-    }
-
-    QTextStream out(&recordInfo);
-    QString temp("");
-
-
-    //make items for first place Box
-    QLabel* firstPlaceBox = new QLabel(record);
-    QLabel* losers = new QLabel(record);
-
-    QVBoxLayout* firstMainLayout = new QVBoxLayout(record);
-    QHBoxLayout* firstSecondaryLayout = new QHBoxLayout(record);
-
-    //set text for labels for first place spot
-    out.readLineInto(&temp);
-    QFont font("Kabel Heavy",30);
-    QStringList currLine(temp.split("SPACE"));
-
-    firstPlaceBox->setText( currLine[0]+"\t"+currLine[1]); //set label's text to first name and their money
-    firstPlaceBox->setFont(font);
-
-    font = QFont("Kabel Heavy",20);
-    losers->setText("...and Losers in this game:\t" + currLine[2]+ "\t"+currLine[3]+"\t"+currLine[4]); // set label losers' names.
-
-    //add stuff to layouts for first place spot.
-    firstMainLayout->setAlignment(Qt::AlignHCenter);
-    firstMainLayout->addWidget(firstPlaceBox);
-
-    firstSecondaryLayout->addWidget(losers);
-
-    firstMainLayout->addLayout(firstSecondaryLayout);
-    firstMainLayout->setContentsMargins(2,2,2,2);
-    pageLayout->addLayout(firstMainLayout,1,2,Qt::AlignHCenter);
-
-
-    //make items for second and third place spot
-    QLabel* secondPlaceL = new QLabel(record);
-    QLabel* thirdPlaceL = new QLabel(record);
-
-
-    //set text for second and third place spot
-    font = QFont("Kabel Heavy", 25);
-
-    out.readLineInto(&temp);
-    currLine = temp.split("SPACE");
-    secondPlaceL->setText(currLine[0] + "     " + currLine[1]);
-    secondPlaceL->setFont(font);
-
-    out.readLineInto(&temp);
-    currLine = temp.split("SPACE");
-    thirdPlaceL->setText(currLine[0]  + "     " + currLine[1]);
-    thirdPlaceL->setFont(font);
-
-    //add second and third place Labels to pageLayout
-    pageLayout->addWidget(secondPlaceL,2,2,Qt::AlignHCenter);
-    pageLayout->addWidget(thirdPlaceL,3,2,Qt::AlignHCenter);
-
-
-    pageLayout->setAlignment(Qt::AlignCenter);
-    pageLayout->setContentsMargins(100,100,100,100);
-    pageLayout->setHorizontalSpacing(200);
-    pageLayout->setVerticalSpacing(150);
-    record->setLayout(pageLayout);
     record->show();
+    record->setFixedSize(1200,900);
+    QPixmap bkgnd(":/fig/records_bkgd.jpg");
+    QPalette p = palette();
+    p.setBrush(QPalette::Background, bkgnd);
+    record->setPalette(p);
 }
-
-
 
 
 void WelcomeWindow::resizeEvent(QResizeEvent *)
