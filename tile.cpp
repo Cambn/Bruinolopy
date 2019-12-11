@@ -35,7 +35,8 @@ void ownableTile::landingEvent( Player* currPlayer){
                                     "Unowned!\n Purchase this property?",
                                      game,
                                     "Yes",  "No");
-        propWindow ->setGeometry(750,300,225,125);
+        propWindow ->setGeometry(750,300,450,350);
+        propWindow ->setWindowTitle("Notice");                             
         QObject::connect(propWindow->getLeft(),&QPushButton::clicked,     //connects Yes button to player buy fxn
                          currPlayer, &Player::buyBankProp);
 
@@ -48,7 +49,8 @@ void ownableTile::landingEvent( Player* currPlayer){
                                                 generateView(),
                                                 "Build a house/hotel on this property?",
                                             currPlayer,"Yes", "No");
-                buildHouse ->setGeometry(750,300,225,125);
+                huildHouse ->setGeometry(750,300,450,350);
+                buildHouse ->setWindowTitle("Notice");
                 QObject::connect(buildHouse->getLeft(),&QPushButton::clicked, currPlayer, &Player::buildHouse);}
         }
         else if (dynamic_cast<Railroad*>(this)) {
@@ -60,7 +62,8 @@ void ownableTile::landingEvent( Player* currPlayer){
                                                                generateView(),
                                                                "So is that a yes or no? Charge is $5.",
                                                                currPlayer,"Yes","No");
-                        RailTransport ->setGeometry(750,300,225,125);
+                        RailTransport ->setGeometry(750,300,450,350);
+                        RailTransport ->setWindowTitle("Notice");
                         QObject::connect(RailTransport->getLeft(),&QPushButton::clicked,currPlayer,&Player::transferPlayer_Railroad);
                     }
                 } 
